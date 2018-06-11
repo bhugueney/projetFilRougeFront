@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { FoodComponent } from './components/food/food.component';
@@ -13,6 +14,7 @@ import { IngredientService } from './services/ingredient.service';
 import { MealService } from './services/meal.service';
 import { PreparationService } from './services/preparation.service';
 import { RecipeService } from './services/recipe.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { RecipeService } from './services/recipe.service';
     MenuComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule
   ],
   providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
   bootstrap: [AppComponent]
