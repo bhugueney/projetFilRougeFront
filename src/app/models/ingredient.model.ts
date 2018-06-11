@@ -1,3 +1,4 @@
+import { User } from './user.model';
 import { Categorie } from './categorie.model';
 export class Ingredient {
   private id: number;
@@ -18,6 +19,6 @@ export class Ingredient {
 
   private categorie: Categorie;
 
-  private owner;
+  private owner: User;
 
 }
