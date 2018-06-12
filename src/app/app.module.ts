@@ -15,6 +15,15 @@ import { MealService } from './services/meal.service';
 import { PreparationService } from './services/preparation.service';
 import { RecipeService } from './services/recipe.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {path: 'main', component: MainMenuComponent},
+  {path: '', redirectTo: 'main', pathMatch: 'full'},
+  {path: '**', component: PageNotFoundComponent}
+];
 
 @NgModule({
   declarations: [
@@ -24,12 +33,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RecipeComponent,
     MealComponent,
     PreparationComponent,
-    MenuComponent
+    MenuComponent,
+    MainMenuComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
   bootstrap: [AppComponent]
