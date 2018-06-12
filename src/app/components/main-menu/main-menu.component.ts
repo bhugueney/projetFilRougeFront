@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainMenuComponent implements OnInit {
 
-  userConnected = false;
+  userConnected = true;
 
   constructor() { }
 

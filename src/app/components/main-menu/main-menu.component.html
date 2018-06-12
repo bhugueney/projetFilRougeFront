@@ -1,7 +1,15 @@
-<section id="main-menu">
-  
-  <div *ngIf="!userConnected">
-      <button mat-button>Menu</button>      
+<section id="main-menu" fxLayout="column">
+
+  <div fxLayout="column" fxLayoutAlign="space-around center"  fxFlex="90%" fxFlexFill >
+    <button mat-stroked-button color="primary" fxFlex="25%" [routerLink]="'/recipe'">Effectuer une préparation</button>
+    <ng-container *ngIf="userConnected; else userNotConnected">
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/ingredients'">Mes ingrédients</button>
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/'">Mon suivi personnel</button>
+          </ng-container>
+    <ng-template #userNotConnected>
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/'">Se connecter</button>
+        <button class="menuButton" mat-stroked-button color="accent" fxFlex="25%"  [routerLink]="'/'">Créer un compte</button>
+    </ng-template>
   </div>
-  <div *ngIf="userConnected">Hello user !</div>
+
 </section>

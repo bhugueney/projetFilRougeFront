@@ -23,6 +23,7 @@ import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, Mat
 
 const routes: Routes = [
   {path: 'main', component: MainMenuComponent},
+  {path: 'recipe', component: RecipeComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
