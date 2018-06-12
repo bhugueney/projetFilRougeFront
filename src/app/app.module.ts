@@ -20,8 +20,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {path: 'main', component: MainMenuComponent},
   {path: '', redirectTo: 'main', pathMatch: 'full'},
+  {path: 'main', component: MainMenuComponent},
+  {path: 'preparation', component: PreparationComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

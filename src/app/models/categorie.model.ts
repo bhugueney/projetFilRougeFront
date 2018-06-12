@@ -24,4 +24,9 @@ export class Categorie {
     this._parent = value;
   }
 
+  constructor(id: number, name: string, parent: Categorie) {
+    this.id = id;
+    this.name = name;
+    this. parent = parent;
+  }
 }

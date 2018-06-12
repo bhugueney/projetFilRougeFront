@@ -149,4 +149,44 @@ export class Ingredient {
     this._comment = value;
   }
 
+  constructor(
+    id: number,
+    name: string,
+    urlImage: string,
+    energy: number,
+    water: number,
+    protein: number,
+    glucid: number,
+    lipid: number,
+    sugar: number,
+    amidon: number,
+    fiber: number,
+    unsaturedFattyAcides: number,
+    monoUnsaturedFattyAcides: number,
+    polyUnsaturedFattyAcides: number,
+    salt: number,
+    categorie: Categorie,
+    owner: User,
+    comment: string
+    ) {
+    this.id = id;
+    this.name = name;
+    this.urlImage = urlImage;
+    this.energy = energy;
+    this.water = water;
+    this.protein = protein;
+    this.glucid = glucid;
+    this.lipid = lipid;
+    this.sugar = sugar;
+    this.amidon = amidon;
+    this.fiber = fiber;
+    this.unsaturedFattyAcides = unsaturedFattyAcides;
+    this.monoUnsaturedFattyAcides = monoUnsaturedFattyAcides;
+    this.polyUnsaturedFattyAcides = polyUnsaturedFattyAcides;
+    this.salt = salt;
+    this.categorie = categorie;
+    this.owner = owner;
+    this.comment = comment;
+  }
+
 }
