@@ -21,10 +21,28 @@ export class PreparationService {
     this.ingredients.push(new Ingredient(
       1,
       'Carottes',
-      '', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'carottes.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       fruitCateg,
       systemUser,
       'ceci est un commentaire'));
+
+    this.ingredients.push(new Ingredient(
+      1,
+      'Tomates',
+      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      fruitCateg,
+      systemUser,
+      'ceci est un commentaire'));
+
+    this.ingredients.push(new Ingredient(
+      1,
+      'Poireau',
+      'ingredients_default.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      fruitCateg,
+      systemUser,
+      'ceci est un commentaire'));
+
+
   }
 
   getListIngredients(): Ingredient[] {

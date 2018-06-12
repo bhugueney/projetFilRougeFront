@@ -1,0 +1,6 @@
+.ingredientCard {
+    display: Flex;
+    flex-direction: column;
+    border: 1px black solid;
+    height: 3elm;
+}
