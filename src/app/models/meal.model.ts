@@ -2,23 +2,23 @@ import { MealType } from './meal-type';
 import { Preparation } from './preparation.model';
 
 export class Meal extends Preparation {
-    private timeStamp: Date;
-    private mealType: MealType;
+    private _timeStamp: Date;
+    private _mealType: MealType;
 
-
-    public getTimeStamp(): Date {
-        return this.timeStamp;
+    public get timeStamp(): Date {
+        return this._timeStamp;
     }
 
-    public setTimeStamp(timeStamp: Date) {
-        this.timeStamp = timeStamp;
+    public set timeStamp(value: Date) {
+        this._timeStamp = value;
     }
 
-    public getMealType(): MealType {
-        return this.mealType;
+    public get mealType(): MealType {
+        return this._mealType;
     }
 
-    public setMealType(mealType: MealType) {
-        this.mealType = mealType;
+    public set mealType(value: MealType) {
+        this._mealType = value;
     }
+
 }
