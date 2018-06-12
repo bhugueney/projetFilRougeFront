@@ -29,7 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
   bootstrap: [AppComponent]
