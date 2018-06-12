@@ -1,3 +1,5 @@
+import { User } from './../models/user.model';
+import { Categorie } from './../models/categorie.model';
 import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 
@@ -10,55 +12,24 @@ export class PreparationService {
 
   constructor() {
 
-    // Add somme ingrédients to mock
-    this.ingredients.push(Object.assign(new Ingredient(), JSON.parse(`
-    {
-      _id: 1,
-      _name: 'Carrotes'
-      '_urlImage': 'carrotes.img',
-      '_energy': 50,
-      '_water': 10,
-      '_protein': 30,
-      '_glucid': 20,
-      '_lipid': 30,
-      '_sugar': 25,
-      '_amidon': 10,
-      '_fiber': 10,
-      '_unsaturedFattyAcides': 30,
-      '_monoUnsaturedFattyAcides': 20,
-      '_polyUnsaturedFattyAcides': 50,
-      '_salt': 5,
-      '_categorie': {_id: 1, _name: 'Fruits'},
-      '_owner': {'_id': 0, '_firstName': '', '_lastName': 'system', '_email': '' },
-      '_comment': 'ceci n\'est pas une carrotte'
-     }
-   `)));
+    this.ingredients = new Array;
 
-   this.ingredients.push(Object.assign(new Ingredient(), JSON.parse(`
-   {
-     _id: 2,
-     _name: 'Tomates'
-     '_urlImage': 'tomates.img',
-     '_energy': 50,
-     '_water': 10,
-     '_protein': 30,
-     '_glucid': 20,
-     '_lipid': 30,
-     '_sugar': 25,
-     '_amidon': 10,
-     '_fiber': 10,
-     '_unsaturedFattyAcides': 30,
-     '_monoUnsaturedFattyAcides': 20,
-     '_polyUnsaturedFattyAcides': 50,
-     '_salt': 5,
-     '_categorie': {_id: 1, _name: 'Fruits'},
-     '_owner': {'_id': 0, '_firstName': '', '_lastName': 'system', '_email': '' },
-     '_comment': 'ceci n\'est pas une tomate'
-    }
-  `)));
+    const fruitCateg: Categorie = new Categorie(1, 'Fruits', null);
+    const systemUser: User = new User(1, '', 'System', '');
+
+     // Add somme ingrédients to mock
+    this.ingredients.push(new Ingredient(
+      1,
+      'Carottes',
+      '', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      fruitCateg,
+      systemUser,
+      'ceci est un commentaire'));
+  }
+
+  getListIngredients(): Ingredient[] {
+    return this.ingredients;
+  }
 
 
-
-
-   }
 }
