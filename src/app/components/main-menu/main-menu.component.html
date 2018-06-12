@@ -1,4 +1,7 @@
-<p>
-  main-menu works!
-  <button routerLink="/preparation">Preparation</button>
-</p>
+<section id="main-menu">
+  
+  <div *ngIf="!userConnected">
+      <button mat-button>Menu</button>      
+  </div>
+  <div *ngIf="userConnected">Hello user !</div>
+</section>
