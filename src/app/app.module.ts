@@ -18,6 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
+import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule } from '@angular/material';
+
 
 const routes: Routes = [
   {path: 'main', component: MainMenuComponent},
@@ -36,11 +38,16 @@ const routes: Routes = [
     MenuComponent,
     MainMenuComponent,
     PageNotFoundComponent
-  ],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
     RouterModule.forRoot(routes)
   ],
   providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
