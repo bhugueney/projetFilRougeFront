@@ -1,3 +1,20 @@
-<p>
-  ingredient works!
-</p>
+<div id="ingredient-container" fxLayout="column" fxLayoutAlign="start start">
+    <section #mainData fxLayout="row">
+        <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" />
+        <div class="ingredient-main-data" fxLayout="column">
+            <h1>{{ingredient.name}}</h1>
+            <h3>Catégorie: {{ingredient.categorie.name}}</h3>
+        </div>
+    </section>
+    <section #detailedData fxLayout="row">
+        <ul>
+            <li>Energie : {{ingredient.energy}} kcal/100g </li>
+            <li>Protéines : {{ingredient.protein}} g/100g</li>
+            <li>Glucides : {{ingredient.glucid}} g/100g</li>
+            <li>Lipides : {{ingredient.lipid}} g/100g</li>
+            <li>Sucres : {{ingredient.sugar}} g/100g</li>
+            <li>Fibres alimentaires : {{ingredient.fiber}} g/100g</li>
+            <li>Salt : {{ingredient.salt}} g/100g</li>
+        </ul>
+    </section>
+</div>

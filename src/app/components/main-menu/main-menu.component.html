@@ -1,7 +1,7 @@
 <section id="main-menu" fxLayout="column">
 
   <div fxLayout="column" fxLayoutAlign="space-around center"  fxFlex="90%" fxFlexFill >
-    <button mat-stroked-button color="primary" fxFlex="25%" [routerLink]="'/recipe'">Effectuer une préparation</button>
+    <button mat-stroked-button color="primary" fxFlex="25%" [routerLink]="'/preparation'">Effectuer une préparation</button>
     <ng-container *ngIf="userConnected; else userNotConnected">
         <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/ingredients'">Mes ingrédients</button>
         <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/'">Mon suivi personnel</button>

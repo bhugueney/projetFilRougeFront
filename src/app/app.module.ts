@@ -25,6 +25,7 @@ const routes: Routes = [
   {path: 'main', component: MainMenuComponent},
   {path: 'recipe', component: RecipeComponent},
   {path: 'preparation', component: PreparationComponent},
+  {path: 'ingredient', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
