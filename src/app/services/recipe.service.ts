@@ -25,7 +25,7 @@ export class RecipeService {
     const carottes = new Ingredient(
       1,
       'Carottes',
-      'carottes.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'carottes.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       fruitCateg,
       systemUser,
       'ceci est un commentaire');
@@ -33,14 +33,14 @@ export class RecipeService {
     const tomate = new Ingredient(
       1,
       'Tomates',
-      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       fruitCateg,
       systemUser,
       'ceci est un commentaire');
     const poireau = new Ingredient(
       1,
       'Poireau',
-      'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       fruitCateg,
       systemUser,
       'ceci est un commentaire');
