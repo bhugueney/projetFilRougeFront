@@ -181,6 +181,8 @@ export class Ingredient {
     monoUnsaturedFattyAcides?: number,
     polyUnsaturedFattyAcides?: number,
     salt?: number,
+    glycemicIndex?: number,
+    glycemicLoad?: number,
     categorie?: Categorie,
     owner?: User,
     comment?: string
@@ -200,6 +202,8 @@ export class Ingredient {
     this.monoUnsaturedFattyAcides = monoUnsaturedFattyAcides;
     this.polyUnsaturedFattyAcides = polyUnsaturedFattyAcides;
     this.salt = salt;
+    this.glycemicIndex = glycemicIndex;
+    this.glycemicLoad = glycemicLoad;
     this.categorie = categorie;
     this.owner = owner;
     this.comment = comment;
