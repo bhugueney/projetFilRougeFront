@@ -4,6 +4,7 @@ import { Categorie } from './../models/categorie.model';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,35 +12,6 @@ import { Ingredient } from '../models/ingredient.model';
 export class PreparationService {
 
   private preparation: Recipe;
-
-
-
-  constructor() {
-
-    
-     // Add somme ingrédients to mock
-    this.ingredients.push();
-
-    this.ingredients.push(new Ingredient(
-      1,
-      'Tomates',
-      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      fruitCateg,
-      systemUser,
-      'ceci est un commentaire'));
-
-    this.ingredients.push(new Ingredient(
-      1,
-      'Poireau',
-      'ingredients_default.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      fruitCateg,
-      systemUser,
-      'ceci est un commentaire'));
-
-
-  }
-
-
 
   private getFakeRecipe(): Recipe {
 
@@ -68,7 +40,7 @@ export class PreparationService {
       'ingredients_default.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       fruitCateg,
       systemUser,
-      'ceci est un commentaire'));
+      'ceci est un commentaire');
 
     const fakeRecipe = new Recipe();
 
@@ -87,6 +59,12 @@ export class PreparationService {
     recipeIngredient2.ingredient = poireau;
     recipeIngredient2.quantity = 2.5;
 
+    const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
+    listIngredient.push(recipeIngredient1);
+    listIngredient.push(recipeIngredient2);
+    listIngredient.push(recipeIngredient3);
+
+    fakeRecipe.listIngredient = listIngredient;
     return fakeRecipe;
   }
 }
