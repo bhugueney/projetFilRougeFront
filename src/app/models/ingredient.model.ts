@@ -22,6 +22,8 @@ export class Ingredient {
   private _monoUnsaturedFattyAcides: number;
   private _polyUnsaturedFattyAcides: number;
   private _salt: number;
+  private _glycemicIndex: number;
+  private _glycemicLoad: number;
 
   private _categorie: Categorie;
 
@@ -147,6 +149,20 @@ export class Ingredient {
   }
   public set comment(value: string) {
     this._comment = value;
+  }
+
+  public get glycemicIndex(): number {
+    return this._glycemicIndex;
+  }
+  public set glycemicIndex(value: number) {
+    this._glycemicIndex = value;
+  }
+
+  public get glycemicLoad(): number {
+    return this._glycemicLoad;
+  }
+  public set glycemicLoad(value: number) {
+    this._glycemicLoad = value;
   }
 
   constructor(
