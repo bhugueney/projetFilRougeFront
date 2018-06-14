@@ -150,24 +150,24 @@ export class Ingredient {
   }
 
   constructor(
-    id: number,
-    name: string,
-    urlImage: string,
-    energy: number,
-    water: number,
-    protein: number,
-    glucid: number,
-    lipid: number,
-    sugar: number,
-    amidon: number,
-    fiber: number,
-    unsaturedFattyAcides: number,
-    monoUnsaturedFattyAcides: number,
-    polyUnsaturedFattyAcides: number,
-    salt: number,
-    categorie: Categorie,
-    owner: User,
-    comment: string
+    id?: number,
+    name?: string,
+    urlImage?: string,
+    energy?: number,
+    water?: number,
+    protein?: number,
+    glucid?: number,
+    lipid?: number,
+    sugar?: number,
+    amidon?: number,
+    fiber?: number,
+    unsaturedFattyAcides?: number,
+    monoUnsaturedFattyAcides?: number,
+    polyUnsaturedFattyAcides?: number,
+    salt?: number,
+    categorie?: Categorie,
+    owner?: User,
+    comment?: string
     ) {
     this.id = id;
     this.name = name;
