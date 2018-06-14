@@ -1,7 +1,7 @@
 import { Ingredient } from './ingredient.model';
 
-export class Preparation extends Ingredient {
-  // content of the preparation : since the Ingredient class
+export class Recipe extends Ingredient {
+  // content of the recipe : since the Ingredient class
   private _listIngredient: Ingredient[];
   public get listIngredient(): Ingredient[] {
     return this._listIngredient;
