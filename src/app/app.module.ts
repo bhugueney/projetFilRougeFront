@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
 
 
 const routes: Routes = [
@@ -50,6 +50,7 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     MatIconModule,
+    MatCardModule,
     RouterModule.forRoot(routes)
   ],
   providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],

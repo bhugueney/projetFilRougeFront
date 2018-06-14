@@ -1,6 +1,7 @@
-<fieldset class="fieldSet">
-  <legend class = "fieldSet-legend">Préparation</legend>
-<ul>
-  <li *ngFor='let ingredient of ingredients'> <a href="">{{ingredient.name}}</a>
-</ul>
-</fieldset>
+<ng-container *ngFor='let ingredient of ingredients'>
+  <mat-card class="ingredientCard"> 
+      <img mat-card-avatar src="/assets/img/{{ingredient.urlImage}}">
+      <mat-card-title>{{ingredient.name}}</mat-card-title>
+      <mat-card-actions></mat-card-actions>
+  </mat-card>
+</ng-container>
