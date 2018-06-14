@@ -4,9 +4,11 @@ import { RecipeIngredient } from './recipe-ingredient.model';
 export class Recipe extends Ingredient {
   // content of the recipe : since the Ingredient class
   private _listIngredient: RecipeIngredient[];
+
   public get listIngredient(): RecipeIngredient[] {
     return this._listIngredient;
   }
+
   public set listIngredient(value: RecipeIngredient[]) {
     this._listIngredient = value;
   }
