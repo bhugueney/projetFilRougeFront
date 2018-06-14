@@ -1,7 +1,7 @@
 import { MealType } from './meal-type';
-import { Preparation } from './preparation.model';
+import { Recipe } from './recipe.model';
 
-export class Meal extends Preparation {
+export class Meal extends Recipe {
     private _timeStamp: Date;
     private _mealType: MealType;
 
