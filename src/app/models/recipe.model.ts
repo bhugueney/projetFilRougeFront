@@ -13,6 +13,7 @@ export class Recipe extends Ingredient {
     this._listIngredient = value;
   }
 
+
   // method to cumulate data informations of every ingredient
   private dataCalcul() {
     this.listIngredient.forEach(
@@ -33,4 +34,5 @@ export class Recipe extends Ingredient {
         this.salt += element.salt;
       });
   }
+
 }

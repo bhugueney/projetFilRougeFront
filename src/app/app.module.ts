@@ -12,7 +12,6 @@ import { MenuComponent } from './components/menu/menu.component';
 import { FoodService } from './services/food.service';
 import { IngredientService } from './services/ingredient.service';
 import { MealService } from './services/meal.service';
-import { PreparationService } from './services/preparation.service';
 import { RecipeService } from './services/recipe.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
@@ -53,7 +52,7 @@ const routes: Routes = [
     MatCardModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
+  providers: [FoodService, IngredientService, MealService, RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { Ingredient } from './../../models/ingredient.model';
-import { PreparationService } from './../../services/preparation.service';
 import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../../services/recipe.service';
+import { Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-preparation',
@@ -9,12 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreparationComponent implements OnInit {
 
-  ingredients: Ingredient[];
+  preparation: Recipe;
 
-  constructor(private preparationService: PreparationService) { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.ingredients = this.preparationService.getListIngredients();
+    this.preparation = this.recipeService.getRecipeById(0);
   }
 
 }

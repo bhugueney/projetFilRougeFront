@@ -1,7 +1,7 @@
-<ng-container *ngFor='let ingredient of ingredients'>
+<ng-container *ngFor='let recipeIngredient of preparation.listIngredient'>
   <mat-card class="ingredientCard"> 
-      <img mat-card-avatar src="/assets/img/{{ingredient.urlImage}}">
-      <mat-card-title>{{ingredient.name}}</mat-card-title>
+      <img mat-card-avatar src="/assets/img/{{recipeIngredient.ingredient.urlImage}}">
+      <mat-card-title>{{recipeIngredient.ingredient.name}} {{recipeIngredient.quantity}}</mat-card-title>
       <mat-card-actions></mat-card-actions>
   </mat-card>
 </ng-container>
