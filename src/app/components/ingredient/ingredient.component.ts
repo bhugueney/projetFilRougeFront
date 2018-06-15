@@ -5,6 +5,7 @@ import { Recipe } from '../../models/recipe.model';
 import { RecipeService } from '../../services/recipe.service';
 import { TypeCheckCompiler } from '@angular/compiler/src/view_compiler/type_check_compiler';
 import { Meal } from '../../models/meal.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-ingredient',
@@ -17,12 +18,16 @@ export class IngredientComponent implements OnInit {
 
   recette: Recipe;
 
-  constructor(private recipeService: RecipeService,
-    private ingredientService: IngredientService,
-  ) { }
+  constructor(private ingredientService: IngredientService, private route: ActivatedRoute) {
+    this.route.params.subscribe(params => {
+      const idRequested: number = +params['id'];
+      this.ingredient = this.ingredientService.getById(idRequested);
+    }
+    );
+  }
 
   ngOnInit() {
-    this.ingredient = this.ingredientService.getCarotte();
+    // this.ingredient = this.ingredientService.getCarotte();
     // this.ingredient = this.recipeService.getRecipeById(1);
 
     // This command allow to get name of real class
@@ -41,5 +46,6 @@ export class IngredientComponent implements OnInit {
     console.log('type of ingredient : ' + typeof (this.ingredient));
 
   }
+
 
 }

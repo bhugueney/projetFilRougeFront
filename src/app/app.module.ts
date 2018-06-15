@@ -25,7 +25,7 @@ const routes: Routes = [
   {path: 'main', component: MainMenuComponent},
   {path: 'recipe', component: RecipeComponent},
   {path: 'preparation', component: PreparationComponent},
-  {path: 'ingredient', component: IngredientComponent},
+  {path: 'ingredient/:id', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -51,7 +51,7 @@ const routes: Routes = [
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService],
   bootstrap: [AppComponent]

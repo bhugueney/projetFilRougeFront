@@ -15,7 +15,10 @@ export class PreparationComponent implements OnInit {
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.preparation = this.recipeService.getRecipeById(0);
+    this.preparation = this.recipeService.getById(0);
   }
 
+  public deleteRecipeIngredient(recipeIngredientPosition: number) {
+    this.preparation.listIngredient.splice(recipeIngredientPosition, 1);
+  }
 }
