@@ -1,7 +1,7 @@
 <ng-container *ngFor='let recipeIngredient of preparation.listIngredient; let recipeIngredientPosition=index'>
   <mat-card class="ingredientCard" > 
-      <img routerLink="/ingredient/{{recipeIngredient.id}}" mat-card-avatar src="/assets/img/{{recipeIngredient.ingredient.urlImage}}" >
-      <div routerLink="/ingredient/{{recipeIngredient.id}}">{{recipeIngredient.ingredient.name}}</div>
+      <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar src="/assets/img/{{recipeIngredient.ingredient.urlImage}}" >
+      <div routerLink="/ingredient/{{recipeIngredient.ingredient.id}}">{{recipeIngredient.ingredient.name}}</div>
       <input class="ingredientQty" matInput type="number" value="{{recipeIngredient.quantity}}">
       <mat-icon (click)="deleteRecipeIngredient(recipeIngredientPosition)">delete_outline</mat-icon>
   </mat-card>

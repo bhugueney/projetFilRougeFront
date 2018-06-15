@@ -13,11 +13,14 @@ export class IngredientComponent implements OnInit {
   ingredient: Ingredient;
 
    constructor(private ingredientService: IngredientService, private route: ActivatedRoute) {
-    this.route.params.subscribe( params => this.ingredientService.getById(params['id']));
+    this.route.params.subscribe( params => {
+        const idRequested: number = +params['id'];
+        this.ingredient = this.ingredientService.getById(idRequested);
+      }
+      );
    }
 
   ngOnInit() {
-    this.ingredient = this.ingredientService.getById(1);
   }
 
 }

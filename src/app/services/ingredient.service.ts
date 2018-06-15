@@ -15,13 +15,14 @@ export class IngredientService {
   static systemUser: User = new User(1, '', 'System', '');
 
   public getById(id: number): Ingredient {
-    let ingredient: Ingredient = this.getUnknown();
+    let retIngredient: Ingredient;
     switch (id) {
-      case 1: { ingredient = this.getCarotte(); break;}
-      case 2: { ingredient =  this.getTomate(); break;}
-      case 3: { ingredient =  this.getPoireau();  break;}
+      case 1: { retIngredient = this.getCarotte(); break; }
+      case 2: { retIngredient =  this.getTomate(); break; }
+      case 3: { retIngredient =  this.getPoireau();  break; }
+      default: {retIngredient =  this.getUnknown();  break; }
     }
-    return ingredient;
+    return retIngredient;
   }
 
 
@@ -49,7 +50,7 @@ export class IngredientService {
       return new Ingredient(
         3,
         'Poireau',
-        'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
         IngredientService.fruitCateg,
         IngredientService.systemUser,
         'ceci est un commentaire');
