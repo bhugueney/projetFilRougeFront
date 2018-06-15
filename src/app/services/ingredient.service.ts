@@ -14,7 +14,18 @@ export class IngredientService {
 
   static systemUser: User = new User(1, '', 'System', '');
 
-  public getCarotte(): Ingredient {
+  public getById(id: number): Ingredient {
+    let ingredient: Ingredient = this.getUnknown();
+    switch (id) {
+      case 1: { ingredient = this.getCarotte(); break;}
+      case 2: { ingredient =  this.getTomate(); break;}
+      case 3: { ingredient =  this.getPoireau();  break;}
+    }
+    return ingredient;
+  }
+
+
+ private getCarotte(): Ingredient {
   return new Ingredient(
     1,
     'Carottes',
@@ -24,5 +35,34 @@ export class IngredientService {
     'ceci est un commentaire');
   }
 
+  private getTomate(): Ingredient {
+    return new Ingredient(
+      2,
+      'Tomates',
+      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      IngredientService.fruitCateg,
+      IngredientService.systemUser,
+      'ceci est un commentaire');
+    }
+
+    private getPoireau(): Ingredient {
+      return new Ingredient(
+        3,
+        'Poireau',
+        'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        IngredientService.fruitCateg,
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+      }
+
+      private getUnknown(): Ingredient {
+        return new Ingredient(
+          0,
+          'Inconnu',
+          'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+          IngredientService.fruitCateg,
+          IngredientService.systemUser,
+          'ceci est ingredient inconu');
+        }
 
 }

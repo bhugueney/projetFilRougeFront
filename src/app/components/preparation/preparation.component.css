@@ -1,6 +1,18 @@
 .ingredientCard {
     display: Flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
     border: 1px black solid;
-    height: 3elm;
+    width: 100vw !important;
+    padding-left: 4px;
+    padding-right:10px;
+    
+}
+
+.cardElm {
+    border: 1px green solid;
+}
+
+.ingredientQty {
+    width: 4em;
 }
