@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../../models/ingredient.model';
 import { IngredientService } from '../../services/ingredient.service';
 import { Recipe } from '../../models/recipe.model';
-import { RecipeService } from '../../services/recipe.service';
-import { TypeCheckCompiler } from '@angular/compiler/src/view_compiler/type_check_compiler';
 import { Meal } from '../../models/meal.model';
 import { ActivatedRoute } from '@angular/router';
+import { MatSlideToggleChange, MatSelectChange } from '@angular/material';
+import { Categorie } from '../../models/categorie.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-ingredient',
@@ -14,13 +15,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class IngredientComponent implements OnInit {
 
+  // Ingredient displayed by component
   ingredient: Ingredient;
 
-  recette: Recipe;
+  categories: Array<Categorie> = [];
 
-  constructor(private ingredientService: IngredientService, private route: ActivatedRoute) {
+  // This boolean indicate if we can edit Ingredient or not.
+  isEditable = false;
+
+  constructor(private ingredientService: IngredientService,
+    private route: ActivatedRoute,
+    private categoryService: CategoryService) {
     this.route.params.subscribe(params => {
       const idRequested: number = +params['id'];
+      this.initCategoriesList();
       this.ingredient = this.ingredientService.getById(idRequested);
     }
     );
@@ -42,10 +50,29 @@ export class IngredientComponent implements OnInit {
         console.log('this.ingredient is a meal');
         break;
     }
-
     console.log('type of ingredient : ' + typeof (this.ingredient));
-
   }
+
+  toggleEditSlide(e: MatSlideToggleChange) {
+    console.log(e);
+    this.isEditable = e.checked;
+  }
+
+  initCategoriesList() {
+    this.categories = this.categoryService.getSelectableCategories();
+  }
+
+  checkIngredient(e: Event) {
+    console.log(this.ingredient);
+    e.preventDefault();
+  }
+
+  setCategoryFromSelector(e: MatSelectChange) {
+    console.log('Category: ' + e.value);
+    const categoryId: number = +e.value;
+    this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
+  }
+
 
 
 }

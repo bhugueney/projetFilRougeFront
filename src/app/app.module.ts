@@ -13,11 +13,14 @@ import { FoodService } from './services/food.service';
 import { IngredientService } from './services/ingredient.service';
 import { MealService } from './services/meal.service';
 import { RecipeService } from './services/recipe.service';
+import { CategoryService } from './services/category.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
-import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
+   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -44,6 +47,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     FlexLayoutModule,
     MatButtonModule,
     MatSidenavModule,
@@ -51,9 +55,13 @@ const routes: Routes = [
     MatToolbarModule,
     MatIconModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatSelectModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [FoodService, IngredientService, MealService, RecipeService],
+  providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
