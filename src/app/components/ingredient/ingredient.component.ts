@@ -68,7 +68,6 @@ export class IngredientComponent implements OnInit {
   }
 
   setCategoryFromSelector(e: MatSelectChange) {
-    console.log('Category: ' + e.value);
     const categoryId: number = +e.value;
     this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
   }

@@ -1,7 +1,15 @@
-.ingredient-image, .ingredient-main-data{
+.ingredient-image {
     display: flex;
-    width: 50vw;
+    width: 25vw;
     justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.ingredient-main-data{
+    display: flex;
+    width: 75vw;
+    justify-content: center;
+    margin: 10px;
 }
 h1 {
     align-content: center;

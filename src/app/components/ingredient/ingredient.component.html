@@ -3,19 +3,20 @@
         <mat-slide-toggle fxFlexAlign="reverse" [color]="'primary'" [checked]="isEditable" (change)="toggleEditSlide($event)">
             Debug - Mode Edition : {{isEditable}}
         </mat-slide-toggle>
+
         <section #mainData fxLayout="row">
-            <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" width="50vpw" />
+            <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" width="25%" height="25%" />
             <div class="ingredient-main-data" fxLayout="column">
                 <mat-form-field>
-                    <h1>
-                        <input matInput placeholder="{{(isEditable?'Name':'')}}" [(ngModel)]="ingredient.name" [disabled]="!isEditable" name="Name" />
-                    </h1>
+                    <input matInput placeholder="{{(isEditable?'Name':'')}}" [(ngModel)]="ingredient.name" [disabled]="!isEditable" name="Name"
+                    />
+
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-select placeholder="{{(isEditable?'Category':'')}}" (selectionChange)="setCategoryFromSelector($event)" [value]="ingredient.categorie.id" [disabled]="!isEditable">
-                        <mat-option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</mat-option>
+                    <mat-select placeholder="{{(isEditable?'Category':'')}}" (selectionChange)="setCategoryFromSelector($event)" [value]="ingredient.categorie.id"
+                        [disabled]="!isEditable">
+                        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
                     </mat-select>
-                    <!-- <h3>Catégorie: {{ingredient.categorie.name}}</h3> -->
                 </mat-form-field>
 
 
@@ -25,8 +26,8 @@
             <div class="ingredientsInfos">
                 <table>
                     <tr>
-                        <th >Valeur Calorique</th>
-                        <td >{{ingredient.energy}} Kcal</td>
+                        <th>Valeur Calorique</th>
+                        <td>{{ingredient.energy}} Kcal</td>
                     </tr>
                     <tr>
                         <th>Lipides</th>
