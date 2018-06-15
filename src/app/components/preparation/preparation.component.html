@@ -1,8 +1,26 @@
+<mat-card class="preparationCard" >
+<div><h4>{{preparation.name}}</h4></div>
+<div class="preparationInfos">
+  <span>Valeur Calorique : {{preparation.energy}} Kcal</span>
+  <span>Lipides {{preparation.lipid}} g/100g</span>
+  <span>Glucides {{preparation.glucid}} g/100g</span>
+  <span>Protéines {{preparation.protein}} g/100g</span>
+  <span>Sucres {{preparation.sugar}} g/100g</span>
+  <span>Fibres {{preparation.fiber}} g/100g</span>
+</div>
+
+
 <ng-container *ngFor='let recipeIngredient of preparation.listIngredient; let recipeIngredientPosition=index'>
   <mat-card class="ingredientCard" > 
       <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar src="/assets/img/{{recipeIngredient.ingredient.urlImage}}" >
-      <div routerLink="/ingredient/{{recipeIngredient.ingredient.id}}">{{recipeIngredient.ingredient.name}}</div>
-      <input class="ingredientQty" matInput type="number" value="{{recipeIngredient.quantity}}">
-      <mat-icon (click)="deleteRecipeIngredient(recipeIngredientPosition)">delete_outline</mat-icon>
+      <div>
+        <h5 routerLink="/ingredient/{{recipeIngredient.ingredient.id}}">{{recipeIngredient.ingredient.name}}</h5>
+        <span>Qté : </span><input class="ingredientQty" matInput type="number" value="{{recipeIngredient.quantity}}" (input)="updateQty(recipeIngredientPosition, Qty.value)" #Qty><span>grs.</span>
+        <mat-icon (click)="increaseQty(recipeIngredientPosition)">add</mat-icon>
+        <mat-icon (click)="decreaseQty(recipeIngredientPosition)">remove</mat-icon>
+        <mat-icon (click)="deleteRecipeIngredient(recipeIngredientPosition)">delete_outline</mat-icon>
+      </div>
+      
   </mat-card>
 </ng-container>
+</mat-card>
