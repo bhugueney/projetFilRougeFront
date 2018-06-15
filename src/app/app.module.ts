@@ -19,7 +19,7 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
-   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule } from '@angular/material';
+   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 
@@ -59,6 +59,7 @@ const routes: Routes = [
     MatInputModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatTableModule,
     RouterModule.forRoot(routes),
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],

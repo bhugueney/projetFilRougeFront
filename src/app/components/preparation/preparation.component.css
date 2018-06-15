@@ -1,7 +1,6 @@
 .preparationCard {
     display: Flex;
     flex-direction: column;
-    align-items: center center;
     justify-content: space-around;
     border: 1px black solid;
     width: 85%vw !important;
@@ -17,11 +16,27 @@
     justify-content: space-around;
     border: 1px black solid;
     border-radius: 10px; 
-    padding: 5px;
     margin: 10px;
-    width: 200px!important;
-    
+    text-align: right;
 }
+
+.preparationInfos td, th {
+    border-radius: 10px; 
+    font-size: 0.8em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+
+.preparationInfos tr:nth-child(odd){
+    background-color: rgb(220,220,220);
+}
+
+.preparationInfos tr:nth-child(even){
+    background-color: rgba(220,220,220,0.5);
+}
+
 
 .preparationCard h4 {
     text-align: center;

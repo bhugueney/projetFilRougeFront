@@ -22,15 +22,38 @@
             </div>
         </section>
         <section #detailedData fxLayout="row" fxLayoutAlign="start start">
-            <ul>
-                <li>Energie : {{ingredient.energy}} kcal/100g </li>
-                <li>Protéines : {{ingredient.protein}} g/100g</li>
-                <li>Glucides : {{ingredient.glucid}} g/100g</li>
-                <li>Lipides : {{ingredient.lipid}} g/100g</li>
-                <li>Sucres : {{ingredient.sugar}} g/100g</li>
-                <li>Fibres alimentaires : {{ingredient.fiber}} g/100g</li>
-                <li>Salt : {{ingredient.salt}} g/100g</li>
-            </ul>
+            <div class="ingredientsInfos">
+                <table>
+                    <tr>
+                        <th >Valeur Calorique</th>
+                        <td >{{ingredient.energy}} Kcal</td>
+                    </tr>
+                    <tr>
+                        <th>Lipides</th>
+                        <td>{{ingredient.lipid}} g/100g</td>
+                    </tr>
+                    <tr>
+                        <th>Glucides</th>
+                        <td>{{ingredient.glucid}} g/100g</td>
+                    </tr>
+                    <tr>
+                        <th>Protéines</th>
+                        <td>{{ingredient.protein}} g/100g</td>
+                    </tr>
+                    <tr>
+                        <th>Sucres</th>
+                        <td>{{ingredient.sugar}} g/100g</td>
+                    </tr>
+                    <tr>
+                        <th>Fibres</th>
+                        <td>{{ingredient.fiber}} g/100g</td>
+                    </tr>
+                    <tr>
+                        <th>Sel</th>
+                        <td>{{ingredient.salt}} g/100g</td>
+                    </tr>
+                </table>
+            </div>
         </section>
         <section fxLayout="row" fxLayoutAlign="center start">
             <button (click)="checkIngredient($event)">Check Ingredient</button>

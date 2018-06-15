@@ -49,7 +49,7 @@ export class IngredientService {
     private getPoireau(): Ingredient {
       return new Ingredient(
         3,
-        'Poireau',
+        'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
         'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
         IngredientService.fruitCateg,
         IngredientService.systemUser,
