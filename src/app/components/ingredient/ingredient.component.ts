@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MatSlideToggleChange, MatSelectChange} from '@angular/material';
 import {Categorie} from '../../models/categorie.model';
 import {CategoryService} from '../../services/category.service';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-ingredient',
@@ -77,6 +78,21 @@ export class IngredientComponent implements OnInit {
       console.log(this.ingredient);
     }
     e.preventDefault();
+  }
+
+  cancelIngredientEdition(e: Event) {
+    if (this.debugMode) {
+      console.log('cancel edition');
+    }
+    e.preventDefault();
+    if (isNullOrUndefined(this.ingredient.id)) {
+      this.ingredient = null;
+      this.ingredient = new Ingredient();
+    } else {
+      this.ingredientService.getById(this.ingredient.id);
+      this.isEditable = false;
+    }
+
   }
 
   /*

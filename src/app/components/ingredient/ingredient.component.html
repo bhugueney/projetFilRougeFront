@@ -102,7 +102,7 @@
     <!-- Bottom button when editable ingredient -->
     <section *ngIf="isEditable" fxLayout="row" fxLayoutAlign="center start" class="buttonSection">
         <button mat-raised-button="saveButton" [color]="'primary'" (click)="saveEditableIngredient($event)">Enregistrer</button>
-        <button mat-raised-button="cancelButton" [color]="'warn'">Annuler</button>
+        <button mat-raised-button="cancelButton" [color]="'warn'" (click)="cancelIngredientEdition($event)">Annuler</button>
     </section>
 
     <section *ngIf="!isEditable" class="buttonSection" fxLayout="row" fxLayoutAlign="end start">
