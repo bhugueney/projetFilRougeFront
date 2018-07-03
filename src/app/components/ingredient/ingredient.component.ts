@@ -31,69 +31,76 @@ export class IngredientComponent implements OnInit {
   debugMode = true;
 
   constructor(private ingredientService: IngredientService,
-              private route: ActivatedRoute,
-              private categoryService: CategoryService) {
-    this.route.params.subscribe(params => {
+    private route: ActivatedRoute,
+    private categoryService: CategoryService) {
+      this.route.params.subscribe(params => {
         const idRequested: number = +params['id'];
+        console.log('idRequested: ' + idRequested);
         this.initCategoriesList();
-        this.ingredient = this.ingredientService.getById(idRequested);
-      }
-    );
-  }
+        if (!isNaN(idRequested)) {
+          // Ingredient reading
+          this.ingredient = this.ingredientService.getById(idRequested);
+        } else {
+          // Ingredient Creation
+          this.isEditable = true;
+          this.ingredient = new Ingredient();
+        }
+      });
+    }
 
-  ngOnInit() {
+    ngOnInit() {
 
-    // This command allow to get name of real class
-    switch (this.ingredient.constructor.name) {
-      case Recipe.name:
+      // This command allow to get name of real class
+      switch (this.ingredient.constructor.name) {
+        case Recipe.name:
         this.isComplexIngredient = true;
         if (this.debugMode) {
           console.log('this.ingredient is a recipe');
         }
         break;
-      case Ingredient.name:
+        case Ingredient.name:
         this.isComplexIngredient = false;
         if (this.debugMode) {
           console.log('this.ingredient is a basic ingredient');
         }
         break;
-      case Meal.name:
+        case Meal.name:
         this.isComplexIngredient = true;
         if (this.debugMode) {
           console.log('this.ingredient is a meal');
         }
         break;
+      }
     }
-  }
 
-  setCategoryFromSelector(e: MatSelectChange) {
-    const categoryId: number = +e.value;
-    this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
-  }
+    setCategoryFromSelector(e: MatSelectChange) {
+      const categoryId: number = +e.value;
+      this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
+    }
 
-  saveEditableIngredient(e: Event) {
-    if (this.debugMode) {
-      console.log('save ingredient');
+    saveEditableIngredient(e: Event) {
+      if (this.debugMode) {
+        console.log('save ingredient');
+        console.log(this.ingredient);
+      }
+      e.preventDefault();
+    }
+
+    /*
+    ONLY DEBUG FUNCTION BELOW THIS LINE
+    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+    toggleEditSlide(e: MatSlideToggleChange) {
+      console.log(e);
+      this.isEditable = e.checked;
+    }
+
+    initCategoriesList() {
+      this.categories = this.categoryService.getSelectableCategories();
+    }
+
+    checkIngredient(e: Event) {
       console.log(this.ingredient);
+      e.preventDefault();
     }
-    e.preventDefault();
-  }
 
-  /*
-  ONLY DEBUG FUNCTION BELOW THIS LINE
-  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-  toggleEditSlide(e: MatSlideToggleChange) {
-    console.log(e);
-    this.isEditable = e.checked;
   }
-
-  initCategoriesList() {
-    this.categories = this.categoryService.getSelectableCategories();
-  }
-
-  checkIngredient(e: Event) {
-    console.log(this.ingredient);
-    e.preventDefault();
-  }
-
-}
