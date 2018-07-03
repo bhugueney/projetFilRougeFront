@@ -22,6 +22,8 @@ export class Ingredient {
   private _monoUnsaturedFattyAcides: number;
   private _polyUnsaturedFattyAcides: number;
   private _salt: number;
+  private _glycemicIndex: number;
+  private _glycemicLoad: number;
 
   private _categorie: Categorie;
 
@@ -147,6 +149,64 @@ export class Ingredient {
   }
   public set comment(value: string) {
     this._comment = value;
+  }
+
+  public get glycemicIndex(): number {
+    return this._glycemicIndex;
+  }
+  public set glycemicIndex(value: number) {
+    this._glycemicIndex = value;
+  }
+
+  public get glycemicLoad(): number {
+    return this._glycemicLoad;
+  }
+  public set glycemicLoad(value: number) {
+    this._glycemicLoad = value;
+  }
+
+  constructor(
+    id?: number,
+    name?: string,
+    urlImage?: string,
+    energy?: number,
+    water?: number,
+    protein?: number,
+    glucid?: number,
+    lipid?: number,
+    sugar?: number,
+    amidon?: number,
+    fiber?: number,
+    unsaturedFattyAcides?: number,
+    monoUnsaturedFattyAcides?: number,
+    polyUnsaturedFattyAcides?: number,
+    salt?: number,
+    glycemicIndex?: number,
+    glycemicLoad?: number,
+    categorie?: Categorie,
+    owner?: User,
+    comment?: string
+    ) {
+    this.id = id;
+    this.name = name;
+    this.urlImage = urlImage;
+    this.energy = energy;
+    this.water = water;
+    this.protein = protein;
+    this.glucid = glucid;
+    this.lipid = lipid;
+    this.sugar = sugar;
+    this.amidon = amidon;
+    this.fiber = fiber;
+    this.unsaturedFattyAcides = unsaturedFattyAcides;
+    this.monoUnsaturedFattyAcides = monoUnsaturedFattyAcides;
+    this.polyUnsaturedFattyAcides = polyUnsaturedFattyAcides;
+    this.salt = salt;
+    this.glycemicIndex = glycemicIndex;
+    this.glycemicLoad = glycemicLoad;
+    this.categorie = categorie;
+    this.owner = owner;
+    this.comment = comment;
   }
 
 }

@@ -12,9 +12,25 @@ import { MenuComponent } from './components/menu/menu.component';
 import { FoodService } from './services/food.service';
 import { IngredientService } from './services/ingredient.service';
 import { MealService } from './services/meal.service';
-import { PreparationService } from './services/preparation.service';
 import { RecipeService } from './services/recipe.service';
+import { CategoryService } from './services/category.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MainMenuComponent } from './components/main-menu/main-menu.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RouterModule, Routes } from '@angular/router';
+import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
+   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
+
+
+const routes: Routes = [
+  {path: '', redirectTo: 'main', pathMatch: 'full'},
+  {path: 'main', component: MainMenuComponent},
+  {path: 'recipe', component: RecipeComponent},
+  {path: 'preparation', component: PreparationComponent},
+  {path: 'ingredient/:id', component: IngredientComponent},
+  {path: '**', component: PageNotFoundComponent}
+];
 
 @NgModule({
   declarations: [
@@ -24,14 +40,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RecipeComponent,
     MealComponent,
     PreparationComponent,
-    MenuComponent
-  ],
+    MenuComponent,
+    MainMenuComponent,
+    PageNotFoundComponent
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     FlexLayoutModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatTableModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [FoodService, IngredientService, MealService, PreparationService, RecipeService],
+  providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
