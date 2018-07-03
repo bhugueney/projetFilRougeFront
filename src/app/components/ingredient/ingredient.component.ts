@@ -7,6 +7,8 @@ import {ActivatedRoute} from '@angular/router';
 import {MatSlideToggleChange, MatSelectChange} from '@angular/material';
 import {Categorie} from '../../models/categorie.model';
 import {CategoryService} from '../../services/category.service';
+import {isEmpty} from 'rxjs/internal/operators';
+import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-ingredient',
@@ -14,6 +16,9 @@ import {CategoryService} from '../../services/category.service';
   styleUrls: ['./ingredient.component.css']
 })
 export class IngredientComponent implements OnInit {
+
+  // Constants for Ingredient Display
+  static DEFAULT_PICTURE = 'defaultIngredient.jpg';
 
   // Ingredient displayed by component
   ingredient: Ingredient;
@@ -45,6 +50,10 @@ export class IngredientComponent implements OnInit {
           // If no ingredient ID is provided -> creation mode
           this.isEditable = true;
           this.ingredient = new Ingredient();
+        }
+
+        if ( isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0 ) {
+          this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
         }
 
         this.initCategoriesList();
