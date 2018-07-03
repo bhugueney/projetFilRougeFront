@@ -49,10 +49,67 @@
     border: 1px black solid;
 }
 
+
+
+
 .ingredientQty {
     width: 4em;
     text-align: right;
     margin: 3px;
     padding-left: 2px;
     padding-right: 2px;
+}
+
+.QtyCol {
+    min-width: 100px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.image {
+    margin-right: 8px;
+}
+
+.PreparationIngredientsTable tr:nth-child(odd){
+    background-color: rgb(220,220,220);
+}
+
+.PreparationIngredientsTable tr:nth-child(even){
+    background-color: rgba(220,220,220,0.5);
+}
+
+.InfoIngredients {
+    border: 3px red solid;
+    border-radius: 10px;
+    margin: auto;
+    width: 90%vw;
+
+}
+
+
+.ingredientsInfos {
+    display: Flex;
+    flex-direction: column;
+    align-items: center center;
+    justify-content: space-around;
+    border: 1px black solid;
+    border-radius: 10px; 
+    margin: 10px;
+    text-align: right;
+}
+
+.ingredientsInfos td, th {
+    border-radius: 10px; 
+    font-size: 0.8em;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.ingredientsInfos tr:nth-child(odd){
+    background-color: rgb(220,220,220);
+}
+
+.ingredientsInfos tr:nth-child(even){
+    background-color: rgba(220,220,220,0.5);
 }
