@@ -1,5 +1,5 @@
+import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
-import { Ingredient } from '../models/ingredient.model';
 import { User } from '../models/user.model';
 import { Categorie } from '../models/categorie.model';
 
@@ -25,45 +25,45 @@ export class IngredientService {
     return retIngredient;
   }
 
-
- private getCarotte(): Ingredient {
-  return new Ingredient(
-    1,
-    'Carottes',
-    'carottes.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-    IngredientService.fruitCateg,
-    IngredientService.systemUser,
-    'ceci est un commentaire');
-  }
-
-  private getTomate(): Ingredient {
+  private getCarotte(): Ingredient {
     return new Ingredient(
       2,
       'Tomates',
-      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       IngredientService.fruitCateg,
       IngredientService.systemUser,
       'ceci est un commentaire');
     }
 
-    private getPoireau(): Ingredient {
+    private getTomate(): Ingredient {
       return new Ingredient(
         3,
         'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        'poireau.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
         IngredientService.fruitCateg,
         IngredientService.systemUser,
         'ceci est un commentaire');
       }
 
-      private getUnknown(): Ingredient {
+      private getPoireau(): Ingredient {
         return new Ingredient(
-          0,
-          'Inconnu',
-          'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+          3,
+          'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
+          'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
           IngredientService.fruitCateg,
           IngredientService.systemUser,
-          'ceci est ingredient inconu');
+          'ceci est un commentaire');
         }
+
+        private getUnknown(): Ingredient {
+          return new Ingredient(
+            0,
+            'Inconnu',
+            'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+            IngredientService.fruitCateg,
+            IngredientService.systemUser,
+            'ceci est ingredient inconu');
+          }
+
 
 }

@@ -29,24 +29,28 @@ export class Recipe extends Ingredient {
     this.monoUnsaturedFattyAcides = 0.0;
     this.polyUnsaturedFattyAcides = 0.0;
     this.salt = 0.0;
+    this.glycemicIndex = 0.0;
+    this.glycemicLoad = 0.0;
     this.listIngredient.forEach(
       recipeIngredient => {
         // tslint:disable-next-line:no-shadowed-variable
         const element: Ingredient = recipeIngredient.ingredient;
         const qty: number = recipeIngredient.quantity;
         // console.log('dataCacul : ingr ' + element.name + ' ' + (element.energy / 100.0) + ' Kcal' + ' * ' + qty + 'gr');
-        this.energy += Math.round((element.energy / 100.0) * qty);
-        this.water += Math.round((element.water / 100.0) * qty);
-        this.protein += Math.round((element.protein / 100.0) * qty);
-        this.glucid += Math.round( (element.glucid / 100.0) * qty);
-        this.lipid += Math.round((element.lipid / 100.0) * qty);
-        this.sugar += Math.round((element.sugar / 100.0) * qty);
-        this.amidon += Math.round((element.amidon / 100.0) * qty);
-        this.fiber += Math.round((element.fiber / 100.0) * qty);
-        this.unsaturedFattyAcides += Math.round((element.unsaturedFattyAcides / 100.0) * qty);
-        this.monoUnsaturedFattyAcides += Math.round((element.monoUnsaturedFattyAcides / 100.0) * qty);
-        this.polyUnsaturedFattyAcides += Math.round((element.polyUnsaturedFattyAcides / 100.0) * qty);
-        this.salt += Math.round((element.salt / 100.0) * qty);
+        this.energy += (element.energy / 100.0) * qty;
+        this.water += (element.water / 100.0) * qty;
+        this.protein += (element.protein / 100.0) * qty;
+        this.glucid += (element.glucid / 100.0) * qty;
+        this.lipid += (element.lipid / 100.0) * qty;
+        this.sugar += (element.sugar / 100.0) * qty;
+        this.amidon += (element.amidon / 100.0) * qty;
+        this.fiber += (element.fiber / 100.0) * qty;
+        this.unsaturedFattyAcides += (element.unsaturedFattyAcides / 100.0) * qty;
+        this.monoUnsaturedFattyAcides += (element.monoUnsaturedFattyAcides / 100.0) * qty;
+        this.polyUnsaturedFattyAcides += (element.polyUnsaturedFattyAcides / 100.0) * qty;
+        this.salt += (element.salt / 100.0) * qty;
+        this.glycemicIndex += (element.glycemicIndex / 100.0) * qty;
+        this.glycemicLoad = Math.round((this.glucid * this.glycemicIndex)) / 100;
       });
       // console.log('dataCalcul : Total energy ' + this.energy);
       // console.log('-------- DATA CALCUL END -----------------');

@@ -7,7 +7,6 @@ import {ActivatedRoute} from '@angular/router';
 import {MatSlideToggleChange, MatSelectChange} from '@angular/material';
 import {Categorie} from '../../models/categorie.model';
 import {CategoryService} from '../../services/category.service';
-import {isNullOrUndefined} from 'util';
 
 @Component({
   selector: 'app-ingredient',
@@ -35,9 +34,20 @@ export class IngredientComponent implements OnInit {
               private route: ActivatedRoute,
               private categoryService: CategoryService) {
     this.route.params.subscribe(params => {
-        const idRequested: number = +params['id'];
+
+        // If an ingredient ID is provided -> read only mode
+        if (params.hasOwnProperty('id')) {
+          const idRequested: number = +params['id'];
+          this.ingredient = this.ingredientService.getById(idRequested);
+          this.isEditable = false;
+
+        } else {
+          // If no ingredient ID is provided -> creation mode
+          this.isEditable = true;
+          this.ingredient = new Ingredient();
+        }
+
         this.initCategoriesList();
-        this.ingredient = this.ingredientService.getById(idRequested);
       }
     );
   }
@@ -78,21 +88,6 @@ export class IngredientComponent implements OnInit {
       console.log(this.ingredient);
     }
     e.preventDefault();
-  }
-
-  cancelIngredientEdition(e: Event) {
-    if (this.debugMode) {
-      console.log('cancel edition');
-    }
-    e.preventDefault();
-    if (isNullOrUndefined(this.ingredient.id)) {
-      this.ingredient = null;
-      this.ingredient = new Ingredient();
-    } else {
-      this.ingredientService.getById(this.ingredient.id);
-      this.isEditable = false;
-    }
-
   }
 
   /*

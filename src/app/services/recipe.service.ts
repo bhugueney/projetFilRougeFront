@@ -1,10 +1,8 @@
+import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
-import { Categorie } from '../models/categorie.model';
-import { User } from '../models/user.model';
 import { Ingredient } from '../models/ingredient.model';
-import { RecipeIngredient } from '../models/recipe-ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +12,14 @@ export class RecipeService {
   constructor(private ingredientService: IngredientService) { }
 
   public getById(id: number): Recipe {
+    if ( id === 0) {}
     return this.getFakeRecipe();
   }
 
+  public DeleteRecipeIngredient(recipe: Recipe, ingredientToDelete: RecipeIngredient): Recipe {
+    recipe.listIngredient = recipe.listIngredient.filter(ingredientItem => ingredientItem !== ingredientToDelete);
+    return recipe;
+  }
 
   private getFakeRecipe(): Recipe {
 

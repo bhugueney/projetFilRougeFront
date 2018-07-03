@@ -19,16 +19,22 @@ import { MainMenuComponent } from './components/main-menu/main-menu.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
-   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule } from '@angular/material';
+   MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
+    MatDialog, MatDialogModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { PreparationDetailsComponent } from './preparation-details/preparation-details.component';
+
+
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'full'},
   {path: 'main', component: MainMenuComponent},
   {path: 'recipe', component: RecipeComponent},
+  {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
+  {path: 'ingredient', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -42,7 +48,8 @@ const routes: Routes = [
     PreparationComponent,
     MenuComponent,
     MainMenuComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    PreparationDetailsComponent
     ],
   imports: [
     BrowserModule,
@@ -60,9 +67,11 @@ const routes: Routes = [
     MatSlideToggleModule,
     MatSelectModule,
     MatTableModule,
+    MatDialogModule,
     RouterModule.forRoot(routes),
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PreparationDetailsComponent]
 })
 export class AppModule { }
