@@ -53,8 +53,9 @@
   
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <td mat-cell *matCellDef="let recipeIngredient" (clic)="showDetails(recipeIngredient.ingredient)">
-          <h5>{{recipeIngredient.ingredient.name}}</h5> 
+        <td mat-cell *matCellDef="let recipeIngredient" >
+          <h5 (click)="showDetails(recipeIngredient.ingredient)">{{recipeIngredient.ingredient.name}}</h5> 
+          
         </td>
     </ng-container>
     
@@ -74,39 +75,6 @@
     <tr mat-row *matRowDef="let row; columns: ['image', 'name', 'qty'];" class="Row"></tr>
   </table>
 
-<div class="InfoIngredients hide" #DivInfoIngredients>
-  <h1>{{ingredientDetails.name}}</h1>
-  <div class="ingredientsInfos">
-      <table>
-          <tr>
-              <th >Valeur Calorique</th>
-              <td >{{ingredientDetails.energy}} Kcal</td>
-          </tr>
-          <tr>
-              <th>Lipides</th>
-              <td>{{ingredientDetails.lipid}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Glucides</th>
-              <td>{{ingredientDetails.glucid}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Protéines</th>
-              <td>{{ingredientDetails.protein}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Sucres</th>
-              <td>{{ingredientDetails.sugar}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Fibres</th>
-              <td>{{ingredientDetails.fiber}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Sel</th>
-              <td>{{ingredientDetails.salt}} g/100g</td>
-          </tr>
-      </table>
-  <button>Close</button>
 
-</div>
+
+

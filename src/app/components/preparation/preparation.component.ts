@@ -3,6 +3,13 @@ import { Ingredient } from './../../models/ingredient.model';
 import { Component, OnInit } from '@angular/core';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
+import { MatDialog } from '@angular/material';
+import { PreparationDetailsComponent } from '../../preparation-details/preparation-details.component';
+
+
+
+
+
 
 @Component({
   selector: 'app-preparation',
@@ -11,10 +18,11 @@ import { Recipe } from '../../models/recipe.model';
 })
 export class PreparationComponent implements OnInit {
 
+  showInfoIngredients: Boolean = false;
   preparation: Recipe;
   ingredientDetails: Ingredient;
 
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.preparation = this.recipeService.getById(0);
@@ -51,6 +59,13 @@ export class PreparationComponent implements OnInit {
   }
 
   public showDetails(ingredientToShow: Ingredient) {
-    this.ingredientDetails = ingredientToShow;
+    const dialogRef = this.dialog.open(PreparationDetailsComponent, {
+      height: '350px'
+    });
+
+    dialogRef.componentInstance.ingredientDetails = ingredientToShow;
+
   }
+
+
 }

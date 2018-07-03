@@ -40,7 +40,7 @@ export class IngredientService {
     return new Ingredient(
       2,
       'Tomates',
-      'tomates.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       IngredientService.fruitCateg,
       IngredientService.systemUser,
       'ceci est un commentaire');
@@ -50,7 +50,7 @@ export class IngredientService {
       return new Ingredient(
         3,
         'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        'poireau.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
         IngredientService.fruitCateg,
         IngredientService.systemUser,
         'ceci est un commentaire');

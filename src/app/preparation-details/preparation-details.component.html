@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Détails</h2>
+<mat-dialog-content>
+    <div class="ingredientsInfos">
+        <table>
+            <tr>
+                <th >Valeur Calorique</th>
+                <td >{{ingredientDetails.energy}} Kcal</td>
+            </tr>
+            <tr>
+                <th>Lipides</th>
+                <td>{{ingredientDetails.lipid}} g/100g</td>
+            </tr>
+            <tr>
+                <th>Glucides</th>
+                <td>{{ingredientDetails.glucid}} g/100g</td>
+            </tr>
+            <tr>
+                <th>Protéines</th>
+                <td>{{ingredientDetails.protein}} g/100g</td>
+            </tr>
+            <tr>
+                <th>Sucres</th>
+                <td>{{ingredientDetails.sugar}} g/100g</td>
+            </tr>
+            <tr>
+                <th>Fibres</th>
+                <td>{{ingredientDetails.fiber}} g/100g</td>
+            </tr>
+            <tr>
+                <th>Sel</th>
+                <td>{{ingredientDetails.salt}} g/100g</td>
+            </tr>
+        </table>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+   <button mat-button [mat-dialog-close]="true">Fermer</button>
+</mat-dialog-actions>
