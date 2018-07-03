@@ -1,63 +1,117 @@
 <form>
-    <div id="ingredient-container" fxLayout="column" fxLayoutAlign="start center">
-        <mat-slide-toggle fxFlexAlign="reverse" [color]="'primary'" [checked]="isEditable" (change)="toggleEditSlide($event)">
-            Debug - Mode Edition : {{isEditable}}
-        </mat-slide-toggle>
-        <section #mainData fxLayout="row">
-            <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" width="50vpw" />
-            <div class="ingredient-main-data" fxLayout="column">
-                <mat-form-field>
-                    <h1>
-                        <input matInput placeholder="{{(isEditable?'Name':'')}}" [(ngModel)]="ingredient.name" [disabled]="!isEditable" name="Name" />
-                    </h1>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-select placeholder="{{(isEditable?'Category':'')}}" (selectionChange)="setCategoryFromSelector($event)" [value]="ingredient.categorie.id" [disabled]="!isEditable">
-                        <mat-option *ngFor="let category of categories" [value]="category.id" >{{category.name}}</mat-option>
-                    </mat-select>
-                    <!-- <h3>Catégorie: {{ingredient.categorie.name}}</h3> -->
-                </mat-form-field>
+  <div id="ingredient-container" fxLayout="column" fxLayoutAlign="start center">
+
+    <!-- DEBUG MODE -->
+    <mat-slide-toggle *ngIf="debugMode" fxFlexAlign="reverse" [color]="'primary'" [checked]="isEditable"
+                      (change)="toggleEditSlide($event)">
+      Debug - Mode Edition : {{isEditable}}
+    </mat-slide-toggle>
+
+    <!-- MAIN DATA -->
+    <section #mainData fxLayout="row">
+      <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" width="25%"
+           height="25%"/>
+      <div class="ingredient-main-data" fxLayout="column">
+        <mat-form-field>
+          <textarea (resize)="true" matInput placeholder="{{(isEditable?'Name':' ')}}" [(ngModel)]="ingredient.name"
+                    [disabled]="!isEditable" name="Name"
+                    [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
+
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="{{(isEditable?'Category':' ')}}" (selectionChange)="setCategoryFromSelector($event)"
+                      [value]="ingredient.categorie.id"
+                      [disabled]="!isEditable"
+                      [class]="(isEditable?'editableInput':'disabledInput')">
+            <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
 
 
-            </div>
-        </section>
-        <section #detailedData fxLayout="row" fxLayoutAlign="start start">
-            <div class="ingredientsInfos">
-                <table>
-                    <tr>
-                        <th >Valeur Calorique</th>
-                        <td >{{ingredient.energy}} Kcal</td>
-                    </tr>
-                    <tr>
-                        <th>Lipides</th>
-                        <td>{{ingredient.lipid}} g/100g</td>
-                    </tr>
-                    <tr>
-                        <th>Glucides</th>
-                        <td>{{ingredient.glucid}} g/100g</td>
-                    </tr>
-                    <tr>
-                        <th>Protéines</th>
-                        <td>{{ingredient.protein}} g/100g</td>
-                    </tr>
-                    <tr>
-                        <th>Sucres</th>
-                        <td>{{ingredient.sugar}} g/100g</td>
-                    </tr>
-                    <tr>
-                        <th>Fibres</th>
-                        <td>{{ingredient.fiber}} g/100g</td>
-                    </tr>
-                    <tr>
-                        <th>Sel</th>
-                        <td>{{ingredient.salt}} g/100g</td>
-                    </tr>
-                </table>
-            </div>
-        </section>
-        <section fxLayout="row" fxLayoutAlign="center start">
-            <button (click)="checkIngredient($event)">Check Ingredient</button>
+      </div>
+    </section>
 
-        </section>
-    </div>
+    <!-- DETAILS OF INGREDIENT -->
+    <section #detailedData fxLayout="row" fxLayoutAlign="start start">
+      <div class="ingredientsInfos">
+        <table>
+          <tr>
+            <th>
+              <mat-label>Valeur Calorique</mat-label>
+            </th>
+            <td><input name="energy" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.energy" [disabled]="!isEditable"> Kcal
+            </td>
+          </tr>
+          <tr>
+            <th>Indice glycémique</th>
+            <td><input name="glycemicIdx" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.glycemicIndex" [disabled]="!isEditable"></td>
+          </tr>
+          <tr>
+            <th>Charge glycémique</th>
+            <td><input name="glycemicLoad" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.glycemicLoad" [disabled]="!isEditable"></td>
+          </tr>
+          <tr>
+            <th>Lipides</th>
+            <td><input name="lipid" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.lipid" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+          <tr>
+            <th>Glucides</th>
+            <td><input name="glucid" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.glucid" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+          <tr>
+            <th>Protéines</th>
+            <td><input name="protein" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.protein" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+          <tr>
+            <th>Sucres</th>
+            <td><input name="sugar" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.sugar" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+          <tr>
+            <th>Fibres</th>
+            <td><input name="fiber" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.fiber" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+          <tr>
+            <th>Sel</th>
+            <td><input name="salt" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
+                       [(ngModel)]="ingredient.salt" [disabled]="!isEditable" min="0" max="100"> g/100g
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section #complexComponents *ngIf="isComplexIngredient">
+      <div>
+        Module ingrédients recette / repas
+      </div>
+    </section>
+
+    <!-- Bottom button when editable ingredient -->
+    <section *ngIf="isEditable" fxLayout="row" fxLayoutAlign="center start" class="buttonSection">
+        <button mat-raised-button="saveButton" [color]="'primary'" (click)="saveEditableIngredient($event)">Enregistrer</button>
+        <button mat-raised-button="cancelButton" [color]="'warn'">Annuler</button>
+    </section>
+
+    <section *ngIf="!isEditable" class="buttonSection" fxLayout="row" fxLayoutAlign="end start">
+      <button mat-raised-button="backButton" [color]="'primary'">Retour</button>
+    </section>
+
+    <!-- Special section for debugMode -->
+    <section *ngIf="debugMode" fxLayout="row" fxLayoutAlign="center start">
+      <button (click)="checkIngredient($event)">Check Ingredient</button>
+    </section>
+  </div>
 </form>
