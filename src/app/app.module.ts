@@ -34,6 +34,7 @@ const routes: Routes = [
   {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
+  {path: 'ingredient', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

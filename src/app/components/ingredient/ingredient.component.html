@@ -12,15 +12,15 @@
       <img display="block" class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" width="25%"
            height="25%"/>
       <div class="ingredient-main-data" fxLayout="column">
-        <mat-form-field>
+
           <textarea (resize)="true" matInput placeholder="{{(isEditable?'Name':' ')}}" [(ngModel)]="ingredient.name"
                     [disabled]="!isEditable" name="Name"
                     [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
 
-        </mat-form-field>
+
         <mat-form-field>
           <mat-select placeholder="{{(isEditable?'Category':' ')}}" (selectionChange)="setCategoryFromSelector($event)"
-                      [value]="ingredient.categorie.id"
+                      [value]="ingredient?.categorie?.id"
                       [disabled]="!isEditable"
                       [class]="(isEditable?'editableInput':'disabledInput')">
             <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
@@ -102,7 +102,7 @@
     <!-- Bottom button when editable ingredient -->
     <section *ngIf="isEditable" fxLayout="row" fxLayoutAlign="center start" class="buttonSection">
         <button mat-raised-button="saveButton" [color]="'primary'" (click)="saveEditableIngredient($event)">Enregistrer</button>
-        <button mat-raised-button="cancelButton" [color]="'warn'">Annuler</button>
+        <button mat-raised-button="cancelButton" [color]="'warn'" (click)="cancelIngredientEdition($event)">Annuler</button>
     </section>
 
     <section *ngIf="!isEditable" class="buttonSection" fxLayout="row" fxLayoutAlign="end start">
