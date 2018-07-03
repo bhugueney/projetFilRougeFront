@@ -27,30 +27,38 @@
         <td>{{preparation.fiber}} g/100g</td>
       </tr>
       <tr>
-          <th>Sel</th>
-          <td>{{preparation.salt}} g/100g</td>
-        </tr>
+        <th>Sel</th>
+        <td>{{preparation.salt}} g/100g</td>
+      </tr>
+      <tr>
+        <th>Glycemic Index</th>
+        <td>{{preparation.glycemicIndex}} g/100g</td>
+      </tr>
+      <tr>
+        <th>Glycemic load</th>
+        <td>{{preparation.glycemicLoad}} g/100g</td>
+      </tr>
      </table>
 </div>
 
 
 
 
-  
+
 <table mat-table [dataSource]="preparation.listIngredient" class="PreparationIngredientsTable">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
-  
+
     <!-- Image Column -->
     <ng-container matColumnDef="image">
-       <td mat-cell *matCellDef="let recipeIngredient"> 
-         <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar 
+       <td mat-cell *matCellDef="let recipeIngredient">
+         <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar
          src="/assets/img/{{recipeIngredient.ingredient.urlImage}}"
-         class="image" > 
+         class="image" >
         </td>
     </ng-container>
-  
+
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <td mat-cell *matCellDef="let recipeIngredient" >
@@ -58,7 +66,7 @@
           
         </td>
     </ng-container>
-    
+
     <!-- Qty Column -->
     <ng-container matColumnDef="qty">
         <td mat-cell *matCellDef="let recipeIngredient" class="QtyCol">
@@ -68,13 +76,55 @@
             </div>
             <mat-icon (click)="increaseQty(recipeIngredient)">add</mat-icon>
             <mat-icon (click)="decreaseQty(recipeIngredient)">remove</mat-icon>
-            <mat-icon (click)="deleteRecipeIngredient(recipeIngredient)">delete_outline</mat-icon>     
+            <mat-icon (click)="deleteRecipeIngredient(recipeIngredient)">delete_outline</mat-icon>
         </td>
     </ng-container>
-      
+
     <tr mat-row *matRowDef="let row; columns: ['image', 'name', 'qty'];" class="Row"></tr>
   </table>
 
+<div class="InfoIngredients hide" #DivInfoIngredients>
+  <h1>{{ingredientDetails.name}}</h1>
+  <div class="ingredientsInfos">
+      <table>
+          <tr>
+              <th >Valeur Calorique</th>
+              <td >{{ingredientDetails.energy}} Kcal</td>
+          </tr>
+          <tr>
+              <th>Lipides</th>
+              <td>{{ingredientDetails.lipid}} g/100g</td>
+          </tr>
+          <tr>
+              <th>Glucides</th>
+              <td>{{ingredientDetails.glucid}} g/100g</td>
+          </tr>
+          <tr>
+              <th>Protéines</th>
+              <td>{{ingredientDetails.protein}} g/100g</td>
+          </tr>
+          <tr>
+              <th>Sucres</th>
+              <td>{{ingredientDetails.sugar}} g/100g</td>
+          </tr>
+          <tr>
+              <th>Fibres</th>
+              <td>{{ingredientDetails.fiber}} g/100g</td>
+          </tr>
+          <tr>
+              <th>Sel</th>
+              <td>{{ingredientDetails.salt}} g/100g</td>
+          </tr>
+          <tr>
+            <th>Glycemic Index</th>
+            <td>{{ingredientDetails.glycemicIndex}} g/100g</td>
+          </tr>
+          <tr>
+            <th>Glycemic load</th>
+            <td>{{ingredientDetails.glycemicLoad}} g/100g</td>
+          </tr>
+      </table>
+  <button>Close</button>
 
 
 
