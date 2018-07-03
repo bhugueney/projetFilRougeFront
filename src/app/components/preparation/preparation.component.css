@@ -1,12 +1,25 @@
+@media (min-width: 400px) {
+    .preparationCard {
+        max-width: 500px;
+    }
+  }
+
 .preparationCard {
     display: Flex;
     flex-direction: column;
     justify-content: space-around;
-    border: 1px black solid;
-    width: 85%vw !important;
-    padding-left: 4px;
-    padding-right:4px;
-    
+    /* border: 3px red solid; */
+    width: 85%vw;
+    padding: 0px;
+         
+}
+
+.preparationTitle {
+   padding: 2px;
+    margin: 0px;
+    text-align: center;
+    background-color: cadetblue;
+    color: beige;
 }
 
 .preparationInfos {
@@ -38,9 +51,7 @@
 }
 
 
-.preparationCard h4 {
-    text-align: center;
-}
+
 
 .ingredientCard {
     display: Flex;
@@ -70,6 +81,12 @@
     margin-right: 8px;
 }
 
+.PreparationIngredientsTableContainer {
+    margin: 3px;
+    height: 300px ;
+    /* border: 2px yellow solid; */
+    overflow-y: auto ;
+}
 .PreparationIngredientsTable tr:nth-child(odd){
     background-color: rgb(220,220,220);
 }
@@ -120,6 +137,33 @@
     display: none;
 }
 
-.show {
-    display: initial;
+
+
+.preparationInfosCaption {
+    background-color: blue;
+    color: whitesmoke;
+    display: Flex;
+    flex-direction: row;
+    align-items: center center;
+    justify-content: space-around;
+    width: inherit;    
+}
+
+.preparationInfosExpandButton {
+    align-self: flex-end;
+}
+
+.PreparationsActionsBar {
+    background-color: blue;
+    color: whitesmoke;
+    display: Flex;
+    flex-direction: row;
+    align-items: center center;
+    justify-content: space-around;
+    width: inherit; 
+    z-index: 999;
+}
+.PreparationsActionButton {
+    margin: 2px;
+    padding: 2px;
 }

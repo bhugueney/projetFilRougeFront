@@ -1,12 +1,21 @@
 <mat-card class="preparationCard" >
-<div><h4>{{preparation.name}}</h4></div>
+<div class="preparationTitle">{{preparation.name}}</div>
 <div class="preparationInfos">
   <table>
+      <tr>
+        <td colspan=2>
+          <div Class="preparationInfosCaption">
+            <span>Cumul Informations Nutritives</span>
+            <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : showExpand}" (click)="showExpand= !showExpand;">expand_more</mat-icon>
+            <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : !showExpand}" (click)="showExpand= !showExpand;">expand_less</mat-icon>
+          </div>
+        </td>
+      </tr>
       <tr>
         <th >Valeur Calorique</th>
         <td >{{preparation.energy}} Kcal</td>
       </tr>
-      <tr>
+      <tr [ngClass]="{'hide' : !showExpand}">
         <th>Lipides</th>
         <td>{{preparation.lipid}} g/100g</td>
       </tr>
@@ -14,7 +23,7 @@
         <th>Glucides</th>
         <td>{{preparation.glucid}} g/100g</td>
       </tr>
-      <tr>
+      <tr [ngClass]="{'hide' : !showExpand}">
         <th>Protéines</th>
         <td>{{preparation.protein}} g/100g</td>
       </tr>
@@ -22,20 +31,20 @@
         <th>Sucres</th>
         <td>{{preparation.sugar}} g/100g</td>
       </tr>
-      <tr>
+      <tr [ngClass]="{'hide' : !showExpand}">
         <th>Fibres</th>
         <td>{{preparation.fiber}} g/100g</td>
       </tr>
-      <tr>
+      <tr [ngClass]="{'hide' : !showExpand}">
         <th>Sel</th>
         <td>{{preparation.salt}} g/100g</td>
       </tr>
       <tr>
-        <th>Glycemic Index</th>
+        <th>Index glycémique</th>
         <td>{{preparation.glycemicIndex}} g/100g</td>
       </tr>
       <tr>
-        <th>Glycemic load</th>
+        <th>Charge glycémique</th>
         <td>{{preparation.glycemicLoad}} g/100g</td>
       </tr>
      </table>
@@ -43,7 +52,7 @@
 
 
 
-
+<div Class="PreparationIngredientsTableContainer">
 
 <table mat-table [dataSource]="preparation.listIngredient" class="PreparationIngredientsTable">
 
@@ -82,49 +91,11 @@
 
     <tr mat-row *matRowDef="let row; columns: ['image', 'name', 'qty'];" class="Row"></tr>
   </table>
+</div>
 
-<div class="InfoIngredients hide" #DivInfoIngredients>
-  <h1>{{ingredientDetails.name}}</h1>
-  <div class="ingredientsInfos">
-      <table>
-          <tr>
-              <th >Valeur Calorique</th>
-              <td >{{ingredientDetails.energy}} Kcal</td>
-          </tr>
-          <tr>
-              <th>Lipides</th>
-              <td>{{ingredientDetails.lipid}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Glucides</th>
-              <td>{{ingredientDetails.glucid}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Protéines</th>
-              <td>{{ingredientDetails.protein}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Sucres</th>
-              <td>{{ingredientDetails.sugar}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Fibres</th>
-              <td>{{ingredientDetails.fiber}} g/100g</td>
-          </tr>
-          <tr>
-              <th>Sel</th>
-              <td>{{ingredientDetails.salt}} g/100g</td>
-          </tr>
-          <tr>
-            <th>Glycemic Index</th>
-            <td>{{ingredientDetails.glycemicIndex}} g/100g</td>
-          </tr>
-          <tr>
-            <th>Glycemic load</th>
-            <td>{{ingredientDetails.glycemicLoad}} g/100g</td>
-          </tr>
-      </table>
-  <button>Close</button>
-
-
-
+<div Class="PreparationsActionsBar">
+  <button class="PreparationsActionButton">Ajout ingrédient</button>
+  <button class="PreparationsActionButton">Enregistrer comme recette</button>
+  <button class="PreparationsActionButton">Enregistrer comme Menu</button>
+</div>
+</mat-card>

@@ -32,22 +32,34 @@ export class RecipeService {
     recipeIngredient1.quantity = 200.0;
 
     const recipeIngredient2: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient1.id = 2;
+    recipeIngredient2.id = 2;
     recipeIngredient2.recipe = fakeRecipe;
     recipeIngredient2.ingredient = this.ingredientService.getById(2);
     recipeIngredient2.quantity = 300.0;
 
     const recipeIngredient3: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient1.id = 3;
+    recipeIngredient3.id = 3;
     recipeIngredient3.recipe = fakeRecipe;
     recipeIngredient3.ingredient = this.ingredientService.getById(3);
     recipeIngredient3.quantity = 50;
+
+    const recipeIngredient4: RecipeIngredient = new RecipeIngredient();
+    recipeIngredient4.id = 3;
+    recipeIngredient4.recipe = fakeRecipe;
+    recipeIngredient4.ingredient = this.ingredientService.getById(4);
+    recipeIngredient4.quantity = 50;
+
 
     const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
     listIngredient.push(recipeIngredient1);
     listIngredient.push(recipeIngredient2);
     listIngredient.push(recipeIngredient3);
-
+    listIngredient.push(recipeIngredient4);
+    listIngredient.push(recipeIngredient4);
+    listIngredient.push(recipeIngredient4);
+    listIngredient.push(recipeIngredient4);
+    listIngredient.push(recipeIngredient4);
+    
     fakeRecipe.listIngredient = listIngredient;
     fakeRecipe.id = 0;
     fakeRecipe.name = '(Nouvelle préparation)';

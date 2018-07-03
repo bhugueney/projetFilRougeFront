@@ -13,3 +13,9 @@
   top: 0;
 }
 
+.zoneTravail {
+  /* border: 2px green solid; */
+  width: 80%vw;
+  /* height: 500px; */
+  overflow-y: auto;
+}

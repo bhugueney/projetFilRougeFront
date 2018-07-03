@@ -18,9 +18,9 @@ import { PreparationDetailsComponent } from '../../preparation-details/preparati
 })
 export class PreparationComponent implements OnInit {
 
-  showInfoIngredients: Boolean = false;
   preparation: Recipe;
   ingredientDetails: Ingredient;
+  showExpand: Boolean = false;
 
   constructor(private recipeService: RecipeService, private dialog: MatDialog) { }
 

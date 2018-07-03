@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'full'},
   {path: 'main', component: MainMenuComponent},
   {path: 'recipe', component: RecipeComponent},
-  {path: 'food', component: FoodComponent}
+  {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}

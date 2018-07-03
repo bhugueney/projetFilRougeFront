@@ -17,17 +17,18 @@ export class IngredientService {
   public getById(id: number): Ingredient {
     let retIngredient: Ingredient;
     switch (id) {
-      case 1: { retIngredient = this.getCarotte(); break; }
-      case 2: { retIngredient =  this.getTomate(); break; }
-      case 3: { retIngredient =  this.getPoireau();  break; }
+      case 2: { retIngredient = this.getCarotte(); break; }
+      case 1: { retIngredient =  this.getTomate(); break; }
+      case 3: { retIngredient =  this.getPoelee();  break; }
+      case 4: { retIngredient =  this.getPoireau();  break; }
       default: {retIngredient =  this.getUnknown();  break; }
     }
     return retIngredient;
   }
 
-  private getCarotte(): Ingredient {
+  private getTomate(): Ingredient {
     return new Ingredient(
-      2,
+      1,
       'Tomates',
       'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       IngredientService.fruitCateg,
@@ -35,20 +36,31 @@ export class IngredientService {
       'ceci est un commentaire');
     }
 
-    private getTomate(): Ingredient {
+    private getCarotte(): Ingredient {
       return new Ingredient(
-        3,
-        'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-        'poireau.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        2,
+        'Carotte',
+        'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
         IngredientService.fruitCateg,
         IngredientService.systemUser,
         'ceci est un commentaire');
       }
 
-      private getPoireau(): Ingredient {
+      private getPoelee(): Ingredient {
         return new Ingredient(
           3,
           'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
+          'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+          IngredientService.fruitCateg,
+          IngredientService.systemUser,
+          'ceci est un commentaire');
+        }
+  
+
+      private getPoireau(): Ingredient {
+        return new Ingredient(
+          4,
+          'Poireau',
           'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
           IngredientService.fruitCateg,
           IngredientService.systemUser,
