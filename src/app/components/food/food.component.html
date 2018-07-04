@@ -1,24 +1,38 @@
 <p>
   TODO search by autocompletion
 </p>
-<p>
-  TODO search by filters
-</p>
-<p>
-  TODO display list of ingredients
-</p>
+
+<!-- Display filters of list of ingredients -->
+<section>
+  <mat-form-field>
+    <mat-select placeholder="filtres" (selectionChange)="setFilterFromSelector($event)" [value]="filterSelected">
+      <mat-option *ngFor="let category of filters" [value]="category">{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</section>
+
+<!-- display list of ingredients -->
+<div [ngSwitch]="filterSelected">
+  <section *ngSwitchCase="'global'">
+    <p *ngFor="let ing of ingredients">{{ing.name}}</p>
+  </section>
+
+  <section *ngSwitchCase="'categories'">
+      <p *ngFor="let cat of listCategoriesN1">{{cat.name}}</p>
+  </section>
+</div>
 
 <!-- to create an ingredient -->
-<div>
-  <button color="primary" [routerLink]="'/ingredient'">créér un ingredient</button>
-</div>
+<section>
+  <button mat-raised-button="createIngredient" [color]="'primary'" [routerLink]="'/ingredient'">créér un ingredient</button>
+</section>
 
 <!-- to display preparation details -->
-<div>
-  <button color="primary" [routerLink]="'/preparation'">Visualiser la préparation</button>
-</div>
+<section>
+  <button mat-raised-button="displayPreparation" [color]="'primary'" [routerLink]="'/preparation'">Visualiser la préparation</button>
+</section>
 
 <!-- to back to main menu -->
-<div>
-  <button color="primary" [routerLink]="'/main'">retour</button>
-</div>
+<section>
+  <button mat-raised-button="backMainMenu" [color]="'primary'" [routerLink]="'/main'">retour</button>
+</section>

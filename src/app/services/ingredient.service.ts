@@ -7,8 +7,20 @@ import { Categorie } from '../models/categorie.model';
   providedIn: 'root'
 })
 export class IngredientService {
+  // list of basics ingredients & users's ingredients
+  private _ingredientsList: Ingredient[];
 
-  constructor() { }
+  constructor() {}
+
+  // getters & setters
+  public get ingredientsList(): Ingredient[] {
+    return this._ingredientsList;
+  }
+  public set ingredientsList(value: Ingredient[]) {
+    this._ingredientsList = value;
+  }
+
+  /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 
   static fruitCateg: Categorie = new Categorie(1, 'Fruits', null);
 
@@ -55,7 +67,7 @@ export class IngredientService {
           IngredientService.systemUser,
           'ceci est un commentaire');
         }
-  
+
 
       private getPoireau(): Ingredient {
         return new Ingredient(
