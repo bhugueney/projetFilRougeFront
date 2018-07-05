@@ -7,23 +7,15 @@ import { Categorie } from '../models/categorie.model';
   providedIn: 'root'
 })
 export class IngredientService {
-  // list of basics ingredients & users's ingredients
-  private _ingredientsList: Ingredient[];
+  constructor() {}
 
-  constructor() {
-    this._ingredientsList = new Array<Ingredient>();
-    this._ingredientsList.push(this.getCarotte());
-    this._ingredientsList.push(this.getPoelee());
-    this._ingredientsList.push(this.getPoireau());
-    this._ingredientsList.push(this.getTomate());
-  }
-
-  // getters & setters
-  public get ingredientsList(): Ingredient[] {
-    return this._ingredientsList;
-  }
-  public set ingredientsList(value: Ingredient[]) {
-    this._ingredientsList = value;
+  public getGlobalList() {
+    const ingredientsList = new Array<Ingredient>();
+    ingredientsList.push(this.getCarotte());
+    ingredientsList.push(this.getPoelee());
+    ingredientsList.push(this.getPoireau());
+    ingredientsList.push(this.getTomate());
+    return ingredientsList;
   }
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/

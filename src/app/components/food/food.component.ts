@@ -11,35 +11,45 @@ import { MatSelectChange } from '@angular/material';
 })
 export class FoodComponent implements OnInit {
   // list of ingredients to display
-  private _ingredients: Ingredient[] = new Array<Ingredient>();
+  private _ingredients: Ingredient[];
   // list of categories level 1
-  private _listCategoriesN1: Categorie[] = new Array<Categorie>();
+  private _listCategories: Categorie[];
   // filters
   private _filters = ['global', 'categories'];
   // filter selected
   private _filterSelected = 'global';
   // list of ingredients selected
-  private _selectedIngredients: Ingredient[] = new Array<Ingredient>();
+  private _selectedIngredients: Ingredient[];
 
   constructor(private foodService: FoodService) {
-    this._listCategoriesN1 = foodService.categoriesList;
-    this._ingredients = foodService.ingredientsList;
+    this.selectedIngredients = new Array<Ingredient>();
   }
 
   ngOnInit() {
+    this.ingredients = this.foodService.getGlobalListIngredients();
   }
 
   public setFilterFromSelector(e: MatSelectChange) {
+    if (e.value === 'categories') {
+      this._listCategories = this.foodService.getMainCategories();
+    }
     this.filterSelected = e.value;
   }
 
-public moveIngredientInPreparationList(ingredient: Ingredient) {
- if (this.selectedIngredients.includes(ingredient)) {
+  public selectedCategory(id: number) {
+    const cat: Categorie = this.foodService.getCategoryById(id);
+    if (cat.listOfChildren.length !== 0) {
+      this._listCategories = cat.listOfChildren;
+    }
+  }
 
- } else {
-   this.selectedIngredients.push(ingredient);
- }
-}
+  public moveIngredientInPreparationList(ingredient: Ingredient) {
+    if (this.selectedIngredients.includes(ingredient)) {
+      this.selectedIngredients.splice(this.selectedIngredients.indexOf(ingredient));
+    } else {
+      this.selectedIngredients.push(ingredient);
+    }
+  }
 
   // Getters and setters
   public get ingredients(): Ingredient[] {
@@ -50,10 +60,10 @@ public moveIngredientInPreparationList(ingredient: Ingredient) {
   }
 
   public get listCategoriesN1(): Categorie[] {
-    return this._listCategoriesN1;
+    return this._listCategories;
   }
   public set listCategoriesN1(value: Categorie[]) {
-    this._listCategoriesN1 = value;
+    this._listCategories = value;
   }
 
   public get filters(): string[] {
