@@ -24,6 +24,8 @@ import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, Mat
 import { FormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from './preparation-details/preparation-details.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -69,6 +71,7 @@ const routes: Routes = [
     MatTableModule,
     MatDialogModule,
     RouterModule.forRoot(routes),
+    HttpClientModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],
   bootstrap: [AppComponent],
