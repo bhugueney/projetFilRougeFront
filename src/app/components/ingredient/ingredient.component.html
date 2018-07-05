@@ -106,7 +106,7 @@
     </section>
 
     <section *ngIf="!isEditable" class="buttonSection" fxLayout="row" fxLayoutAlign="end start">
-      <button mat-raised-button="backButton" [color]="'primary'">Retour</button>
+      <button mat-raised-button="backButton" [color]="'primary'" (click)="close($event)">Retour</button>
     </section>
 
     <!-- Special section for debugMode -->

@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {Ingredient} from '../../models/ingredient.model';
-import {IngredientService} from '../../services/ingredient.service';
-import {Recipe} from '../../models/recipe.model';
-import {Meal} from '../../models/meal.model';
-import {ActivatedRoute} from '@angular/router';
-import {MatSlideToggleChange, MatSelectChange} from '@angular/material';
-import {Categorie} from '../../models/categorie.model';
-import {CategoryService} from '../../services/category.service';
-import {isEmpty} from 'rxjs/internal/operators';
-import {isNullOrUndefined} from 'util';
+import { Component, OnInit } from '@angular/core';
+import { Ingredient } from '../../models/ingredient.model';
+import { IngredientService } from '../../services/ingredient.service';
+import { Recipe } from '../../models/recipe.model';
+import { Meal } from '../../models/meal.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSlideToggleChange, MatSelectChange } from '@angular/material';
+import { Categorie } from '../../models/categorie.model';
+import { CategoryService } from '../../services/category.service';
+import { isEmpty } from 'rxjs/internal/operators';
+import { isNullOrUndefined } from 'util';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-ingredient',
@@ -36,28 +37,29 @@ export class IngredientComponent implements OnInit {
   debugMode = true;
 
   constructor(private ingredientService: IngredientService,
-              private route: ActivatedRoute,
-              private categoryService: CategoryService) {
+    private route: ActivatedRoute,
+    private location: Location,
+    private categoryService: CategoryService) {
     this.route.params.subscribe(params => {
 
-        // If an ingredient ID is provided -> read only mode
-        if (params.hasOwnProperty('id')) {
-          const idRequested: number = +params['id'];
-          this.ingredient = this.ingredientService.getById(idRequested);
-          this.isEditable = false;
+      // If an ingredient ID is provided -> read only mode
+      if (params.hasOwnProperty('id')) {
+        const idRequested: number = +params['id'];
+        this.ingredient = this.ingredientService.getById(idRequested);
+        this.isEditable = false;
 
-        } else {
-          // If no ingredient ID is provided -> creation mode
-          this.isEditable = true;
-          this.ingredient = new Ingredient();
-        }
-
-        if ( isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0 ) {
-          this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
-        }
-
-        this.initCategoriesList();
+      } else {
+        // If no ingredient ID is provided -> creation mode
+        this.isEditable = true;
+        this.ingredient = new Ingredient();
       }
+
+      if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+        this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+      }
+
+      this.initCategoriesList();
+    }
     );
   }
 
@@ -96,7 +98,21 @@ export class IngredientComponent implements OnInit {
       console.log('save ingredient');
       console.log(this.ingredient);
     }
+    // TODO CALL to IngredientService.save()
     e.preventDefault();
+  }
+
+  cancelIngredientEdition(e: Event) {
+    // CallBack
+    this.close(e);
+  }
+
+  close(e: Event) {
+    if (this.debugMode) {
+      console.log('this.location.back');
+    }
+    e.preventDefault();
+    this.location.back();
   }
 
   /*
