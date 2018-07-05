@@ -11,17 +11,23 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class IngredientService {
-  // list of basics ingredients & users's ingredients
+  restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
+  restItems: any;
   private _ingredientsList: Ingredient[];
 
   constructor(private http: HttpClient) {
     this.loadIngredientsFromDatabase();
-    this._ingredientsList = new Array<Ingredient>();
-    this._ingredientsList.push(this.getCarotte());
-    this._ingredientsList.push(this.getPoelee());
-    this._ingredientsList.push(this.getPoireau());
-    this._ingredientsList.push(this.getTomate());
    }
+
+  public getGlobalList() {
+    const ingredientsList = new Array<Ingredient>();
+    ingredientsList.push(this.getCarotte());
+    ingredientsList.push(this.getPoelee());
+    ingredientsList.push(this.getPoireau());
+    ingredientsList.push(this.getTomate());
+    return ingredientsList;
+  }
+
 
   // getters & setters
   public get ingredientsList(): Ingredient[] {
@@ -30,9 +36,6 @@ export class IngredientService {
   public set ingredientsList(value: Ingredient[]) {
     this._ingredientsList = value;
   }
-
-  restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
-  restItems: any;
 
   // Read all REST Items
   loadIngredientsFromDatabase(): void {
