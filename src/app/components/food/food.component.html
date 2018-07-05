@@ -14,12 +14,23 @@
 <!-- display list of ingredients -->
 <div [ngSwitch]="filterSelected">
   <section *ngSwitchCase="'global'">
-    <p *ngFor="let ing of ingredients">{{ing.name}}</p>
+    <article *ngFor="let ingredient of ingredients">
+<a [routerLink]="'/ingredient/'+ingredient.id">
+  <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;"/>{{ingredient.name}}
+</a>
+<button (click)="moveIngredientInPreparationList(ingredient)">{{selectedIngredients.includes(ingredient)? 'remove' : 'add'}}</button>
+<button>X</button>
+    </article>
   </section>
 
   <section *ngSwitchCase="'categories'">
       <p *ngFor="let cat of listCategoriesN1">{{cat.name}}</p>
   </section>
+</div>
+
+<div>
+  CONTROL DEBUG LIST PREPARATION<br/>
+<div *ngFor="let ing of selectedIngredients">| {{ing.name}} |</div>
 </div>
 
 <!-- to create an ingredient -->

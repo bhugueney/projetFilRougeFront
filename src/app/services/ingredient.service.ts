@@ -10,7 +10,13 @@ export class IngredientService {
   // list of basics ingredients & users's ingredients
   private _ingredientsList: Ingredient[];
 
-  constructor() {}
+  constructor() {
+    this._ingredientsList = new Array<Ingredient>();
+    this._ingredientsList.push(this.getCarotte());
+    this._ingredientsList.push(this.getPoelee());
+    this._ingredientsList.push(this.getPoireau());
+    this._ingredientsList.push(this.getTomate());
+  }
 
   // getters & setters
   public get ingredientsList(): Ingredient[] {
