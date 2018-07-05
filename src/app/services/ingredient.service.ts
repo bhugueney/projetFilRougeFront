@@ -16,6 +16,11 @@ export class IngredientService {
 
   constructor(private http: HttpClient) {
     this.loadIngredientsFromDatabase();
+    this._ingredientsList = new Array<Ingredient>();
+    this._ingredientsList.push(this.getCarotte());
+    this._ingredientsList.push(this.getPoelee());
+    this._ingredientsList.push(this.getPoireau());
+    this._ingredientsList.push(this.getTomate());
    }
 
   // getters & setters
