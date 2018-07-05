@@ -3,6 +3,8 @@ import { Categorie } from './../../models/categorie.model';
 import { FoodService } from './../../services/food.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
+import { PreparationService } from '../../services/preparation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-food',
@@ -21,7 +23,9 @@ export class FoodComponent implements OnInit {
   // list of ingredients selected
   private _selectedIngredients: Ingredient[] = new Array<Ingredient>();
 
-  constructor(private foodService: FoodService) {
+  constructor(private foodService: FoodService,
+    private preparationService: PreparationService,
+    private router: Router) {
     this._listCategoriesN1 = foodService.categoriesList;
     this._ingredients = foodService.ingredientsList;
   }
@@ -75,6 +79,12 @@ public moveIngredientInPreparationList(ingredient: Ingredient) {
   }
   public set selectedIngredients(value: Ingredient[]) {
     this._selectedIngredients = value;
+  }
+
+  public displayPreparation() {
+    // met a jour la liste d'ingrédients de la préparation
+    this.preparationService.ingredientsList = this.ingredients;
+    this.router.navigate(['/preparation']);
   }
 
 }

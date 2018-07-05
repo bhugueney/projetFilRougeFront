@@ -12,16 +12,34 @@ export class RecipeService {
   constructor(private ingredientService: IngredientService) { }
 
   public getById(id: number): Recipe {
-    if ( id === 0) {}
-    return this.getFakeRecipe();
+    let result: Recipe = null;
+    if (id != null) {
+        result = this.getFakeRecipe(id);
+    }
+    return  result;
   }
+
+  public getNew(): Recipe {
+    const newRecipe = new Recipe();
+    newRecipe.id = 0;
+    newRecipe.listIngredient = null;
+    newRecipe.name = '(Nouvelle préparation)';
+    return newRecipe;
+  }
+
+
 
   public DeleteRecipeIngredient(recipe: Recipe, ingredientToDelete: RecipeIngredient): Recipe {
     recipe.listIngredient = recipe.listIngredient.filter(ingredientItem => ingredientItem !== ingredientToDelete);
     return recipe;
   }
 
-  private getFakeRecipe(): Recipe {
+  public DeleteRecipeAllIngredients(recipe: Recipe): Recipe {
+    recipe.listIngredient = new Array<RecipeIngredient>();
+    return recipe;
+  }
+
+  private getFakeRecipe(id: number): Recipe {
 
     const fakeRecipe = new Recipe();
 
@@ -59,9 +77,9 @@ export class RecipeService {
     listIngredient.push(recipeIngredient4);
     listIngredient.push(recipeIngredient4);
     listIngredient.push(recipeIngredient4);
-    
+
     fakeRecipe.listIngredient = listIngredient;
-    fakeRecipe.id = 0;
+    fakeRecipe.id = id;
     fakeRecipe.name = '(Nouvelle préparation)';
     fakeRecipe.energy = 0.0;
     fakeRecipe.water = 0.0;

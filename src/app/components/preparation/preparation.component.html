@@ -1,56 +1,77 @@
 <mat-card class="preparationCard" >
 <div class="preparationTitle">{{preparation.name}}</div>
 <div class="preparationInfos">
+
+<!-- 
+              <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : showExpand}" (click)="showExpand= !showExpand;">expand_more</mat-icon>
+              <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : !showExpand}" (click)="showExpand= !showExpand;">expand_less</mat-icon>
+
+
+-->
   <table>
       <tr>
-        <td colspan=2>
-          <div Class="preparationInfosCaption">
-            <span>Cumul Informations Nutritives</span>
-            <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : showExpand}" (click)="showExpand= !showExpand;">expand_more</mat-icon>
-            <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : !showExpand}" (click)="showExpand= !showExpand;">expand_less</mat-icon>
-          </div>
+        <th>
+          <mat-icon  *ngIf="!showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_more</mat-icon>
+          <mat-icon  *ngIf="showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_less</mat-icon>
+        </th>
+        <th>Info.&#8239;Nutritionelle</th>
+        <th>Total</th>
+        <th>Portion 100gr</th>
+      </tr>
+      <tr>
+        <td colspan=2>Valeur Calorique</td>
+        <td >{{preparation.totalEnergy | number: '1.2-2'}} Kcal</td>
+        <td >{{preparation.energy | number: '1.2-2'}} Kcal</td>
+      </tr>
+      <tr *ngIf="showExpand">
+        <td  colspan=2>Lipides</td>
+        <td>{{preparation.totalLipid | number: '1.2-2'}} g</td>
+        <td>{{preparation.lipid | number: '1.2-2'}} g</td>
+      </tr>
+      <tr>
+        <td  colspan=2>Glucides</td>
+        <td>{{preparation.totalGlucid | number: '1.2-2'}} g</td>
+        <td>{{preparation.glucid | number: '1.2-2'}} g</td>
+      </tr>
+      <tr *ngIf="showExpand">
+        <td colspan=2>Protéines</td>
+        <td>{{preparation.totalProtein | number: '1.2-2'}} g</td>
+        <td>{{preparation.protein | number: '1.2-2'}} g</td>
+      </tr>
+      <tr>
+        <td colspan=2>Sucres</td>
+        <td>{{preparation.totalSugar | number: '1.2-2'}} g</td>
+        <td>{{preparation.sugar | number: '1.2-2'}} g</td>
+      </tr>
+      <tr *ngIf="showExpand">
+        <td colspan=2>Fibres</td>
+        <td>{{preparation.totalFiber | number: '1.2-2'}} g</td>
+        <td>{{preparation.fiber | number: '1.2-2'}} g</td>
+      </tr>
+      <tr *ngIf="showExpand">
+        <td colspan=2>Sel</td>
+        <td>{{preparation.totalSalt | number: '1.2-2'}} g</td>
+        <td>{{preparation.salt | number: '1.2-2'}} g</td>
+      </tr>
+      <tr>
+        <th colspan=2>Charge glycémique</th>
+        <td [ngClass]="{'Vert': (preparation.totalGlycemicLoad < 11),
+                        'Orange': (preparation.totalGlycemicLoad >= 11 && preparation.totalGlycemicLoad < 20),
+                        'Rouge': (preparation.totalGlycemicLoad >= 20)
+                      }">
+                      {{preparation.totalGlycemicLoad | number: '1.2-2'}}
         </td>
-      </tr>
-      <tr>
-        <th >Valeur Calorique</th>
-        <td >{{preparation.energy}} Kcal</td>
-      </tr>
-      <tr [ngClass]="{'hide' : !showExpand}">
-        <th>Lipides</th>
-        <td>{{preparation.lipid}} g/100g</td>
-      </tr>
-      <tr>
-        <th>Glucides</th>
-        <td>{{preparation.glucid}} g/100g</td>
-      </tr>
-      <tr [ngClass]="{'hide' : !showExpand}">
-        <th>Protéines</th>
-        <td>{{preparation.protein}} g/100g</td>
-      </tr>
-      <tr>
-        <th>Sucres</th>
-        <td>{{preparation.sugar}} g/100g</td>
-      </tr>
-      <tr [ngClass]="{'hide' : !showExpand}">
-        <th>Fibres</th>
-        <td>{{preparation.fiber}} g/100g</td>
-      </tr>
-      <tr [ngClass]="{'hide' : !showExpand}">
-        <th>Sel</th>
-        <td>{{preparation.salt}} g/100g</td>
-      </tr>
-      <tr>
-        <th>Index glycémique</th>
-        <td>{{preparation.glycemicIndex}} g/100g</td>
-      </tr>
-      <tr>
-        <th>Charge glycémique</th>
-        <td>{{preparation.glycemicLoad}} g/100g</td>
+        <td  [ngClass]="{'Vert': (preparation.glycemicLoad < 11),
+                         'Orange': (preparation.glycemicLoad >= 11 && preparation.totalGlycemicIndex < 20),
+                         'Rouge': (preparation.glycemicLoad >= 20)
+                        }">
+                        {{preparation.glycemicLoad | number: '1.2-2'}}
+          </td>
       </tr>
      </table>
 </div>
 
-
+<!--  [ngClass]="{'hide' : !showExpand}" -->
 
 <div Class="PreparationIngredientsTableContainer">
 
@@ -94,7 +115,8 @@
 </div>
 
 <div Class="PreparationsActionsBar">
-  <button class="PreparationsActionButton">Ajout ingrédient</button>
+  <input type="button" class="PreparationsActionButton" ng-disabled="!razButtonEnabled" (click)="deleteRecipeAllIngredients();" value ="RAZ">
+  <button routerLink="/food/{{preparation.id}}" class="PreparationsActionButton">Ajout d'ingrédient(s)</button>
   <button class="PreparationsActionButton">Enregistrer comme recette</button>
   <button class="PreparationsActionButton">Enregistrer comme Menu</button>
 </div>

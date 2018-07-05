@@ -7,10 +7,10 @@ export class Ingredient {
 
   private _urlImage: string;
 
-  // energy is specified in k/cal per 100g
+  // energy is specified in k/cal for portion of 100g
   private _energy: number;
 
-  // Attributes below are specified in g/100g
+  // Attributes below are specified in g for portion of 100g
   private _water: number;
   private _protein: number;
   private _glucid: number;
@@ -22,6 +22,8 @@ export class Ingredient {
   private _monoUnsaturedFattyAcides: number;
   private _polyUnsaturedFattyAcides: number;
   private _salt: number;
+
+  // Attributes below are specified indice for portion of 100g
   private _glycemicIndex: number;
   private _glycemicLoad: number;
 
@@ -128,6 +130,20 @@ export class Ingredient {
     this._salt = value;
   }
 
+  public get glycemicIndex(): number {
+    return this._glycemicIndex;
+  }
+  public set glycemicIndex(value: number) {
+    this._glycemicIndex = value;
+  }
+
+  public get glycemicLoad(): number {
+    return this._glycemicLoad;
+  }
+  public set glycemicLoad(value: number) {
+    this._glycemicLoad = value;
+  }
+
   public get categorie(): Categorie {
     return this._categorie;
   }
@@ -151,19 +167,6 @@ export class Ingredient {
     this._comment = value;
   }
 
-  public get glycemicIndex(): number {
-    return this._glycemicIndex;
-  }
-  public set glycemicIndex(value: number) {
-    this._glycemicIndex = value;
-  }
-
-  public get glycemicLoad(): number {
-    return this._glycemicLoad;
-  }
-  public set glycemicLoad(value: number) {
-    this._glycemicLoad = value;
-  }
 
   constructor(
     id?: number,

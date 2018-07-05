@@ -22,7 +22,9 @@ import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, Mat
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
     MatDialog, MatDialogModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-import { PreparationDetailsComponent } from './preparation-details/preparation-details.component';
+import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
+import { PreparationConfirmRazComponent } from 'src/app/components/preparation-confirm-raz/preparation-confirm-raz.component';
+import { PreparationService } from './services/preparation.service';
 
 
 
@@ -33,6 +35,7 @@ const routes: Routes = [
   {path: 'recipe', component: RecipeComponent},
   {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
+  {path: 'preparation/:id', component: PreparationComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
   {path: 'ingredient', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
@@ -49,7 +52,8 @@ const routes: Routes = [
     MenuComponent,
     MainMenuComponent,
     PageNotFoundComponent,
-    PreparationDetailsComponent
+    PreparationDetailsComponent,
+    PreparationConfirmRazComponent
     ],
   imports: [
     BrowserModule,
@@ -70,8 +74,8 @@ const routes: Routes = [
     MatDialogModule,
     RouterModule.forRoot(routes),
   ],
-  providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService],
+  providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],
-  entryComponents: [PreparationDetailsComponent]
+  entryComponents: [PreparationDetailsComponent, PreparationConfirmRazComponent]
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Ingredient } from '../models/ingredient.model';
-import { IngredientService } from '../services/ingredient.service';
+import { Ingredient } from 'src/app/models/ingredient.model';
+import { IngredientService } from '../../services/ingredient.service';
 
 @Component({
   selector: 'app-preparation-details',
