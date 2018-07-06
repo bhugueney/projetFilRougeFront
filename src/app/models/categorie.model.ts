@@ -2,6 +2,7 @@ export class Categorie {
   private _id: number;
   private _name: string;
   private _parent: Categorie;
+  private _listOfChildren: Categorie[] = new Array<Categorie>();
 
   public get id(): number {
     return this._id;
@@ -22,6 +23,13 @@ export class Categorie {
   }
   public set parent(value: Categorie) {
     this._parent = value;
+  }
+
+  public get listOfChildren(): Categorie[] {
+    return this._listOfChildren;
+  }
+  public set listOfChildren(value: Categorie[]) {
+    this._listOfChildren = value;
   }
 
   constructor(id: number, name: string, parent: Categorie) {

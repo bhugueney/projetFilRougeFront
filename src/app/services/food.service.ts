@@ -1,3 +1,4 @@
+import { RecipeService } from './recipe.service';
 import { IngredientService } from './ingredient.service';
 import { Ingredient } from './../models/ingredient.model';
 import { Categorie } from './../models/categorie.model';
@@ -8,28 +9,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FoodService {
-  // list of categories
-  private _categoriesList: Categorie[];
-  // list of ingredients
-  private _ingredientsList: Ingredient[];
 
-  constructor(private categorieService: CategoryService, private ingredientService: IngredientService) {
-    this._categoriesList = categorieService.getMainCategories();
-    this._ingredientsList = ingredientService.ingredientsList;
+  constructor(private categorieService: CategoryService, private ingredientService: IngredientService,
+    private recipeService: RecipeService) {
   }
 
-  // Getters and setters
-  public get categoriesList(): Categorie[] {
-    return this._categoriesList;
-  }
-  public set categoriesList(value: Categorie[]) {
-    this._categoriesList = value;
+  // method to get global list of ingredients
+  public getGlobalListIngredients() {
+    return this.ingredientService.getGlobalList();
   }
 
-  public get ingredientsList(): Ingredient[] {
-    return this._ingredientsList;
+  // method to get main categories
+  public getMainCategories() {
+    return this.categorieService.getMainCategories();
   }
-  public set ingredientList(value: Ingredient[]) {
-    this._ingredientsList = value;
+
+  // method to get details of category
+  public getCategoryById(id: number) {
+    return this.categorieService.getCategoryById(id);
   }
 }

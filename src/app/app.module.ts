@@ -29,6 +29,8 @@ import { DialogOkComponent } from './components/dialog-ok/dialog-ok.component';
 
 
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -77,6 +79,7 @@ const routes: Routes = [
     MatTableModule,
     MatDialogModule,
     RouterModule.forRoot(routes),
+    HttpClientModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],
