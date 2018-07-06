@@ -10,15 +10,18 @@ export class CategoryService {
 
   constructor() {
     // To link to back
-    this.categories.push(new Categorie(1, 'Fruits', null));
-    this.categories.push(new Categorie(2, 'Légumes', null));
-    this.categories.push(new Categorie(3, 'Viandes', null));
-    this.categories.push(new Categorie(4, 'Fruits Frais', this.categories[0]));
-    this.categories.push(new Categorie(5, 'Fruits Sec', this.categories[0]));
-    this.categories.push(new Categorie(6, 'Légumes vert', this.categories[1]));
-    this.categories.push(new Categorie(7, 'féculents', this.categories[1]));
-    this.categories.push(new Categorie(8, 'Boeuf', this.categories[2]));
-    this.categories.push(new Categorie(9, 'Agneau', this.categories[2]));
+    this.categories.push(new Categorie(1, 'Fruits', null, []));
+    this.categories.push(new Categorie(2, 'Légumes', null, []));
+    this.categories.push(new Categorie(3, 'Viandes', null, []));
+    this.categories.push(new Categorie(4, 'Fruits Frais', this.categories[0], []));
+    this.categories.push(new Categorie(5, 'Fruits Sec', this.categories[0], []));
+    this.categories.push(new Categorie(6, 'Légumes vert', this.categories[1], []));
+    this.categories.push(new Categorie(7, 'féculents', this.categories[1], []));
+    this.categories.push(new Categorie(8, 'Boeuf', this.categories[2], []));
+    this.categories.push(new Categorie(9, 'Agneau', this.categories[2], []));
+    this.categories[0].listOfChildren = [this.getCategoryById(4), this.getCategoryById(5)];
+    this.categories[1].listOfChildren = [this.getCategoryById(6), this.getCategoryById(7)];
+    this.categories[2].listOfChildren = [this.getCategoryById(8), this.getCategoryById(9)];
   }
 
 public getMainCategories(): Categorie[] {

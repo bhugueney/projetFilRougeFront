@@ -2,7 +2,7 @@ export class Categorie {
   private _id: number;
   private _name: string;
   private _parent: Categorie;
-  private _listOfChildren: Categorie[] = new Array<Categorie>();
+  private _listOfChildren: Categorie[];
 
   public get id(): number {
     return this._id;
@@ -32,9 +32,10 @@ export class Categorie {
     this._listOfChildren = value;
   }
 
-  constructor(id: number, name: string, parent: Categorie) {
+  constructor(id: number, name: string, parent: Categorie, listOfChildren: Categorie[]) {
     this.id = id;
     this.name = name;
     this. parent = parent;
+    this.listOfChildren = listOfChildren;
   }
 }

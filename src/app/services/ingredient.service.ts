@@ -1,3 +1,4 @@
+import { CategoryService } from './category.service';
 import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
@@ -5,6 +6,7 @@ import { Categorie } from '../models/categorie.model';
 
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -15,17 +17,28 @@ export class IngredientService {
   restItems: any;
   private _ingredientsList: Ingredient[];
 
-  constructor(private http: HttpClient) {
-    this.loadIngredientsFromDatabase();
-   }
+  // Mise en place d'un objet Subject(qui peut etre observable et observer)de modification sur la liste ingredients
+  private updateList = new Subject<Ingredient[]>();
+
+  // flux d'annonce sur lequel on peut suivre les modifications apportées à l'objet Subject
+  public ingredientsListRead = this.updateList.asObservable();
+
+  constructor(private http: HttpClient, private categoryService: CategoryService) {
+    // this.loadIngredientsFromDatabase();
+  }
 
   public getGlobalList() {
-    const ingredientsList = new Array<Ingredient>();
-    ingredientsList.push(this.getCarotte());
-    ingredientsList.push(this.getPoelee());
-    ingredientsList.push(this.getPoireau());
-    ingredientsList.push(this.getTomate());
-    return ingredientsList;
+    // this.ingredientsList = new Array<Ingredient>();
+    this.ingredientsList = new Array<Ingredient>();
+    this.ingredientsList.push(this.getCarotte());
+    this.ingredientsList.push(this.getPoelee());
+    this.ingredientsList.push(this.getPoireau());
+    this.ingredientsList.push(this.getTomate());
+    return this.ingredientsList;
+  }
+
+  public getListByCategoryId(catId) {
+    return this.ingredientsList.filter(e => e.categorie.id === catId);
   }
 
 
@@ -40,24 +53,23 @@ export class IngredientService {
   // Read all REST Items
   loadIngredientsFromDatabase(): void {
     this.restItemsServiceGetRestItems()
-      .subscribe(
-        restItems => {
-          this.ingredientsList = restItems;
-          console.log(this.ingredientsList);
-        }
-      );
+    .subscribe(
+      restItems => {
+        this.ingredientsList = restItems;
+        this.updateList.next(this.ingredientsList); // permet de prevenir les autres composants de la mise à jour
+        console.log(this.ingredientsList);
+      }
+    );
   }
 
   // Rest Items Service: Read all REST Items
   restItemsServiceGetRestItems() {
     return this.http
-      .get<any[]>(this.restItemsUrl)
-      .pipe(map(data => data));
+    .get<any[]>(this.restItemsUrl)
+    .pipe(map(data => data));
   }
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
-
-  static fruitCateg: Categorie = new Categorie(1, 'Fruits', null);
 
   static systemUser: User = new User(1, '', 'System', '');
 
@@ -78,52 +90,52 @@ export class IngredientService {
       1,
       'Tomates',
       'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      IngredientService.fruitCateg,
+      this.categoryService.getCategoryById(4),
       IngredientService.systemUser,
       'ceci est un commentaire');
-  }
+    }
 
-  private getCarotte(): Ingredient {
-    return new Ingredient(
-      2,
-      'Carotte',
-      'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      IngredientService.fruitCateg,
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getCarotte(): Ingredient {
+      return new Ingredient(
+        2,
+        'Carotte',
+        'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+      }
 
-  private getPoelee(): Ingredient {
-    return new Ingredient(
-      3,
-      'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-      'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      IngredientService.fruitCateg,
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
-
-
-  private getPoireau(): Ingredient {
-    return new Ingredient(
-      4,
-      'Poireau',
-      'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      IngredientService.fruitCateg,
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
-
-  private getUnknown(): Ingredient {
-    return new Ingredient(
-      0,
-      'Inconnu',
-      'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      IngredientService.fruitCateg,
-      IngredientService.systemUser,
-      'ceci est ingredient inconu');
-  }
+      private getPoelee(): Ingredient {
+        return new Ingredient(
+          3,
+          'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
+          'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+          this.categoryService.getCategoryById(8),
+          IngredientService.systemUser,
+          'ceci est un commentaire');
+        }
 
 
+        private getPoireau(): Ingredient {
+          return new Ingredient(
+            4,
+            'Poireau',
+            'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+            this.categoryService.getCategoryById(4),
+            IngredientService.systemUser,
+            'ceci est un commentaire');
+          }
 
-}
+          private getUnknown(): Ingredient {
+            return new Ingredient(
+              0,
+              'Inconnu',
+              'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+              this.categoryService.getCategoryById(9),
+              IngredientService.systemUser,
+              'ceci est ingredient inconu');
+            }
+
+
+
+          }
