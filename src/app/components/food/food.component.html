@@ -56,7 +56,7 @@
 
       <!-- to display preparation details -->
       <section>
-        <button mat-raised-button="displayPreparation" [color]="'primary'" [routerLink]="'/preparation'">Visualiser la préparation</button>
+        <button mat-raised-button="displayPreparation" [color]="'primary'" [routerLink]="'/preparation'" (click)="loadListIngredients(selectedIngredients)">Visualiser la préparation</button>
       </section>
 
       <!-- to back before -->

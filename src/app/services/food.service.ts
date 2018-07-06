@@ -1,7 +1,9 @@
+import { PreparationService } from './preparation.service';
 import { RecipeService } from './recipe.service';
 import { IngredientService } from './ingredient.service';
 import { CategoryService } from './category.service';
 import { Injectable } from '@angular/core';
+import { Ingredient } from '../models/ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ import { Injectable } from '@angular/core';
 export class FoodService {
 
   constructor(private categorieService: CategoryService, private ingredientService: IngredientService,
-    private recipeService: RecipeService) {
+    private preparationService: PreparationService) {
     }
 
     // method to get global list of ingredients
@@ -30,5 +32,15 @@ export class FoodService {
     // method to get details of category
     public getCategoryById(id: number) {
       return this.categorieService.getCategoryById(id);
+    }
+
+    // method to send a list of preparation
+    public setListIngredients(list: Ingredient[]) {
+      this.preparationService.ingredientsList = list;
+    }
+
+    // method to load a list of preparation
+    public getListIngredients(): Ingredient[] {
+      return this.preparationService.ingredientsList;
     }
   }
