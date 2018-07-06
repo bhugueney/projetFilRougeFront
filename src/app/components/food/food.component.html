@@ -18,7 +18,7 @@
     ***********************************-->
     <!-- Display list of ingredients -->
     <div [ngSwitch]="filterSelected">
-      <section *ngSwitchCase="'global'">
+      <section  *ngSwitchDefault="">
         <article *ngFor="let ingredient of ingredients">
           <a [routerLink]="'/ingredient/'+ingredient.id">
             <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;"/>{{ingredient.name}}
@@ -31,8 +31,8 @@
 
       <!-- Display list of categories -->
       <section *ngSwitchCase="'categories'">
-        <article *ngFor="let cat of listCategoriesN1">
-          <a (click)="selectedCategory(cat.id)">{{cat.name}}</a>
+        <article *ngFor="let cat of listCategories">
+          <a href="#" (click)="selectedCategory(cat.id, $event)">{{cat.name}}</a>
         </article>
       </section>
     </div>
@@ -41,6 +41,14 @@
       CONTROL DEBUG LIST PREPARATION<br/>
       <div *ngFor="let ing of selectedIngredients">| {{ing.name}} |</div>
     </div>
+    <div>
+        CONTROL DEBUG DISPLAY CATEGORIE<br/>
+        <div *ngFor="let cat of listCategories">| {{cat.name}} |</div>
+      </div>
+      <div>
+          CONTROL DEBUG DISPLAY FILTRE SELECTIONNE<br/>
+          <div>{{filterSelected}}</div>
+        </div>
 
     <!--*******************
       Display actions buttons
