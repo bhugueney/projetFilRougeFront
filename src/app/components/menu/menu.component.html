@@ -7,11 +7,22 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)"
   >
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-toolbar color="primary">
+        <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        >
+        <!-- *ngIf="isHandset$ | async" -->
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>&nbsp;
+      <span>Menu</span></mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/main" (click)="drawer.toggle()" routerLinkActive=true>Accueil</a>
-      <a mat-list-item routerLink="/preparation/0" (click)="drawer.toggle()">Effectuer une préparation</a>
-      <a mat-list-item routerLink="/recipe" (click)="drawer.toggle()">Recettes</a>
+      <a mat-list-item routerLink="/preparation/0" (click)="drawer.toggle()">Créer une préparation</a>
+      <a mat-list-item routerLink="/recipe" (click)="drawer.toggle()">Consulter mes recettes</a>
+      <a mat-list-item routerLink="/meal" (click)="drawer.toggle()">Suivre mes repas</a>
       <a mat-list-item routerLink="/ingredient/2" (click)="drawer.toggle()" routerLinkActive=true>[Test] Ingredient display</a>
       <a mat-list-item routerLink="/">... To complete...</a>
     </mat-nav-list>
@@ -24,9 +35,10 @@
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">home</mat-icon>
-      </button>
+        *ngIf="!drawer.opened">
+      <!--  *ngIf="isHandset$ | async" -->
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>&nbsp;
       <span> My IG Coach</span>
     </mat-toolbar>
     <div Class="zoneTravail"><router-outlet></router-outlet></div>
