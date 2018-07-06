@@ -28,6 +28,7 @@ export class FoodComponent implements OnInit {
     private router: Router) {
     this._listCategoriesN1 = foodService.categoriesList;
     this._ingredients = foodService.ingredientsList;
+    this._selectedIngredients = preparationService.ingredientsList;
   }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ public moveIngredientInPreparationList(ingredient: Ingredient) {
 
   public displayPreparation() {
     // met a jour la liste d'ingrédients de la préparation
-    this.preparationService.ingredientsList = this.ingredients;
+    this.preparationService.ingredientsList = this._selectedIngredients;
     this.router.navigate(['/preparation']);
   }
 

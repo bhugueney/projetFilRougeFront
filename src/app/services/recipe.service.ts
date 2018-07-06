@@ -9,14 +9,26 @@ import { Ingredient } from '../models/ingredient.model';
 })
 export class RecipeService {
 
-  constructor(private ingredientService: IngredientService) { }
+  private recipeList: Recipe[];
+
+  constructor(private ingredientService: IngredientService) {
+    this.recipeList = new Array<Recipe>();
+    for (let i = 1; i < 10; i++) {
+      this.recipeList .push(this.createFakeRecipe(i, i));
+    }
+  }
+
+  public getAll(): Recipe[] {
+    return this.recipeList;
+  }
+
 
   public getById(id: number): Recipe {
-    let result: Recipe = null;
-    if (id != null) {
-        result = this.getFakeRecipe(id);
+    if (id < this.recipeList.length) {
+      return this.recipeList[ id - 1];
+    } else {
+      return null;
     }
-    return  result;
   }
 
   public getNew(): Recipe {
@@ -39,48 +51,13 @@ export class RecipeService {
     return recipe;
   }
 
-  private getFakeRecipe(id: number): Recipe {
 
+
+  private createFakeRecipe(id: number, numIngredients: number): Recipe {
     const fakeRecipe = new Recipe();
-
-    const recipeIngredient1: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient1.id = 1;
-    recipeIngredient1.recipe = fakeRecipe;
-    recipeIngredient1.ingredient = this.ingredientService.getById(1);
-    recipeIngredient1.quantity = 200.0;
-
-    const recipeIngredient2: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient2.id = 2;
-    recipeIngredient2.recipe = fakeRecipe;
-    recipeIngredient2.ingredient = this.ingredientService.getById(2);
-    recipeIngredient2.quantity = 300.0;
-
-    const recipeIngredient3: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient3.id = 3;
-    recipeIngredient3.recipe = fakeRecipe;
-    recipeIngredient3.ingredient = this.ingredientService.getById(3);
-    recipeIngredient3.quantity = 50;
-
-    const recipeIngredient4: RecipeIngredient = new RecipeIngredient();
-    recipeIngredient4.id = 3;
-    recipeIngredient4.recipe = fakeRecipe;
-    recipeIngredient4.ingredient = this.ingredientService.getById(4);
-    recipeIngredient4.quantity = 50;
-
-
-    const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
-    listIngredient.push(recipeIngredient1);
-    listIngredient.push(recipeIngredient2);
-    listIngredient.push(recipeIngredient3);
-    listIngredient.push(recipeIngredient4);
-    listIngredient.push(recipeIngredient4);
-    listIngredient.push(recipeIngredient4);
-    listIngredient.push(recipeIngredient4);
-    listIngredient.push(recipeIngredient4);
-
-    fakeRecipe.listIngredient = listIngredient;
     fakeRecipe.id = id;
-    fakeRecipe.name = '(Nouvelle préparation)';
+    fakeRecipe.name = 'Recette N° ' + id;
+    fakeRecipe.comment = 'ceci est la recette n° ' + id;
     fakeRecipe.energy = 0.0;
     fakeRecipe.water = 0.0;
     fakeRecipe.protein = 0.0;
@@ -94,6 +71,16 @@ export class RecipeService {
     fakeRecipe.polyUnsaturedFattyAcides = 0.0;
     fakeRecipe.salt = 0.0;
 
+    // create ingredients list
+    const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
+    for (let i = 1; i <= numIngredients; i++) {
+      const recipeIngredient: RecipeIngredient = new RecipeIngredient();
+      recipeIngredient.recipe = fakeRecipe;
+      recipeIngredient.ingredient = this.ingredientService.getById(i);
+      recipeIngredient.quantity = 100.0 * i;
+      listIngredient.push(recipeIngredient);
+    }
+    fakeRecipe.listIngredient = listIngredient;
 
     return fakeRecipe;
 

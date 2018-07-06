@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { PreparationService } from '../../services/preparation.service';
 
 @Component({
   selector: 'app-menu',
@@ -14,6 +16,7 @@ export class MenuComponent implements OnInit {
     .pipe(
       map(result => result.matches)
     );
+
   constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() { }

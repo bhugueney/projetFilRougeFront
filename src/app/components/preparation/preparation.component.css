@@ -179,3 +179,7 @@
 .Rouge {
     background-color: lightcoral;
 }
+
+.nameColumn {
+    min-width: 173px;
+}

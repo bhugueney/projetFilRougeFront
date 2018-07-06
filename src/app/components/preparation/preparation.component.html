@@ -91,7 +91,7 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <td mat-cell *matCellDef="let recipeIngredient" >
+        <td mat-cell *matCellDef="let recipeIngredient" class="nameColumn">
           <h5 (click)="showDetails(recipeIngredient.ingredient)">{{recipeIngredient.ingredient.name}}</h5> 
           
         </td>
@@ -116,8 +116,9 @@
 
 <div Class="PreparationsActionsBar">
   <input type="button" class="PreparationsActionButton" ng-disabled="!razButtonEnabled" (click)="deleteRecipeAllIngredients();" value ="RAZ">
-  <button routerLink="/food/{{preparation.id}}" class="PreparationsActionButton">Ajout d'ingrédient(s)</button>
+  <button routerLink="/food" class="PreparationsActionButton">Ajout d'ingrédient(s)</button>
   <button class="PreparationsActionButton">Enregistrer comme recette</button>
   <button class="PreparationsActionButton">Enregistrer comme Menu</button>
+  <button class="PreparationsActionButton" (click)="abandon();">Abandon</button>
 </div>
 </mat-card>

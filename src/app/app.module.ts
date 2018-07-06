@@ -20,11 +20,14 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
-    MatDialog, MatDialogModule } from '@angular/material';
+    MatDialogModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
-import { PreparationConfirmRazComponent } from 'src/app/components/preparation-confirm-raz/preparation-confirm-raz.component';
 import { PreparationService } from './services/preparation.service';
+import { DialogYesNoComponent } from './components/dialog-yes-no/dialog-yes-no.component';
+import { DialogOkComponent } from './components/dialog-ok/dialog-ok.component';
+
+
 
 
 
@@ -53,7 +56,8 @@ const routes: Routes = [
     MainMenuComponent,
     PageNotFoundComponent,
     PreparationDetailsComponent,
-    PreparationConfirmRazComponent
+    DialogYesNoComponent,
+    DialogOkComponent
     ],
   imports: [
     BrowserModule,
@@ -76,6 +80,6 @@ const routes: Routes = [
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],
-  entryComponents: [PreparationDetailsComponent, PreparationConfirmRazComponent]
+  entryComponents: [DialogYesNoComponent, DialogOkComponent, PreparationDetailsComponent]
 })
 export class AppModule { }

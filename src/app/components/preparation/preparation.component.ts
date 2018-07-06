@@ -1,3 +1,4 @@
+import { DialogYesNoComponent } from './../dialog-yes-no/dialog-yes-no.component';
 import { RecipeIngredient } from './../../models/recipe-ingredient.model';
 import { Ingredient } from './../../models/ingredient.model';
 import { Component, OnInit } from '@angular/core';
@@ -5,9 +6,8 @@ import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { MatDialog } from '@angular/material';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
-import { PreparationConfirmRazComponent } from 'src/app/components/preparation-confirm-raz/preparation-confirm-raz.component';
-import {ActivatedRoute} from '@angular/router';
 import { PreparationService } from '../../services/preparation.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -25,22 +25,42 @@ export class PreparationComponent implements OnInit {
   showExpand: Boolean = false;
   razButtonEnabled: Boolean = true;
 
-  constructor(private preparationService: PreparationService,
+  constructor(private route: ActivatedRoute,
+              private preparationService: PreparationService,
               private recipeService: RecipeService,
               private dialog: MatDialog,
-              private route: ActivatedRoute)  {
-    // this.route.params.subscribe(params => {
-    //   // If an recipe ID is provided -> edit mode
-    //   if (params.hasOwnProperty('id')) {
-    //     const idRequested: number = +params['id'];
-    //     this.preparation = this.recipeService.getById(idRequested);
-    //   } else {
-    //     // If no ingredient ID is provided -> creation mode
-    //     this.preparation = this.recipeService.getNew();
-    //   }
-    // });
-    this.preparation = this.preparationService.preparation;
+              private router: Router )  {
 
+    this.route.params.subscribe(params => {
+
+    // If an ID is provided
+    if (params.hasOwnProperty('id')) {
+      const idRequested: number = + params['id'];
+      // si on est deja en edition d'une preparation
+      if (this.preparationService.preparation != null) {
+        if (this.preparationService.preparation.id !== idRequested) {
+          // const dialogRef = this.dialog.open(DialogOkComponent,
+          //    { data : { title : 'Alerte !',
+          //               message : 'Erreur une preparation n° ' + this.preparationService.preparation.id + 
+          // ' est déja en cours d\'édition !'
+          //             }
+          //     });
+           alert('Erreur une preparation n° ' + this.preparationService.preparation.id + ' est déja en cours d\'édition !');
+        }
+      } else { // si on est pas en edition
+        // si on demande une nouvelle preparation
+        if (idRequested === 0) {
+          this.preparationService.setNewPreparation();
+          this.router.navigate(['/food']);
+        } else {
+          this.preparationService.preparation = this.recipeService.getById(idRequested);
+        }
+      }
+    } else {
+      // If no ID is provided -> edit mode
+    }
+  });
+  this.preparation = this.preparationService.preparation;
   }
 
   ngOnInit() {
@@ -55,7 +75,8 @@ export class PreparationComponent implements OnInit {
   }
 
   public deleteRecipeAllIngredients() {
-    const dialogRef = this.dialog.open(PreparationConfirmRazComponent, {});
+    const dialogRef = this.dialog.open(DialogYesNoComponent,
+      {data: {title: 'Confirmation suppression', message: 'Etes-vous sûr de vouloir supprimer tous ces ingrédients ?'}});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -97,5 +118,10 @@ export class PreparationComponent implements OnInit {
 
   }
 
+  public abandon() {
+    this.preparationService.preparation = null;
+    this.preparation = null;
+    this.router.navigate(['/main']);
+  }
 
 }
