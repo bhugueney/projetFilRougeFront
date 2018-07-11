@@ -1,6 +1,6 @@
-<p>
+<!--<p>
   TODO search by autocompletion
-</p>
+</p>-->
 
 <!-- ***********************************
   Display filters of list of ingredients
@@ -18,37 +18,29 @@
     ***********************************-->
     <!-- Display list of ingredients -->
     <div [ngSwitch]="filterSelected">
-      <section  *ngSwitchDefault="">
-        <article *ngFor="let ingredient of ingredients">
-          <a [routerLink]="'/ingredient/'+ingredient.id">
-            <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;"/>{{ingredient.name}}
-          </a>
-          <button (click)="moveIngredientInPreparationList(ingredient)">{{selectedIngredients.includes(ingredient)? 'remove' : 'add'}}</button>
-          <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
-          <!--<button>X</button>-->
-        </article>
-      </section>
-
       <!-- Display list of categories -->
       <section *ngSwitchCase="'categories'">
         <article *ngFor="let cat of listCategories">
           <a href="#" (click)="selectedCategory(cat.id, $event)">{{cat.name}}</a>
         </article>
       </section>
+
+      <section  *ngSwitchDefault="">
+        <article *ngFor="let ingredient of ingredients">
+          <!--<a [routerLink]="'/ingredient/'+ingredient.id">-->
+            <a (click)="displayIngredient(ingredient.id)">
+            <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;"/>{{ingredient?.name}}
+          </a>
+          <button (click)="moveIngredientInPreparationList(ingredient.id)">{{control(ingredient.id)? 'remove' : 'add'}}</button>
+          <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
+          <!--<button>X</button>-->
+        </article>
+      </section>
+
     </div>
 
-    <div>
-      CONTROL DEBUG LIST PREPARATION<br/>
-      <div *ngFor="let ing of selectedIngredients">| {{ing.name}} |</div>
-    </div>
-    <div>
-        CONTROL DEBUG DISPLAY CATEGORIE<br/>
-        <div *ngFor="let cat of listCategories">| {{cat.name}} |</div>
-      </div>
-      <div>
-          CONTROL DEBUG DISPLAY FILTRE SELECTIONNE<br/>
-          <div>{{filterSelected}}</div>
-        </div>
+    <!-- DEBUG -->
+
 
     <!--*******************
       Display actions buttons
@@ -61,7 +53,7 @@
 
       <!-- to back before -->
       <section>
-        <button mat-raised-button="back" [color]="'primary'" >Précédent</button>
+        <button mat-raised-button="back" [color]="'primary'" (click)="rollBack($event)">Précédent</button>
       </section>
 
       <!-- to create an ingredient -->

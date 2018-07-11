@@ -5,7 +5,7 @@ export class Ingredient {
   private _id: number;
   private _name: string;
 
-  private _urlImage: string;
+  private _urlImage = 'defaultIngredient.jpg';
 
   // energy is specified in k/cal for portion of 100g
   private _energy: number;

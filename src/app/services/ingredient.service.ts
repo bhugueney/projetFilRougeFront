@@ -34,6 +34,7 @@ export class IngredientService {
     this.ingredientsList.push(this.getPoelee());
     this.ingredientsList.push(this.getPoireau());
     this.ingredientsList.push(this.getTomate());
+    this.ingredientsList.push(this.getUnknown());
     return this.ingredientsList;
   }
 
@@ -128,8 +129,8 @@ export class IngredientService {
 
           private getUnknown(): Ingredient {
             return new Ingredient(
-              0,
-              'Inconnu',
+              102,
+              'FAKE RECIPE',
               'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
               this.categoryService.getCategoryById(9),
               IngredientService.systemUser,

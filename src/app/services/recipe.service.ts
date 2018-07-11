@@ -24,8 +24,8 @@ export class RecipeService {
 
 
   public getById(id: number): Recipe {
-    if (id < this.recipeList.length) {
-      return this.recipeList[ id - 1];
+    if ((this.recipeList.filter(e => e.id === id)).length > 0) {
+      return this.recipeList.find(e => e.id === id);
     } else {
       return null;
     }
@@ -55,9 +55,9 @@ export class RecipeService {
 
   private createFakeRecipe(id: number, numIngredients: number): Recipe {
     const fakeRecipe = new Recipe();
-    fakeRecipe.id = id;
-    fakeRecipe.name = 'Recette N° ' + id;
-    fakeRecipe.comment = 'ceci est la recette n° ' + id;
+    fakeRecipe.id = 100 + id;
+    fakeRecipe.name = 'Recette N° ' + fakeRecipe.id;
+    fakeRecipe.comment = 'ceci est la recette n° ' + fakeRecipe.id;
     fakeRecipe.energy = 0.0;
     fakeRecipe.water = 0.0;
     fakeRecipe.protein = 0.0;
