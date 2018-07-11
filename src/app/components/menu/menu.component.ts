@@ -17,8 +17,11 @@ export class MenuComponent implements OnInit {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(private breakpointObserver: BreakpointObserver, private preparationService: PreparationService) { }
 
   ngOnInit() { }
 
+  doNewPreparation() {
+    this.preparationService.setNewPreparation();
+  }
 }

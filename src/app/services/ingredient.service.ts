@@ -2,7 +2,6 @@ import { CategoryService } from './category.service';
 import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { Categorie } from '../models/categorie.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -17,27 +16,12 @@ export class IngredientService {
   static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
   static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
-  restItems: any;
   private _ingredientsList: Ingredient[];
 
-  // Mise en place d'un objet Subject(qui peut etre observable et observer)de modification sur la liste ingredients
-  private updateList = new Subject<Ingredient[]>();
+  constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
-  // flux d'annonce sur lequel on peut suivre les modifications apportées à l'objet Subject
-  public ingredientsListRead = this.updateList.asObservable();
-
-  constructor(private http: HttpClient, private categoryService: CategoryService) {
-    // this.loadIngredientsFromDatabase();
-  }
-
-  public getGlobalList() {
-    // this.ingredientsList = new Array<Ingredient>();
-    this.ingredientsList = new Array<Ingredient>();
-    this.ingredientsList.push(this.getCarotte());
-    this.ingredientsList.push(this.getPoelee());
-    this.ingredientsList.push(this.getPoireau());
-    this.ingredientsList.push(this.getTomate());
-    return this.ingredientsList;
+  public getGlobalList(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=0');
   }
 
   public getListByCategoryId(catId) {
@@ -51,25 +35,6 @@ export class IngredientService {
   }
   public set ingredientsList(value: Ingredient[]) {
     this._ingredientsList = value;
-  }
-
-  // Read all REST Items
-  loadIngredientsFromDatabase(): void {
-    this.restItemsServiceGetRestItems()
-      .subscribe(
-        restItems => {
-          this.ingredientsList = restItems;
-          this.updateList.next(this.ingredientsList); // permet de prevenir les autres composants de la mise à jour
-          console.log(this.ingredientsList);
-        }
-      );
-  }
-
-  // Rest Items Service: Read all REST Items
-  restItemsServiceGetRestItems() {
-    return this.http
-      .get<any[]>(IngredientService.restItemsUrl)
-      .pipe(map(data => data));
   }
 
   public getById(id: number): Observable<Ingredient> {
@@ -129,20 +94,9 @@ export class IngredientService {
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 
+
   // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
-
-  /*public getById(id: number): Ingredient {
-    let retIngredient: Ingredient;
-    switch (id) {
-      case 2: { retIngredient = this.getCarotte(); break; }
-      case 1: { retIngredient = this.getTomate(); break; }
-      case 3: { retIngredient = this.getPoelee(); break; }
-      case 4: { retIngredient = this.getPoireau(); break; }
-      default: { retIngredient = this.getUnknown(); break; }
-    }
-    return retIngredient;
-  }*/
 
   private getTomate(): Ingredient {
     return new Ingredient(
@@ -174,7 +128,6 @@ export class IngredientService {
       'ceci est un commentaire');
   }
 
-
   private getPoireau(): Ingredient {
     return new Ingredient(
       4,
@@ -187,8 +140,8 @@ export class IngredientService {
 
   private getUnknown(): Ingredient {
     return new Ingredient(
-      0,
-      'Inconnu',
+      102,
+      'FAKE RECIPE',
       'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
       this.categoryService.getCategoryById(9),
       IngredientService.systemUser,

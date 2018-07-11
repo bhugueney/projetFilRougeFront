@@ -26,11 +26,12 @@ export class UserService {
     const storedUserId = localStorage.userId;
     this.loggedUser = this.getById(storedUserId);
 
-    // fake authentification, a enlver plus tard
-    if (!this.loggedUser) {
+    // fake authentification a remplacer plus tard
+    if (this.loggedUser === null) {
       this.authenticate('hugues.poumeyrol.pf1@gmail.com', '');
     }
 
+    console.log('User Service constructeur. loggedUser =', this.loggedUser);
    }
 
 
@@ -44,10 +45,16 @@ export class UserService {
       localStorage.userId = null;
     }
     this.loggedUser = retUser;
+    console.log('User Service Authentification appellée. loggedUser =', this.loggedUser);
+  }
+
+  public isUserConnected(): boolean {
+    console.log('User Service isUserConnected ', this.loggedUser != null );
+    return this.loggedUser != null;
   }
 
 
-  private getById(id: number) : User {
+  private getById(id: number): User {
     let retUser = this.users.find( (user) => user.id === id);
     if (!retUser) { retUser = null; }
     return retUser;

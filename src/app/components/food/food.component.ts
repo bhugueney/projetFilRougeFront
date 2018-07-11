@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { CategoryService } from './../../services/category.service';
 import { IngredientService } from './../../services/ingredient.service';
 import { Ingredient } from './../../models/ingredient.model';
@@ -19,13 +20,16 @@ export class FoodComponent implements OnInit {
   // list of categories level 1
   private _listCategories: Categorie[];
   // filters
-  private _filters = ['aucun', 'categories'];
+  private _filters = ['categories', 'liste globale'];
   // filter selected
-  private _filterSelected = 'aucun';
+  private _filterSelected = 'categories';
   // list of ingredients selected
   private _selectedIngredients: Ingredient[];
 
-  constructor(private foodService: FoodService) {
+  private _routerLink: string;
+
+  constructor(private location: Location, private foodService: FoodService,
+    private route: Router, private ingredientService: IngredientService) {
     this.selectedIngredients = new Array<Ingredient>();
   }
 
@@ -34,15 +38,30 @@ export class FoodComponent implements OnInit {
       (ingredientsList) => {this.ingredients = ingredientsList; },
       () => {}
     );*/
-    this.ingredients = this.foodService.getGlobalListIngredients();
+    this.getGlobalListIngredients();
     this.listCategories = this.foodService.getMainCategories();
     this.selectedIngredients = this.foodService.getListIngredients();
   }
 
+  public getGlobalListIngredients() {
+    this.ingredientService.getGlobalList().subscribe(
+      (list) => {
+        this.ingredients = list;
+        list.forEach(e => {
+          if (e.urlImage === null) {e.urlImage = 'defaultIngredient.jpg'; }
+        });
+      }
+    );
+  }
+
+  control(id: number): boolean {
+    return this.selectedIngredients.filter(e => e.id === id).length > 0;
+  }
+
   public setFilterFromSelector(e: MatSelectChange) {
     this.filterSelected = e.value;
-    if (this.filterSelected === 'aucun') {
-      this.ingredients = this.foodService.getGlobalListIngredients();
+    if (this.filterSelected === 'liste globale') {
+      this.getGlobalListIngredients();
     }
     if (this.filterSelected === 'categories') {
       this.listCategories = this.foodService.getMainCategories();
@@ -55,22 +74,37 @@ export class FoodComponent implements OnInit {
     if (cat.listOfChildren.length !== 0) {
       this.listCategories = cat.listOfChildren;
     } else {
-      this.filterSelected = 'ingredients: ' + cat.name;
+      this.filterSelected = '';
       this.ingredients = this.foodService.getFilterListIngredientByCategoryId(cat.id);
-      console.log(this.ingredients);
     }
   }
 
-  public moveIngredientInPreparationList(ingredient: Ingredient) {
-    if (this.selectedIngredients.includes(ingredient)) {
-      this.selectedIngredients.splice(this.selectedIngredients.indexOf(ingredient));
+  public moveIngredientInPreparationList(ing: Ingredient) {
+    const indexIngredient = this.selectedIngredients.findIndex((e) => e.id === ing.id);
+    if (this.control(ing.id)) {
+      this.selectedIngredients.splice(indexIngredient, 1);
     } else {
-      this.selectedIngredients.push(ingredient);
+      this.selectedIngredients.push(ing);
     }
   }
 
   public loadListIngredients(list: Ingredient[]) {
     this.foodService.setListIngredients(list);
+  }
+
+  public displayIngredient(id: number) {
+    if (this.foodService.getRecipeById(id)) {
+      console.log('recipe');
+      this.route.navigateByUrl('/preparation/' + id);
+    } else {
+      console.log('ingredient');
+      this.route.navigateByUrl('/ingredient/' + id);
+    }
+  }
+
+  public rollBack(e: Event) {
+    e.preventDefault();
+    this.location.back();
   }
 
   // Getters and setters
@@ -107,6 +141,13 @@ export class FoodComponent implements OnInit {
   }
   public set selectedIngredients(value: Ingredient[]) {
     this._selectedIngredients = value;
+  }
+
+  public get routerLink(): string {
+    return this._routerLink;
+  }
+  public set routerLink(value: string) {
+    this._routerLink = value;
   }
 
 }

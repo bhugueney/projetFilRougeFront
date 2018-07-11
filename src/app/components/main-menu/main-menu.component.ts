@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PreparationService } from 'src/app/services/preparation.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -9,9 +10,12 @@ export class MainMenuComponent implements OnInit {
 
   userConnected = true; // localStorage.userId;
 
-  constructor() { }
+  constructor(private preparationService: PreparationService) { }
 
   ngOnInit() {
   }
 
+  doNewPreparation() {
+    this.preparationService.setNewPreparation();
+  }
 }
