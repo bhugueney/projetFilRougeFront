@@ -32,8 +32,11 @@ export class IngredientComponent implements OnInit {
   // This boolean indicates if this ingredient is composed of other ones.
   isComplexIngredient = false;
 
+  // This variable content error message to display to the user in case of data base error.
+  dbErrorMessage: string;
+
   // DEBUG MODE
-  debugMode = true;
+  debugMode = false;
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
@@ -43,6 +46,9 @@ export class IngredientComponent implements OnInit {
     // Default mode : Creation mode
     this.isEditable = true;
     this.ingredient = new Ingredient();
+    this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+
+    this.dbErrorMessage = '';
 
     this.route.params.subscribe(params => {
 
@@ -59,6 +65,9 @@ export class IngredientComponent implements OnInit {
             }
           }
         );
+      } else {
+        // DEBUG 
+        localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
       }
 
       this.initCategoriesList();
@@ -96,13 +105,34 @@ export class IngredientComponent implements OnInit {
     this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
   }
 
-  saveEditableIngredient(e: Event) {
+  /**
+   * This method is called to save current ingredient in database
+   * @param e : event of button calling this method
+   */
+  saveEditableIngredient() {
     if (this.debugMode) {
       console.log('save ingredient');
       console.log(this.ingredient);
     }
-    // TODO CALL to IngredientService.save()
-    e.preventDefault();
+
+    if (this.ingredient.id) {
+      this.ingredientService.update(this.ingredient).subscribe(
+        (ingredient: Ingredient) => {
+          this.ingredient = ingredient;
+          this.dbErrorMessage = '';
+        },
+        (error: Error) => this.dbErrorMessage = error.message
+      );
+    } else {
+      this.ingredientService.create(this.ingredient).subscribe(
+        (ingredient: Ingredient) => {
+          this.ingredient = ingredient;
+          this.dbErrorMessage = '';
+        },
+        (error: Error) => this.dbErrorMessage = error.message
+      );
+
+    }
   }
 
   cancelIngredientEdition(e: Event) {

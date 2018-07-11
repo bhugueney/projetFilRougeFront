@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { Categorie } from '../models/categorie.model';
 
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -14,7 +14,7 @@ import { Subject, Observable } from 'rxjs';
 })
 export class IngredientService {
 
-  static readonly URL_GET_BY_ID = 'http://localhost:8095/ingredients';
+  static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
   static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
   restItems: any;
@@ -75,11 +75,56 @@ export class IngredientService {
   public getById(id: number): Observable<Ingredient> {
     const userId = (localStorage.userId ? localStorage.userId : '0');
     return this.http.get<Ingredient>(
-      IngredientService.URL_GET_BY_ID + '/' + id,
+      IngredientService.URL_INGREDIENT + '/userId=' + id,
       {
         params: new HttpParams()
           .set('userId', userId)
       });
+  }
+
+  /**
+   * Create an ingredient in database
+   * @param ingredient : ingredient to create
+   */
+  public create(ingredient: Ingredient): Observable<Ingredient> {
+
+    // An ingredient can't be created by anonymous user.
+    if (!localStorage.userId) {
+      return throwError(new Error('Unknown user'));
+    }
+
+    return this.http.post<Ingredient>(
+      IngredientService.URL_INGREDIENT + '/userId=' + localStorage.userId
+      , {
+        header: new HttpHeaders().set('Allow', 'POST'),
+        ingredient
+      });
+
+  }
+
+  /**
+   * Update an existing ingredient in database
+   * @param ingredient : existing ingredient to update in database
+   */
+  public update(ingredient: Ingredient): Observable<Ingredient> {
+
+    // An ingredient can't be update by anonymous user.
+    if (!localStorage.userId) {
+      return throwError(new Error('Unknown user'));
+    }
+
+    // An ingredient can't be updated if it has no ID
+    if (!ingredient.id) {
+      return throwError(new Error('An update can\'t be performed without an id'));
+    }
+
+    return this.http.put<Ingredient>(
+      IngredientService.URL_INGREDIENT + '/' + ingredient.id,
+      {
+        params: new HttpParams()
+          .set('userId', localStorage.userId)
+      }
+    );
   }
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
