@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,7 @@ export class RecipeService {
   constructor(private ingredientService: IngredientService) {
     this.recipeList = new Array<Recipe>();
     for (let i = 1; i < 10; i++) {
-      this.recipeList .push(this.createFakeRecipe(i, i));
+      this.recipeList.push(this.createFakeRecipe(i, i));
     }
   }
 
@@ -38,8 +39,6 @@ export class RecipeService {
     newRecipe.name = '(Nouvelle préparation)';
     return newRecipe;
   }
-
-
 
   public DeleteRecipeIngredient(recipe: Recipe, ingredientToDelete: RecipeIngredient): Recipe {
     recipe.listIngredient = recipe.listIngredient.filter(ingredientItem => ingredientItem !== ingredientToDelete);
@@ -76,9 +75,16 @@ export class RecipeService {
     for (let i = 1; i <= numIngredients; i++) {
       const recipeIngredient: RecipeIngredient = new RecipeIngredient();
       recipeIngredient.recipe = fakeRecipe;
-      recipeIngredient.ingredient = this.ingredientService.getById(i);
-      recipeIngredient.quantity = 100.0 * i;
-      listIngredient.push(recipeIngredient);
+      // recipeIngredient.ingredient = this.ingredientService.getById(i);
+      this.ingredientService.getById(i).subscribe(
+        (ingredient: Ingredient) => {
+          recipeIngredient.ingredient = ingredient;
+          recipeIngredient.quantity = 100.0 * i;
+          listIngredient.push(recipeIngredient);
+        },
+        (error) => { } // What do you want to do John Snow.... Nothing ?!
+      );
+
     }
     fakeRecipe.listIngredient = listIngredient;
 

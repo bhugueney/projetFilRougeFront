@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainMenuComponent implements OnInit {
 
-  userConnected = true;
+  userConnected = true; // localStorage.userId;
 
   constructor() { }
 
