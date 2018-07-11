@@ -40,22 +40,26 @@ export class IngredientComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private categoryService: CategoryService) {
+
+    // Default mode : Creation mode
+    this.isEditable = true;
+    this.ingredient = new Ingredient();
+
     this.route.params.subscribe(params => {
 
       // If an ingredient ID is provided -> read only mode
       if (params.hasOwnProperty('id')) {
         const idRequested: number = +params['id'];
-        this.ingredient = this.ingredientService.getById(idRequested);
-        this.isEditable = false;
+        this.ingredientService.getById(idRequested).subscribe(
+          (ingredient: Ingredient) => {
+            this.ingredient = ingredient;
+            this.isEditable = false;
 
-      } else {
-        // If no ingredient ID is provided -> creation mode
-        this.isEditable = true;
-        this.ingredient = new Ingredient();
-      }
-
-      if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
-        this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+            if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+              this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+            }
+          }
+        );
       }
 
       this.initCategoriesList();

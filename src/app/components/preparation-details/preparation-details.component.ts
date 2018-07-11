@@ -9,10 +9,10 @@ import { IngredientService } from '../../services/ingredient.service';
 })
 export class PreparationDetailsComponent  {
 
-  ingredientDetails: Ingredient = this.ingredientService.getById(0);
+  ingredientDetails: Ingredient;
 
   constructor(private ingredientService: IngredientService) {
-    this.ingredientDetails = ingredientService.getById(0);
+    this.ingredientDetails = new Ingredient(); // ingredientService.getById(0);
    }
 
   public setIngredientDetails(ingredientToShow: Ingredient) {
