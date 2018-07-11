@@ -2,7 +2,7 @@ import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
-import { Ingredient } from '../models/ingredient.model';
+
 
 @Injectable({
   providedIn: 'root'
