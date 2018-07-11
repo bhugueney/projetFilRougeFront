@@ -31,7 +31,7 @@
             <a (click)="displayIngredient(ingredient.id)">
             <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;"/>{{ingredient?.name}}
           </a>
-          <button (click)="moveIngredientInPreparationList(ingredient.id)">{{control(ingredient.id)? 'remove' : 'add'}}</button>
+          <button (click)="moveIngredientInPreparationList(ingredient)">{{control(ingredient.id)? 'remove' : 'add'}}</button>
           <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
           <!--<button>X</button>-->
         </article>

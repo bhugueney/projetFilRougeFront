@@ -2,11 +2,9 @@ import { CategoryService } from './category.service';
 import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
-import { Categorie } from '../models/categorie.model';
 
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -17,28 +15,21 @@ export class IngredientService {
   static readonly URL_GET_BY_ID = 'http://localhost:8095/ingredients';
   static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
-  restItems: any;
   private _ingredientsList: Ingredient[];
 
-  // Mise en place d'un objet Subject(qui peut etre observable et observer)de modification sur la liste ingredients
-  private updateList = new Subject<Ingredient[]>();
+  constructor(private http: HttpClient, private categoryService: CategoryService) {}
 
-  // flux d'annonce sur lequel on peut suivre les modifications apportées à l'objet Subject
-  public ingredientsListRead = this.updateList.asObservable();
-
-  constructor(private http: HttpClient, private categoryService: CategoryService) {
-    // this.loadIngredientsFromDatabase();
-  }
-
-  public getGlobalList() {
-    // this.ingredientsList = new Array<Ingredient>();
-    this.ingredientsList = new Array<Ingredient>();
+  public getGlobalList(): Observable<Ingredient[]> {
+    /*this.ingredientsList = new Array<Ingredient>();
     this.ingredientsList.push(this.getCarotte());
     this.ingredientsList.push(this.getPoelee());
     this.ingredientsList.push(this.getPoireau());
     this.ingredientsList.push(this.getTomate());
     this.ingredientsList.push(this.getUnknown());
-    return this.ingredientsList;
+    return this.ingredientsList;*/
+    return this.http.get<Ingredient[]>(
+      restItemsUrl
+    );
   }
 
   public getListByCategoryId(catId) {
@@ -55,7 +46,7 @@ export class IngredientService {
   }
 
   // Read all REST Items
-  loadIngredientsFromDatabase(): void {
+  /*loadIngredientsFromDatabase(): void {
     this.restItemsServiceGetRestItems()
     .subscribe(
       restItems => {
@@ -64,14 +55,14 @@ export class IngredientService {
         console.log(this.ingredientsList);
       }
     );
-  }
+  }*/
 
   // Rest Items Service: Read all REST Items
-  restItemsServiceGetRestItems() {
+  /*restItemsServiceGetRestItems() {
     return this.http
     .get<any[]>(IngredientService.restItemsUrl)
     .pipe(map(data => data));
-  }
+  }*/
 
   public getById(id: number): Observable<Ingredient> {
     const userId = (localStorage.userId ? localStorage.userId : '0');
