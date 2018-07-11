@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Meal } from '../models/meal.model';
 import { RecipeIngredient } from '../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
+import { Ingredient } from '../models/ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MealService {
   constructor(private ingredientService: IngredientService) {
     this.mealList = new Array<Meal>();
     for (let i = 1; i < 10; i++) {
-      this.mealList .push(this.createFakeMeal(i, i));
+      this.mealList.push(this.createFakeMeal(i, i));
     }
   }
 
@@ -24,7 +25,7 @@ export class MealService {
 
   public getById(id: number): Meal {
     if (id < this.mealList.length) {
-      return this.mealList[ id - 1];
+      return this.mealList[id - 1];
     } else {
       return null;
     }
@@ -53,9 +54,19 @@ export class MealService {
     for (let i = 1; i <= numIngredients; i++) {
       const recipeIngredient: RecipeIngredient = new RecipeIngredient();
       recipeIngredient.recipe = fakeMeal;
-      recipeIngredient.ingredient = this.ingredientService.getById(i);
-      recipeIngredient.quantity = 100.0 * i;
-      listIngredient.push(recipeIngredient);
+      // recipeIngredient.ingredient = this.ingredientService.getById(i);
+      this.ingredientService.getById(i).subscribe(
+        (ingredient: Ingredient) => {
+          recipeIngredient.ingredient = ingredient;
+          recipeIngredient.quantity = 100.0 * i;
+          listIngredient.push(recipeIngredient);
+        },
+        (error) => {
+          console.log('ingredient ' + i + 'unknown in database');
+        }
+
+      );
+
     }
     fakeMeal.listIngredient = listIngredient;
 

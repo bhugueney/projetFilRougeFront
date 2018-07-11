@@ -84,6 +84,7 @@ export class IngredientService {
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 
+  // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
 
   /*public getById(id: number): Ingredient {

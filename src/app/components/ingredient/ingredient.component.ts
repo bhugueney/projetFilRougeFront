@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSlideToggleChange, MatSelectChange } from '@angular/material';
 import { Categorie } from '../../models/categorie.model';
 import { CategoryService } from '../../services/category.service';
-import { isEmpty } from 'rxjs/internal/operators';
 import { isNullOrUndefined } from 'util';
 import { Location } from '@angular/common';
 
