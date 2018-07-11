@@ -67,13 +67,12 @@ export class FoodComponent implements OnInit {
     }
   }
 
-  public moveIngredientInPreparationList(id: number) {
-    const ingredient = this.foodService.getIngredientById(id);
-    const indexIngredient = this.selectedIngredients.findIndex((e) => e.id === id);
-    if (this.control(id)) {
+  public moveIngredientInPreparationList(ing: Ingredient) {
+    const indexIngredient = this.selectedIngredients.findIndex((e) => e.id === ing.id);
+    if (this.control(ing.id)) {
       this.selectedIngredients.splice(indexIngredient, 1);
     } else {
-      this.selectedIngredients.push(ingredient);
+      this.selectedIngredients.push(ing);
     }
   }
 

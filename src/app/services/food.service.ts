@@ -45,11 +45,6 @@ export class FoodService {
       return this.preparationService.ingredientsList;
     }
 
-    // method to get an ingredient by id
-    public getIngredientById(id: number): Ingredient {
-      return this.ingredientService.getById(id);
-    }
-
     // method to get a recipe by id
     public getRecipeById(id: number): Recipe {
       return this.recipeService.getById(id);
