@@ -1,3 +1,4 @@
+import { FoodComponent } from './../components/food/food.component';
 import { PreparationService } from './preparation.service';
 import { RecipeService } from './recipe.service';
 import { IngredientService } from './ingredient.service';
@@ -16,9 +17,11 @@ export class FoodService {
     }
 
     // method to get global list of ingredients
-    public getGlobalListIngredients() {
-      return this.ingredientService.getGlobalList();
-    }
+    /*public getGlobalListIngredients() {
+      this.ingredientService.getGlobalList().subscribe(
+        (list) => {this.foodComponent.ingredients = list; }
+      );
+    }*/
 
     // method to get list since a category
     public getFilterListIngredientByCategoryId(catId: number) {

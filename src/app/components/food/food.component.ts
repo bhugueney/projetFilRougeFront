@@ -28,7 +28,8 @@ export class FoodComponent implements OnInit {
 
   private _routerLink: string;
 
-  constructor(private location: Location, private foodService: FoodService, private route: Router) {
+  constructor(private location: Location, private foodService: FoodService,
+    private route: Router, private ingredientService: IngredientService) {
     this.selectedIngredients = new Array<Ingredient>();
   }
 
@@ -37,9 +38,20 @@ export class FoodComponent implements OnInit {
       (ingredientsList) => {this.ingredients = ingredientsList; },
       () => {}
     );*/
-    this.ingredients = this.foodService.getGlobalListIngredients();
+    this.getGlobalListIngredients();
     this.listCategories = this.foodService.getMainCategories();
     this.selectedIngredients = this.foodService.getListIngredients();
+  }
+
+  public getGlobalListIngredients() {
+    this.ingredientService.getGlobalList().subscribe(
+      (list) => {
+        this.ingredients = list;
+        list.forEach(e => {
+          if (e.urlImage === null) {e.urlImage = 'defaultIngredient.jpg'; }
+        });
+      }
+    );
   }
 
   control(id: number): boolean {
@@ -49,7 +61,7 @@ export class FoodComponent implements OnInit {
   public setFilterFromSelector(e: MatSelectChange) {
     this.filterSelected = e.value;
     if (this.filterSelected === 'liste globale') {
-      this.ingredients = this.foodService.getGlobalListIngredients();
+      this.getGlobalListIngredients();
     }
     if (this.filterSelected === 'categories') {
       this.listCategories = this.foodService.getMainCategories();
@@ -82,8 +94,8 @@ export class FoodComponent implements OnInit {
 
   public displayIngredient(id: number) {
     if (this.foodService.getRecipeById(id)) {
-console.log('recipe');
-this.route.navigateByUrl('/preparation/' + id);
+      console.log('recipe');
+      this.route.navigateByUrl('/preparation/' + id);
     } else {
       console.log('ingredient');
       this.route.navigateByUrl('/ingredient/' + id);

@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class IngredientService {
 
-  static readonly URL_GET_BY_ID = 'http://localhost:8095/ingredients';
+  static readonly URL_GET_BY_ID = 'http://localhost:8095/ingredients?userId=0';
   static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
   private _ingredientsList: Ingredient[];
@@ -20,16 +20,7 @@ export class IngredientService {
   constructor(private http: HttpClient, private categoryService: CategoryService) {}
 
   public getGlobalList(): Observable<Ingredient[]> {
-    /*this.ingredientsList = new Array<Ingredient>();
-    this.ingredientsList.push(this.getCarotte());
-    this.ingredientsList.push(this.getPoelee());
-    this.ingredientsList.push(this.getPoireau());
-    this.ingredientsList.push(this.getTomate());
-    this.ingredientsList.push(this.getUnknown());
-    return this.ingredientsList;*/
-    return this.http.get<Ingredient[]>(
-      restItemsUrl
-    );
+    return this.http.get<Ingredient[]>(IngredientService.URL_GET_BY_ID);
   }
 
   public getListByCategoryId(catId) {
@@ -45,25 +36,6 @@ export class IngredientService {
     this._ingredientsList = value;
   }
 
-  // Read all REST Items
-  /*loadIngredientsFromDatabase(): void {
-    this.restItemsServiceGetRestItems()
-    .subscribe(
-      restItems => {
-        this.ingredientsList = restItems;
-        this.updateList.next(this.ingredientsList); // permet de prevenir les autres composants de la mise à jour
-        console.log(this.ingredientsList);
-      }
-    );
-  }*/
-
-  // Rest Items Service: Read all REST Items
-  /*restItemsServiceGetRestItems() {
-    return this.http
-    .get<any[]>(IngredientService.restItemsUrl)
-    .pipe(map(data => data));
-  }*/
-
   public getById(id: number): Observable<Ingredient> {
     const userId = (localStorage.userId ? localStorage.userId : '0');
     return this.http.get<Ingredient>(
@@ -78,18 +50,6 @@ export class IngredientService {
 
     // tslint:disable-next-line:member-ordering
     static systemUser: User = new User(1, '', 'System', '');
-
-    /*public getById(id: number): Ingredient {
-      let retIngredient: Ingredient;
-      switch (id) {
-        case 2: { retIngredient = this.getCarotte(); break; }
-        case 1: { retIngredient = this.getTomate(); break; }
-        case 3: { retIngredient = this.getPoelee(); break; }
-        case 4: { retIngredient = this.getPoireau(); break; }
-        default: { retIngredient = this.getUnknown(); break; }
-      }
-      return retIngredient;
-    }*/
 
     private getTomate(): Ingredient {
       return new Ingredient(
