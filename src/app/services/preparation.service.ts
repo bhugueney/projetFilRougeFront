@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { Ingredient } from 'src/app/models/ingredient.model';
 import { Meal } from './../models/meal.model';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
+
 
 
 
@@ -64,13 +66,20 @@ export class PreparationService {
   }
 
 
-  constructor() {
+  constructor(private router: Router) {
     this.preparation = null;
   }
 
   public setNewPreparation() {
-    this.preparation = new Meal();
+    if (this.preparation === null) {
+      this.preparation = new Meal();
     this.preparation.id = 0;
     this.preparation.name = 'Nouvelle préparation';
+    this.router.navigateByUrl('/food');
+    } else {
+      alert('Erreur une preparation n° ' + this.preparation.id + ' est déja en cours d\'édition !');
+    }
   }
+
+
 }
