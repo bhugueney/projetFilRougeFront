@@ -66,7 +66,7 @@ export class IngredientComponent implements OnInit {
           }
         );
       } else {
-        // DEBUG 
+        // DEBUG
         localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
       }
 

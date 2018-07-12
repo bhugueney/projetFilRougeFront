@@ -1,15 +1,21 @@
 <section id="main-menu" fxLayout="column">
 
   <div fxLayout="column" fxLayoutAlign="space-around center"  fxFlex="90%" fxFlexFill >
-    <button mat-stroked-button color="primary" fxFlex="25%" (click)="doNewPreparation();">Effectuer une préparation</button>
-    <ng-container *ngIf="userConnected; else userNotConnected">
-        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/ingredients'">Mes ingrédients</button>
-        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/'">Mon suivi personnel</button>
-          </ng-container>
-    <ng-template #userNotConnected>
-        <button class="menuButton" mat-stroked-button color="primary" fxFlex="25%"  [routerLink]="'/'">Se connecter</button>
-        <button class="menuButton" mat-stroked-button color="accent" fxFlex="25%"  [routerLink]="'/'">Créer un compte</button>
-    </ng-template>
+    <button mat-stroked-button color="primary" fxFlex="10%" (click)="doNewPreparation();">Effectuer une préparation</button>
+    
+    <!-- si un utilisateur est connecté affichage boutons Mes ingrédients et Mon suivi et Se déconnecter-->
+    <ng-container *ngIf="(isUserConnected$ | async)">
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%"  [routerLink]="'/ingredients'">Mes ingrédients</button>
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%"  [routerLink]="'/'">Mon suivi personnel</button>
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%" (click)="userService.disconnect();" >Se déconnecter</button>
+      </ng-container>
+
+    <!-- Si pas d'utilisateur connecté affichage boutons pour se connecter -->
+    <ng-container *ngIf="!(isUserConnected$ | async)">
+        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%" routerLink="/connexion" >Se connecter</button>
+                
+        <button class="menuButton" mat-stroked-button color="accent" fxFlex="10%"  [routerLink]="'/notimplemented'">Créer un compte</button>
+    </ng-container>
   </div>
 
 </section>

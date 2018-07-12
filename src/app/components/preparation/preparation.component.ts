@@ -37,7 +37,7 @@ export class PreparationComponent implements OnInit {
               private userService: UserService )  {
 
     // met en place le suivi de isUserConnected
-    this.userService.isUserConnected().subscribe( (userState) => { this.isUserConnected = userState;});
+    this.userService.isUserConnected().subscribe( (userState) => { this.isUserConnected = userState; });
 
     const idRequested: number = +route.snapshot.paramMap.get('id');
     const isConsult = JSON.parse(route.snapshot.queryParamMap.get('consult') || 'false');
@@ -122,7 +122,7 @@ export class PreparationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.preparationService.preparation = null;
+        this.preparationService.razPreparation();
         this.preparation = null;
         this.router.navigate(['/main']);
       }

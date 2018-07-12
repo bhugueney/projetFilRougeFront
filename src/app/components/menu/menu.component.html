@@ -34,9 +34,7 @@
       
       <!-- authentification disponible que si pas d'utilisateurs connectés -->
       <ng-container *ngIf="!(isUserConnected$ | async)">
-          <a mat-list-item (click)="drawer.toggle(); userService.authenticate('frederic.pareja.pf1@gmail.com', '');">Se connecter Fred (TEST)</a>
-          <a mat-list-item (click)="drawer.toggle(); userService.authenticate('hugues.poumeyrol.pf1@gmail.com', '');">Se connecter Hugues (TEST)</a>
-          <a mat-list-item (click)="drawer.toggle(); userService.authenticate('gabriel.wisniewski@gmail.com', '');">Se connecter Gabriel (TEST)</a>
+        <a mat-list-item (click)="drawer.toggle();" routerLink="/connexion" >Se connecter</a>
       </ng-container>
 
       <!-- déconnection disponible que si un utilisateur est connecté -->

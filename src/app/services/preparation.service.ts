@@ -107,4 +107,9 @@ export class PreparationService {
      console.log('Preparation service set preparationbyid prep = null id=' + id, this.preparation);
     }
   }
+
+  public razPreparation() {
+    this.preparation = null;
+  }
+
 }

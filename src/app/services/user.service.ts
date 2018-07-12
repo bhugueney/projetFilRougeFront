@@ -1,3 +1,5 @@
+import { PreparationService } from 'src/app/services/preparation.service';
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { BehaviorSubject, Observable } from '../../../node_modules/rxjs';
@@ -61,7 +63,9 @@ export class UserService {
   // --------------------------
   // Constructeur
   // --------------------------
-  constructor() {
+  constructor( private router: Router,
+               private preparationService: PreparationService
+             ) {
 
     // met en place une observation du changement de authenticatedUser
     // pour mettre a jour automatiquement isAuthenticated
@@ -132,7 +136,9 @@ export class UserService {
   public disconnect() {
     // emet une nouvelle valeur pour authenticatedUser
     this.authenticatedUser.next(null);
-   if (UserService.debugMode) { console.log('User Service disconnect appellé. loggedUser =', this.authenticatedUser); }
+    if (UserService.debugMode) { console.log('User Service disconnect appellé. loggedUser =', this.authenticatedUser); }
+    this.router.navigateByUrl('/main');
+    this.preparationService.razPreparation();
   }
 
 }
