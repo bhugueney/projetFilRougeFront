@@ -75,6 +75,15 @@ export class IngredientComponent implements OnInit {
     );
   }
 
+  public updateGlycemicLoad() {
+    if ( this.ingredient.glucid && this.ingredient.glycemicIndex) {
+      this.ingredient.glycemicLoad = this.ingredientService.calculateGlycemicLoad(
+        this.ingredient.glycemicIndex,
+        this.ingredient.glucid
+      );
+    }
+  }
+
   ngOnInit() {
 
     // This command allow to get name of real class
@@ -121,7 +130,10 @@ export class IngredientComponent implements OnInit {
           this.ingredient = ingredient;
           this.dbErrorMessage = '';
         },
-        (error: Error) => this.dbErrorMessage = error.message
+        (error: Error) => {
+          this.dbErrorMessage = error.message;
+          console.log('Update error');
+        }
       );
     } else {
       this.ingredientService.create(this.ingredient).subscribe(

@@ -30,7 +30,7 @@ export class Ingredient {
   private _categorie: Categorie;
 
   // Creator of ingredient
-  private _owner: User;
+  // private _owner: User;
 
   // User comment
   private _comment: string;
@@ -152,12 +152,12 @@ export class Ingredient {
   }
 
   // Creator of ingredient
-  public get owner(): User {
-    return this._owner;
-  }
-  public set owner(value: User) {
-    this._owner = value;
-  }
+  // public get owner(): User {
+  //   return this._owner;
+  // }
+  // public set owner(value: User) {
+  //   this._owner = value;
+  // }
 
   // User comment
   public get comment(): string {
@@ -208,7 +208,7 @@ export class Ingredient {
     this.glycemicIndex = glycemicIndex;
     this.glycemicLoad = glycemicLoad;
     this.categorie = categorie;
-    this.owner = owner;
+   //  this.owner = owner;
     this.comment = comment;
   }
 

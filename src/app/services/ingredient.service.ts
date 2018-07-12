@@ -93,6 +93,16 @@ export class IngredientService {
     );
   }
 
+
+  public calculateGlycemicLoad(glycemicIndex: number, glucidQuantityPerPortion: number): number {
+    // CG = [IG x quantité de glucides d’une portion d’aliment (g)]/100
+    if (!glycemicIndex || !glucidQuantityPerPortion) {
+      return null;
+    }
+    return Math.round(glycemicIndex * glucidQuantityPerPortion) / 100;
+  }
+
+
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 
 
