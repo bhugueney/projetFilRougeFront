@@ -6,7 +6,6 @@ import { Categorie } from './../../models/categorie.model';
 import { FoodService } from './../../services/food.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
-import { PreparationService } from '../../services/preparation.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,129 +24,132 @@ export class FoodComponent implements OnInit {
   private _filterSelected = 'categories';
   // list of ingredients selected
   private _selectedIngredients: Ingredient[];
-
+  // link to navigate on display ingredient since simple ingredient or complexe ingredient (recipe)
   private _routerLink: string;
 
   constructor(private location: Location, private foodService: FoodService,
-    private route: Router, private ingredientService: IngredientService) {
-    this.selectedIngredients = new Array<Ingredient>();
-  }
+    private route: Router, private ingredientService: IngredientService, private categoryService: CategoryService) {
+      this.selectedIngredients = new Array<Ingredient>();
+    }
 
-  ngOnInit() {
-    /*this.ingredientService.ingredientsListRead.subscribe(
-      (ingredientsList) => {this.ingredients = ingredientsList; },
-      () => {}
-    );*/
-    this.getGlobalListIngredients();
-    this.listCategories = this.foodService.getMainCategories();
-    this.selectedIngredients = this.foodService.getListIngredients();
-  }
-
-  public getGlobalListIngredients() {
-    this.ingredientService.getGlobalList().subscribe(
-      (list) => {
-        this.ingredients = list;
-        list.forEach(e => {
-          if (e.urlImage === null) {e.urlImage = 'defaultIngredient.jpg'; }
-        });
-      }
-    );
-  }
-
-  control(id: number): boolean {
-    return this.selectedIngredients.filter(e => e.id === id).length > 0;
-  }
-
-  public setFilterFromSelector(e: MatSelectChange) {
-    this.filterSelected = e.value;
-    if (this.filterSelected === 'liste globale') {
+    ngOnInit() {
       this.getGlobalListIngredients();
+      this.getMainCategories();
+      this.selectedIngredients = this.foodService.getListIngredients();
     }
-    if (this.filterSelected === 'categories') {
-      this.listCategories = this.foodService.getMainCategories();
+
+    public getGlobalListIngredients() {
+      this.ingredientService.getGlobalList().subscribe(
+        (list) => {
+          this.ingredients = list;
+          list.forEach(e => {
+            if (e.urlImage === null) {e.urlImage = 'defaultIngredient.jpg'; }
+          });
+        }
+      );
     }
-  }
 
-  public selectedCategory(id: number, e: Event) {
-    e.preventDefault();
-    const cat: Categorie = this.foodService.getCategoryById(id);
-    if (cat.listOfChildren.length !== 0) {
-      this.listCategories = cat.listOfChildren;
-    } else {
-      this.filterSelected = '';
-      this.ingredients = this.foodService.getFilterListIngredientByCategoryId(cat.id);
+    public getMainCategories() {
+      this.categoryService.getCategories().subscribe(
+        (list) => {
+          this.listCategories = (list.filter(e => e.parent === null));
+          console.log(this.listCategories);
+        }
+      );
     }
-  }
 
-  public moveIngredientInPreparationList(ing: Ingredient) {
-    const indexIngredient = this.selectedIngredients.findIndex((e) => e.id === ing.id);
-    if (this.control(ing.id)) {
-      this.selectedIngredients.splice(indexIngredient, 1);
-    } else {
-      this.selectedIngredients.push(ing);
+    control(id: number): boolean {
+      return this.selectedIngredients.filter(e => e.id === id).length > 0;
     }
-  }
 
-  public loadListIngredients(list: Ingredient[]) {
-    this.foodService.setListIngredients(list);
-  }
-
-  public displayIngredient(id: number) {
-    if (this.foodService.getRecipeById(id)) {
-      console.log('recipe');
-      this.route.navigateByUrl('/preparation/' + id);
-    } else {
-      console.log('ingredient');
-      this.route.navigateByUrl('/ingredient/' + id);
+    public setFilterFromSelector(e: MatSelectChange) {
+      this.filterSelected = e.value;
+      if (this.filterSelected === 'liste globale') {
+        this.getGlobalListIngredients();
+      }
+      if (this.filterSelected === 'categories') {
+        this.getMainCategories();
+      }
     }
-  }
 
-  public rollBack(e: Event) {
-    e.preventDefault();
-    this.location.back();
-  }
+    public selectedCategory(id: number, e: Event) {
+      e.preventDefault();
+      const cat: Categorie = this.foodService.getCategoryById(id);
+      if (cat.listOfChildren.length !== 0) {
+        this.listCategories = cat.listOfChildren;
+      } else {
+        this.filterSelected = '';
+        this.ingredients = this.foodService.getFilterListIngredientByCategoryId(cat.id);
+      }
+    }
 
-  // Getters and setters
-  public get ingredients(): Ingredient[] {
-    return this._ingredients;
-  }
-  public set ingredients(value: Ingredient[]) {
-    this._ingredients = value;
-  }
+    public moveIngredientInPreparationList(ing: Ingredient) {
+      const indexIngredient = this.selectedIngredients.findIndex((e) => e.id === ing.id);
+      if (this.control(ing.id)) {
+        this.selectedIngredients.splice(indexIngredient, 1);
+      } else {
+        this.selectedIngredients.push(ing);
+      }
+    }
 
-  public get listCategories(): Categorie[] {
-    return this._listCategories;
-  }
-  public set listCategories(value: Categorie[]) {
-    this._listCategories = value;
-  }
+    public loadListIngredients(list: Ingredient[]) {
+      this.foodService.setListIngredients(list);
+    }
 
-  public get filters(): string[] {
-    return this._filters;
-  }
-  public set filters(value: string[]) {
-    this._filters = value;
-  }
+    public displayIngredient(id: number) {
+      if (this.foodService.getRecipeById(id)) {
+        this.route.navigateByUrl('/preparation/' + id);
+      } else {
+        this.route.navigateByUrl('/ingredient/' + id);
+      }
+    }
 
-  public get filterSelected(): string {
-    return this._filterSelected;
-  }
-  public set filterSelected(value: string) {
-    this._filterSelected = value;
-  }
+    public rollBack(e: Event) {
+      e.preventDefault();
+      this.location.back();
+    }
 
-  public get selectedIngredients(): Ingredient[] {
-    return this._selectedIngredients;
-  }
-  public set selectedIngredients(value: Ingredient[]) {
-    this._selectedIngredients = value;
-  }
+    // Getters and setters
+    public get ingredients(): Ingredient[] {
+      return this._ingredients;
+    }
+    public set ingredients(value: Ingredient[]) {
+      this._ingredients = value;
+    }
 
-  public get routerLink(): string {
-    return this._routerLink;
-  }
-  public set routerLink(value: string) {
-    this._routerLink = value;
-  }
+    public get listCategories(): Categorie[] {
+      return this._listCategories;
+    }
+    public set listCategories(value: Categorie[]) {
+      this._listCategories = value;
+    }
 
-}
+    public get filters(): string[] {
+      return this._filters;
+    }
+    public set filters(value: string[]) {
+      this._filters = value;
+    }
+
+    public get filterSelected(): string {
+      return this._filterSelected;
+    }
+    public set filterSelected(value: string) {
+      this._filterSelected = value;
+    }
+
+    public get selectedIngredients(): Ingredient[] {
+      return this._selectedIngredients;
+    }
+    public set selectedIngredients(value: Ingredient[]) {
+      this._selectedIngredients = value;
+    }
+
+    public get routerLink(): string {
+      return this._routerLink;
+    }
+    public set routerLink(value: string) {
+      this._routerLink = value;
+    }
+
+  }

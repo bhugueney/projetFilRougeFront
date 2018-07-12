@@ -29,9 +29,9 @@ export class FoodService {
     }
 
     // method to get main categories
-    public getMainCategories() {
+    /*public getMainCategories() {
       return this.categorieService.getMainCategories();
-    }
+    }*/
 
     // method to get details of category
     public getCategoryById(id: number) {
