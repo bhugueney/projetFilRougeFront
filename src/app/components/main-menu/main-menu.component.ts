@@ -16,6 +16,6 @@ export class MainMenuComponent implements OnInit {
   }
 
   doNewPreparation() {
-    this.preparationService.setNewPreparation();
+    this.preparationService.doNewPreparation();
   }
 }

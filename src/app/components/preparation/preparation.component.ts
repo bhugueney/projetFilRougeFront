@@ -10,6 +10,7 @@ import { PreparationDetailsComponent } from 'src/app/components/preparation-deta
 import { PreparationService } from '../../services/preparation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
+import { Observable } from '../../../../node_modules/rxjs';
 
 
 
@@ -25,7 +26,7 @@ export class PreparationComponent implements OnInit {
 
   preparation: Recipe;
   showExpand: Boolean = false;
-  userIsConnected = false;
+  isUserConnected: boolean;
 
 
   constructor(private route: ActivatedRoute,
@@ -35,37 +36,29 @@ export class PreparationComponent implements OnInit {
               private router: Router,
               private userService: UserService )  {
 
-    this.route.params.subscribe(params => {
+    // met en place le suivi de isUserConnected
+    this.userService.isUserConnected().subscribe( (userState) => { this.isUserConnected = userState;});
 
-      // If an ID is provided
-      if (params.hasOwnProperty('id')) {
-        const idRequested: number = + params['id'];
-        // si on est deja en edition d'une preparation
-        if (this.preparationService.preparation != null) {
-          if (this.preparationService.preparation.id !== idRequested) {
-            // const dialogRef = this.dialog.open(DialogOkComponent,
-            //    { data : { title : 'Alerte !',
-            //               message : 'Erreur une preparation n° ' + this.preparationService.preparation.id +
-            // ' est déja en cours d\'édition !'
-            //             }
-            //     });
-            alert('Erreur une preparation n° ' + this.preparationService.preparation.id + ' est déja en cours d\'édition !');
-          }
-        } else { // si on est pas en edition
-          // si on demande une nouvelle preparation
-          if (idRequested === 0) {
-            this.preparationService.setNewPreparation();
-            this.router.navigate(['/food']);
-          } else {
-            this.preparationService.preparation = this.recipeService.getById(idRequested);
-          }
-        }
+    const idRequested: number = +route.snapshot.paramMap.get('id');
+    const isConsult = JSON.parse(route.snapshot.queryParamMap.get('consult') || 'false');
+    console.log('PreparationComponent idRequested:', idRequested);
+    console.log('PreparationComponent isConsult:', isConsult);
+
+    // si pas de préparation en cours
+    if (this.preparationService.preparation === null) {
+      if (idRequested === 0) {
+        // si demande de nouvelle préparation
+        this.preparationService.setNewPreparation();
       } else {
-        // If no ID is provided -> edit mode
+        // si demande d'une recette ou repas
+        this.preparationService.setPreparationById(idRequested);
       }
-    });
-    this.preparation = this.preparationService.preparation;
-    this.userIsConnected = userService.isUserConnected();
+
+      // vérifie si un utilisateur est connecté
+      // this.userIsConnected = this.userService.isUserConnected();
+
+    }
+
   }
 
   ngOnInit() {
