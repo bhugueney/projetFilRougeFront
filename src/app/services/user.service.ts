@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { BehaviorSubject, Observable } from '../../../node_modules/rxjs';
+import { MatDialog } from '../../../node_modules/@angular/material';
+import { DialogYesNoComponent } from 'src/app/components/dialog-yes-no/dialog-yes-no.component';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +66,8 @@ export class UserService {
   // Constructeur
   // --------------------------
   constructor( private router: Router,
-               private preparationService: PreparationService
+               private preparationService: PreparationService,
+               private dialog: MatDialog,
              ) {
 
     // met en place une observation du changement de authenticatedUser
@@ -134,11 +137,19 @@ export class UserService {
   }
 
   public disconnect() {
-    // emet une nouvelle valeur pour authenticatedUser
-    this.authenticatedUser.next(null);
-    if (UserService.debugMode) { console.log('User Service disconnect appellé. loggedUser =', this.authenticatedUser); }
-    this.router.navigateByUrl('/main');
-    this.preparationService.razPreparation();
+
+    const dialogRef = this.dialog.open(DialogYesNoComponent,
+      {data: {title: 'Confirmation déconnexion', message: 'Etes-vous sûr de vouloir vous déconnecter ?'}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // emet une nouvelle valeur pour authenticatedUser
+        this.authenticatedUser.next(null);
+        if (UserService.debugMode) { console.log('User Service disconnect appellé. loggedUser =', this.authenticatedUser); }
+        this.router.navigateByUrl('/main');
+        this.preparationService.razPreparation();
+      }
+    });
   }
 
 }
