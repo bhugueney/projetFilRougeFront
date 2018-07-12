@@ -1,11 +1,10 @@
+import { Ingredient } from 'src/app/models/ingredient.model';
 import { CategoryService } from './category.service';
-import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject, Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -16,7 +15,7 @@ export class IngredientService {
   static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
   static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
-  private _ingredientsList: Ingredient[];
+  // private _ingredientsList: Ingredient[];
 
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
@@ -24,18 +23,19 @@ export class IngredientService {
     return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=0');
   }
 
-  public getListByCategoryId(catId) {
-    return this.ingredientsList.filter(e => e.categorie.id === catId);
+  public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
+    // return this.ingredientsList.filter(e => e.categorie.id === catId);
+   return  this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
   }
 
 
   // getters & setters
-  public get ingredientsList(): Ingredient[] {
+  /*public get ingredientsList(): Ingredient[] {
     return this._ingredientsList;
   }
   public set ingredientsList(value: Ingredient[]) {
     this._ingredientsList = value;
-  }
+  }*/
 
   public getById(id: number): Observable<Ingredient> {
     const userId = (localStorage.userId ? localStorage.userId : '0');
@@ -97,7 +97,7 @@ export class IngredientService {
 
   // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
-
+/*
   private getTomate(): Ingredient {
     return new Ingredient(
       1,
@@ -147,7 +147,7 @@ export class IngredientService {
       IngredientService.systemUser,
       'ceci est ingredient inconu');
   }
-
+*/
 
 
 }
