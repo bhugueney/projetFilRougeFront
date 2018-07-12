@@ -19,9 +19,9 @@ export class RecipeComponent implements OnInit {
   ngOnInit() {
   }
 
-  public get recipe(): Recipe {
+  /*public get recipe(): Recipe {
     return this.recipeService.getById(1);
-  }
+  }*/
 
   public editRecipe(recipe: Recipe) {
     this.preparationService.preparation = recipe;

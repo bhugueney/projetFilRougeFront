@@ -131,6 +131,11 @@ export class FoodComponent implements OnInit {
     this.location.back();
   }
 
+  // method to search by autocompletion
+  public search(search: string) {
+
+  }
+
   // Getters and setters
   public get ingredients(): Ingredient[] {
     return this._ingredients;
