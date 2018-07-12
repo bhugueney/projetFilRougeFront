@@ -139,7 +139,10 @@ export class UserService {
   public disconnect() {
 
     const dialogRef = this.dialog.open(DialogYesNoComponent,
-      {data: {title: 'Confirmation déconnexion', message: 'Etes-vous sûr de vouloir vous déconnecter ?'}});
+      {data: {title: 'Confirmation déconnexion',
+              message: 'Etes-vous sûr de vouloir vous déconnecter ?\nCela vas entrainer l\'abandon de la tache en cours.'
+             }
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
