@@ -1,9 +1,12 @@
+import { RecipeService } from './recipe.service';
+import { DialogOkComponent } from './../components/dialog-ok/dialog-ok.component';
 import { Router } from '@angular/router';
 import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { Ingredient } from 'src/app/models/ingredient.model';
 import { Meal } from './../models/meal.model';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
+import { MatDialog } from '../../../node_modules/@angular/material';
 
 
 
@@ -65,21 +68,48 @@ export class PreparationService {
     }
   }
 
-
-  constructor(private router: Router) {
+  // CONSTRUCTEUR
+  constructor(private router: Router, private dialog: MatDialog, private recipeService: RecipeService ) {
     this.preparation = null;
   }
 
-  public setNewPreparation() {
+  // initialise une nouvelle préparation et navigue sur l'écran de choix des ingrédients
+  public doNewPreparation() {
     if (this.preparation === null) {
-      this.preparation = new Meal();
-    this.preparation.id = 0;
-    this.preparation.name = 'Nouvelle préparation';
-    this.router.navigateByUrl('/food');
+      //  si il n'y a pas de preparation en cours on initialise une nouvelle préparation
+      this.setNewPreparation();
+      this.router.navigateByUrl('/food');
     } else {
-      alert('Erreur une preparation n° ' + this.preparation.id + ' est déja en cours d\'édition !');
+      //  si il n'y a déja une préparation en cours alors message d'erreur
+      const dialogRef = this.dialog.open(DialogOkComponent,
+        {data: {title: 'Erreur', message: 'Erreur : ' + this.preparation.name + ' est déja en cours d\'édition !'}});
+      dialogRef.afterClosed().subscribe(result => {});
     }
   }
 
+  // initialise une nouvelle préparation (sans navigation)
+  public setNewPreparation() {
+    this.preparation = new Meal();
+    this.preparation.id = 0;
+    this.preparation.name = 'Nouvelle préparation';
+  }
+
+  public setPreparationById(id: number) {
+    if (this.preparation != null) {
+       //  si il n'y a déja une préparation en cours alors message d'erreur
+       console.log('Preparation service set preparationbyid prep != null id=' + id, this.preparation);
+       const dialogRef = this.dialog.open(DialogOkComponent,
+        {data: {title: 'Erreur', message: 'Erreur : ' + this.preparation.name + ' est déja en cours d\'édition !'}});
+      dialogRef.afterClosed().subscribe(result => {});
+    } else {
+     //  si il n'y a pas de preparation en cours on initialise une nouvelle préparation en recherchant la recette
+     this.preparation = this.recipeService.getById(id);
+     console.log('Preparation service set preparationbyid prep = null id=' + id, this.preparation);
+    }
+  }
+
+  public razPreparation() {
+    this.preparation = null;
+  }
 
 }

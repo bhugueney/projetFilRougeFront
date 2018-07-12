@@ -1,5 +1,7 @@
+import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { PreparationService } from 'src/app/services/preparation.service';
+import { Observable } from '../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-main-menu',
@@ -8,14 +10,17 @@ import { PreparationService } from 'src/app/services/preparation.service';
 })
 export class MainMenuComponent implements OnInit {
 
-  userConnected = true; // localStorage.userId;
+  isUserConnected$: Observable<boolean> = this.userService.isUserConnected();
 
-  constructor(private preparationService: PreparationService) { }
+
+  constructor(  private preparationService: PreparationService,
+                public userService: UserService
+              ) { }
 
   ngOnInit() {
   }
 
   doNewPreparation() {
-    this.preparationService.setNewPreparation();
+    this.preparationService.doNewPreparation();
   }
 }

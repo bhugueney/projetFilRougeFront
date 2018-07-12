@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { FoodComponent } from './components/food/food.component';
@@ -26,10 +27,9 @@ import { PreparationDetailsComponent } from 'src/app/components/preparation-deta
 import { PreparationService } from './services/preparation.service';
 import { DialogYesNoComponent } from './components/dialog-yes-no/dialog-yes-no.component';
 import { DialogOkComponent } from './components/dialog-ok/dialog-ok.component';
+import { UserConnexionComponent } from './components/user-connexion/user-connexion.component';
+import { NotImplementedComponent } from './components/not-implemented/not-implemented.component';
 
-
-
-import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -42,9 +42,10 @@ const routes: Routes = [
   {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
   {path: 'preparation/:id', component: PreparationComponent},
-  {path: 'preparation/:id', component: PreparationComponent},
   {path: 'ingredient', component: IngredientComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
+  {path: 'connexion', component: UserConnexionComponent},
+  {path: 'notimplemented', component: NotImplementedComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -61,7 +62,9 @@ const routes: Routes = [
     PageNotFoundComponent,
     PreparationDetailsComponent,
     DialogYesNoComponent,
-    DialogOkComponent
+    DialogOkComponent,
+    UserConnexionComponent,
+    NotImplementedComponent
     ],
   imports: [
     BrowserModule,

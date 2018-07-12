@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { PreparationService } from '../../services/preparation.service';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-menu',
@@ -17,11 +19,21 @@ export class MenuComponent implements OnInit {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private preparationService: PreparationService) { }
+  isUserConnected$: Observable<boolean> = this.userService.isUserConnected();
+  userConnected: User = null;
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private preparationService: PreparationService,
+    public userService: UserService
+  ) {
+      // met en place le suivi de l'utilisateur
+      this.userService.getAauthenticatedUser().subscribe( (user) => { this.userConnected = user; });
+  }
 
   ngOnInit() { }
 
   doNewPreparation() {
-    this.preparationService.setNewPreparation();
+    this.preparationService.doNewPreparation();
   }
 }

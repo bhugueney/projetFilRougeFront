@@ -117,8 +117,10 @@
 
   <div Class="PreparationsActionsBar">
     <button routerLink="/food" class="PreparationsActionButton">Ajout d'ingrédient(s)</button>
-    <button *ngIf="userIsConnected" class="PreparationsActionButton">Enregistrer comme recette</button>
-    <button *ngIf="userIsConnected" class="PreparationsActionButton">Enregistrer comme Menu</button>
+    <ng-container *ngIf="isUserConnected">
+        <button class="PreparationsActionButton" routerLink="/notimplemented" >Enregistrer comme recette</button>
+        <button  class="PreparationsActionButton" routerLink="/notimplemented" >Enregistrer comme Menu</button>
+    </ng-container>
     <button class="PreparationsActionButton" (click)="abandon();">Abandon</button>
   </div>
   </mat-card>

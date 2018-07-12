@@ -1,0 +1,24 @@
+<div class="form-container">
+  <h1 class="form-field">Connection</h1>
+
+  <form (ngSubmit)="onSubmit()" >
+      <mat-form-field class="form-field">
+        <mat-select placeholder="utilisateur" [(ngModel)]="email" name="email">
+              <mat-option value="frederic.pareja.pf1@gmail.com">Frédérick</mat-option>
+              <mat-option value="hugues.poumeyrol.pf1@gmail.com">Hugues</mat-option>
+              <mat-option value="gabriel.wisniewski@gmail.com">Gabriel</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  class="form-field">
+        <input matInput name="password" placeholder="saisir le mot de passe" [(ngModel)]="password" name="password"/>
+      </mat-form-field>
+      
+      <button  class="form-field">Se connecter</button>
+  </form>
+
+  <div class="form-field">
+      <a routerLink="/notimplemented">j'ai oublié mon mon de passe</a>
+  </div>
+  
+</div>
