@@ -36,7 +36,7 @@ export class IngredientComponent implements OnInit {
   dbErrorMessage: string;
 
   // DEBUG MODE
-  debugMode = false;
+  debugMode = true;
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
@@ -73,6 +73,15 @@ export class IngredientComponent implements OnInit {
         this.initCategoriesList();
       }
     );
+  }
+
+  public updateGlycemicLoad() {
+    if ( this.ingredient.glucid && this.ingredient.glycemicIndex) {
+      this.ingredient.glycemicLoad = this.ingredientService.calculateGlycemicLoad(
+        this.ingredient.glycemicIndex,
+        this.ingredient.glucid
+      );
+    }
   }
 
   ngOnInit() {
@@ -123,7 +132,10 @@ export class IngredientComponent implements OnInit {
           this.ingredient = ingredient;
           this.dbErrorMessage = '';
         },
-        (error: Error) => this.dbErrorMessage = error.message
+        (error: Error) => {
+          this.dbErrorMessage = error.message;
+          console.log('Update error');
+        }
       );
     } else {
       this.ingredientService.create(this.ingredient).subscribe(

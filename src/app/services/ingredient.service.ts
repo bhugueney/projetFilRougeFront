@@ -40,7 +40,7 @@ export class IngredientService {
   public getById(id: number): Observable<Ingredient> {
     const userId = (localStorage.userId ? localStorage.userId : '0');
     return this.http.get<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/userId=' + id,
+      IngredientService.URL_INGREDIENT + '/' + id,
       {
         params: new HttpParams()
           .set('userId', userId)
@@ -84,13 +84,24 @@ export class IngredientService {
     }
 
     return this.http.put<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/' + ingredient.id,
-      {
+      IngredientService.URL_INGREDIENT + '/' + ingredient.id + '?userId=' + localStorage.userId,
+      ingredient
+      /* {
         params: new HttpParams()
           .set('userId', localStorage.userId)
-      }
+      }*/
     );
   }
+
+
+  public calculateGlycemicLoad(glycemicIndex: number, glucidQuantityPerPortion: number): number {
+    // CG = [IG x quantité de glucides d’une portion d’aliment (g)]/100
+    if (!glycemicIndex || !glucidQuantityPerPortion) {
+      return null;
+    }
+    return Math.round(glycemicIndex * glucidQuantityPerPortion) / 100;
+  }
+
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 

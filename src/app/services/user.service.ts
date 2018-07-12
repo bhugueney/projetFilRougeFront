@@ -18,9 +18,10 @@ export class UserService {
   static debugMode = false; // mettre a true pour afficher les logs dans la console
 
   private static users: User[] =  [
-    new User(1, 'Frédérick', 'Pareja', 'frederic.pareja.pf1@gmail.com'),
-    new User(2, 'Hugues', 'Poumeyrol', 'hugues.poumeyrol.pf1@gmail.com'),
-    new User(3, 'Gabriel', 'Wisniewski', 'gabriel.wisniewski@gmail.com')
+    new User(1, 'admin', 'admin', 'pf1.fhg@gmail.com'),
+    new User(2, 'Frédérick', 'Pareja', 'frederic.pareja.pf1@gmail.com'),
+    new User(3, 'Hugues', 'Poumeyrol', 'hugues.poumeyrol.pf1@gmail.com'),
+    new User(4, 'Gabriel', 'Wisniewski', 'gabriel.wisniewski@gmail.com')
    ];
 
 
