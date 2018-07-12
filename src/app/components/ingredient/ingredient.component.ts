@@ -43,35 +43,35 @@ export class IngredientComponent implements OnInit {
     private location: Location,
     private categoryService: CategoryService) {
 
-    // Default mode : Creation mode
-    this.isEditable = true;
-    this.ingredient = new Ingredient();
-    this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+      // Default mode : Creation mode
+      this.isEditable = true;
+      this.ingredient = new Ingredient();
+      this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
 
-    this.dbErrorMessage = '';
+      this.dbErrorMessage = '';
 
-    this.route.params.subscribe(params => {
+      this.route.params.subscribe(params => {
 
-      // If an ingredient ID is provided -> read only mode
-      if (params.hasOwnProperty('id')) {
-        const idRequested: number = +params['id'];
-        this.ingredientService.getById(idRequested).subscribe(
-          (ingredient: Ingredient) => {
-            this.ingredient = ingredient;
-            this.isEditable = false;
+        // If an ingredient ID is provided -> read only mode
+        if (params.hasOwnProperty('id')) {
+          const idRequested: number = +params['id'];
+          this.ingredientService.getById(idRequested).subscribe(
+            (ingredient: Ingredient) => {
+              this.ingredient = ingredient;
+              this.isEditable = false;
 
-            if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
-              this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+              if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+                this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+              }
             }
-          }
-        );
-      } else {
-        // DEBUG
-        localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
-      }
+          );
+        } else {
+          // DEBUG
+          localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
+        }
 
-      this.initCategoriesList();
-    }
+        this.initCategoriesList();
+      }
     );
   }
 
@@ -80,35 +80,37 @@ export class IngredientComponent implements OnInit {
     // This command allow to get name of real class
     switch (this.ingredient.constructor.name) {
       case Recipe.name:
-        this.isComplexIngredient = true;
-        if (this.debugMode) {
-          console.log('this.ingredient is a recipe');
-        }
-        break;
+      this.isComplexIngredient = true;
+      if (this.debugMode) {
+        console.log('this.ingredient is a recipe');
+      }
+      break;
       case Ingredient.name:
-        this.isComplexIngredient = false;
-        if (this.debugMode) {
-          console.log('this.ingredient is a basic ingredient');
-        }
-        break;
+      this.isComplexIngredient = false;
+      if (this.debugMode) {
+        console.log('this.ingredient is a basic ingredient');
+      }
+      break;
       case Meal.name:
-        this.isComplexIngredient = true;
-        if (this.debugMode) {
-          console.log('this.ingredient is a meal');
-        }
-        break;
+      this.isComplexIngredient = true;
+      if (this.debugMode) {
+        console.log('this.ingredient is a meal');
+      }
+      break;
     }
   }
 
   setCategoryFromSelector(e: MatSelectChange) {
     const categoryId: number = +e.value;
-    this.ingredient.categorie = this.categoryService.getCategoryById(categoryId);
+    this.categoryService.getCategoryById(categoryId).subscribe(
+      (cat) => {this.ingredient.categorie = cat; }
+    );
   }
 
   /**
-   * This method is called to save current ingredient in database
-   * @param e : event of button calling this method
-   */
+  * This method is called to save current ingredient in database
+  * @param e : event of button calling this method
+  */
   saveEditableIngredient() {
     if (this.debugMode) {
       console.log('save ingredient');
