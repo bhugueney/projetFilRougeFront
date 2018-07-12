@@ -22,10 +22,11 @@
       <a mat-list-item routerLink="/main" (click)="drawer.toggle()" routerLinkActive=true>Accueil</a>
       <a mat-list-item (click)="drawer.toggle(); doNewPreparation();">Effectuer une préparation</a>
 
-      <!-- recettes et repas disponibles que si user connecté -->
+      <!-- création ingrédient, consultation recettes et repas disponibles que si user connecté -->
       <ng-container *ngIf="(isUserConnected$ | async)">
         <a mat-list-item routerLink="/recipe" (click)="drawer.toggle()">Consulter mes recettes</a>
         <a mat-list-item routerLink="/meal" (click)="drawer.toggle()">Suivre mes repas</a>
+        <a mat-list-item routerLink="/ingredient" (click)="drawer.toggle()">Créer mon ingrédient</a>
       </ng-container>
       
       <a mat-list-item routerLink="/ingredient/2" (click)="drawer.toggle()" routerLinkActive=true>[Test] Ingredient display</a>

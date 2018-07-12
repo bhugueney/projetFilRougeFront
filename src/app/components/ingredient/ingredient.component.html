@@ -13,13 +13,13 @@
            height="25%"/>
       <div class="ingredient-main-data" fxLayout="column">
 
-          <textarea (resize)="true" matInput placeholder="{{(isEditable?'Name':' ')}}" [(ngModel)]="ingredient.name"
+          <textarea (resize)="true" matInput placeholder="{{(isEditable?'Ingrédient':' ')}}" [(ngModel)]="ingredient.name"
                     [disabled]="!isEditable" name="Name"
                     [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
 
 
         <mat-form-field>
-          <mat-select placeholder="{{(isEditable?'Category':' ')}}" (selectionChange)="setCategoryFromSelector($event)"
+          <mat-select placeholder="{{(isEditable?'Catégorie':' ')}}" (selectionChange)="setCategoryFromSelector($event)"
                       [value]="ingredient?.categorie?.id"
                       [disabled]="!isEditable"
                       [class]="(isEditable?'editableInput':'disabledInput')">
@@ -93,15 +93,15 @@
       </div>
     </section>
 
-    <section #complexComponents *ngIf="isComplexIngredient">
-      <div>
-        Module ingrédients recette / repas
-      </div>
+    <section #complexComponents *ngIf="dbErrorMessage">
+      <p>
+        {{ dbErrorMessage }} 
+      </p>
     </section>
 
     <!-- Bottom button when editable ingredient -->
     <section *ngIf="isEditable" fxLayout="row" fxLayoutAlign="center start" class="buttonSection">
-        <button mat-raised-button="saveButton" [color]="'primary'" (click)="saveEditableIngredient($event)">Enregistrer</button>
+        <button mat-raised-button="saveButton" [color]="'primary'" (click)="saveEditableIngredient()">Enregistrer</button>
         <button mat-raised-button="cancelButton" [color]="'warn'" (click)="cancelIngredientEdition($event)">Annuler</button>
     </section>
 

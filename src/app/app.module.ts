@@ -42,8 +42,8 @@ const routes: Routes = [
   {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
   {path: 'preparation/:id', component: PreparationComponent},
-  {path: 'ingredient/:id', component: IngredientComponent},
   {path: 'ingredient', component: IngredientComponent},
+  {path: 'ingredient/:id', component: IngredientComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
