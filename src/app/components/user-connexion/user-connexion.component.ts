@@ -1,3 +1,5 @@
+import { DialogOkComponent } from './../dialog-ok/dialog-ok.component';
+import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -13,7 +15,8 @@ export class UserConnexionComponent implements OnInit {
   password = '';
 
   constructor( private userService: UserService,
-               private location: Location
+               private location: Location,
+               private dialog: MatDialog
              ) {
   }
 
@@ -21,8 +24,22 @@ export class UserConnexionComponent implements OnInit {
   }
 
   public onSubmit() {
-    this.userService.authenticate(this.email, this.password);
-    this.location.back();
+    this.userService.authenticate(
+      this.email,
+      this.password,
+      // fonction callback appellée par authenticate
+      (messageRetour: string) => {
+        if (messageRetour === 'OK') {
+          // si l'authentifcation a réussie
+          this.location.back();
+        } else {
+          // si une erreur est survenue
+          const dialogRef = this.dialog.open(DialogOkComponent,
+            {data: {title: 'Erreur lors de l\'authentification', message: messageRetour}});
+
+        }
+      }
+    );
   }
 
 }

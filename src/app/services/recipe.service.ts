@@ -88,6 +88,7 @@ export class RecipeService {
       const recipeIngredient: RecipeIngredient = new RecipeIngredient();
       recipeIngredient.recipe = fakeRecipe;
       // recipeIngredient.ingredient = this.ingredientService.getById(i);
+      /*
       this.ingredientService.getById(i).subscribe(
         (ingredient: Ingredient) => {
           recipeIngredient.ingredient = ingredient;
@@ -96,7 +97,7 @@ export class RecipeService {
         },
         (error) => { } // What do you want to do John Snow.... Nothing ?!
       );
-
+*/
     }
     fakeRecipe.listIngredient = listIngredient;
 

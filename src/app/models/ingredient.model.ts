@@ -27,7 +27,7 @@ export class Ingredient {
   private _glycemicIndex: number;
   private _glycemicLoad: number;
 
-  private _categorie: Categorie;
+  private _category: Categorie;
 
   // Creator of ingredient
   // private _owner: User;
@@ -144,11 +144,11 @@ export class Ingredient {
     this._glycemicLoad = value;
   }
 
-  public get categorie(): Categorie {
-    return this._categorie;
+  public get category(): Categorie {
+    return this._category;
   }
-  public set categorie(value: Categorie) {
-    this._categorie = value;
+  public set category(value: Categorie) {
+    this._category = value;
   }
 
   // Creator of ingredient
@@ -186,7 +186,7 @@ export class Ingredient {
     salt?: number,
     glycemicIndex?: number,
     glycemicLoad?: number,
-    categorie?: Categorie,
+    category?: Categorie,
     owner?: User,
     comment?: string
     ) {
@@ -207,7 +207,7 @@ export class Ingredient {
     this.salt = salt;
     this.glycemicIndex = glycemicIndex;
     this.glycemicLoad = glycemicLoad;
-    this.categorie = categorie;
+    this.category = category;
    //  this.owner = owner;
     this.comment = comment;
   }

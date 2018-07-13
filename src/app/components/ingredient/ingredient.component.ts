@@ -36,47 +36,47 @@ export class IngredientComponent implements OnInit {
   dbErrorMessage: string;
 
   // DEBUG MODE
-  debugMode = true;
+  debugMode = false;
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
     private location: Location,
     private categoryService: CategoryService) {
 
-      // Default mode : Creation mode
-      this.isEditable = true;
-      this.ingredient = new Ingredient();
-      this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+    // Default mode : Creation mode
+    this.isEditable = true;
+    this.ingredient = new Ingredient();
+    this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
 
-      this.dbErrorMessage = '';
+    this.dbErrorMessage = '';
+    this.initCategoriesList();
+    this.route.params.subscribe(params => {
 
-      this.route.params.subscribe(params => {
+      // If an ingredient ID is provided -> read only mode
+      if (params.hasOwnProperty('id')) {
+        const idRequested: number = +params['id'];
+        this.ingredientService.getById(idRequested).subscribe(
+          (ingredient: Ingredient) => {
+            this.ingredient = ingredient;
+            this.isEditable = false;
 
-        // If an ingredient ID is provided -> read only mode
-        if (params.hasOwnProperty('id')) {
-          const idRequested: number = +params['id'];
-          this.ingredientService.getById(idRequested).subscribe(
-            (ingredient: Ingredient) => {
-              this.ingredient = ingredient;
-              this.isEditable = false;
-
-              if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
-                this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
-              }
+            if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+              this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
             }
-          );
-        } else {
-          // DEBUG
-          localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
-        }
-
-        this.initCategoriesList();
+          }
+        );
+      } else {
+        // DEBUG
+        localStorage.userId = '1'; // Pour test création d'un ingrédient en base avec user ADMIN
       }
+
+
+    }
     );
   }
 
   public updateGlycemicLoad() {
-    if ( this.ingredient.glucid && this.ingredient.glycemicIndex) {
+    if (this.ingredient.glucid && this.ingredient.glycemicIndex) {
       this.ingredient.glycemicLoad = this.ingredientService.calculateGlycemicLoad(
         this.ingredient.glycemicIndex,
         this.ingredient.glucid
@@ -89,30 +89,30 @@ export class IngredientComponent implements OnInit {
     // This command allow to get name of real class
     switch (this.ingredient.constructor.name) {
       case Recipe.name:
-      this.isComplexIngredient = true;
-      if (this.debugMode) {
-        console.log('this.ingredient is a recipe');
-      }
-      break;
+        this.isComplexIngredient = true;
+        if (this.debugMode) {
+          console.log('this.ingredient is a recipe');
+        }
+        break;
       case Ingredient.name:
-      this.isComplexIngredient = false;
-      if (this.debugMode) {
-        console.log('this.ingredient is a basic ingredient');
-      }
-      break;
+        this.isComplexIngredient = false;
+        if (this.debugMode) {
+          console.log('this.ingredient is a basic ingredient');
+        }
+        break;
       case Meal.name:
-      this.isComplexIngredient = true;
-      if (this.debugMode) {
-        console.log('this.ingredient is a meal');
-      }
-      break;
+        this.isComplexIngredient = true;
+        if (this.debugMode) {
+          console.log('this.ingredient is a meal');
+        }
+        break;
     }
   }
 
   setCategoryFromSelector(e: MatSelectChange) {
     const categoryId: number = +e.value;
     this.categoryService.getCategoryById(categoryId).subscribe(
-      (cat) => {this.ingredient.categorie = cat; }
+      (cat) => { this.ingredient.category = cat; }
     );
   }
 
@@ -171,7 +171,16 @@ export class IngredientComponent implements OnInit {
   }
 
   initCategoriesList() {
-    this.categories = this.categoryService.getSelectableCategories();
+    this.categoryService.getCategories().subscribe(
+
+      (categories: Categorie[]) => {
+        this.categories = categories;
+        if (this.ingredient.category) {
+          console.log(this.ingredient.category.name);
+        }
+
+      }
+    );
   }
 
   checkIngredient(e: Event) {
