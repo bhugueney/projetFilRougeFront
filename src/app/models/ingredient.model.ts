@@ -2,171 +2,38 @@ import { User } from './user.model';
 import { Categorie } from './categorie.model';
 export class Ingredient {
 
-  private _id: number;
-  private _name: string;
+  public id: number;
+  public name: string;
 
-  private _urlImage = 'defaultIngredient.jpg';
+  public urlImage = 'defaultIngredient.jpg';
 
   // energy is specified in k/cal for portion of 100g
-  private _energy: number;
+  public energy: number;
 
   // Attributes below are specified in g for portion of 100g
-  private _water: number;
-  private _protein: number;
-  private _glucid: number;
-  private _lipid: number;
-  private _sugar: number;
-  private _amidon: number;
-  private _fiber: number;
-  private _unsaturedFattyAcides: number;
-  private _monoUnsaturedFattyAcides: number;
-  private _polyUnsaturedFattyAcides: number;
-  private _salt: number;
+  public water: number;
+  public protein: number;
+  public glucid: number;
+  public lipid: number;
+  public sugar: number;
+  public amidon: number;
+  public fiber: number;
+  public unsaturedFattyAcides: number;
+  public monoUnsaturedFattyAcides: number;
+  public polyUnsaturedFattyAcides: number;
+  public salt: number;
 
   // Attributes below are specified indice for portion of 100g
-  private _glycemicIndex: number;
-  private _glycemicLoad: number;
+  public glycemicIndex: number;
+  public glycemicLoad: number;
 
-  private _category: Categorie;
-
-  // Creator of ingredient
-  // private _owner: User;
-
-  // User comment
-  private _comment: string;
-
-  // Getters and setters
-  public get id(): number {
-    return this._id;
-  }
-  public set id(value: number) {
-    this._id = value;
-  }
-  public get name(): string {
-    return this._name;
-  }
-  public set name(value: string) {
-    this._name = value;
-  }
-
-  public get urlImage(): string {
-    return this._urlImage;
-  }
-  public set urlImage(value: string) {
-    this._urlImage = value;
-  }
-
-  public get energy(): number {
-    return this._energy;
-  }
-  public set energy(value: number) {
-    this._energy = value;
-  }
-
-  public get water(): number {
-    return this._water;
-  }
-  public set water(value: number) {
-    this._water = value;
-  }
-  public get protein(): number {
-    return this._protein;
-  }
-  public set protein(value: number) {
-    this._protein = value;
-  }
-  public get glucid(): number {
-    return this._glucid;
-  }
-  public set glucid(value: number) {
-    this._glucid = value;
-  }
-  public get lipid(): number {
-    return this._lipid;
-  }
-  public set lipid(value: number) {
-    this._lipid = value;
-  }
-  public get sugar(): number {
-    return this._sugar;
-  }
-  public set sugar(value: number) {
-    this._sugar = value;
-  }
-  public get amidon(): number {
-    return this._amidon;
-  }
-  public set amidon(value: number) {
-    this._amidon = value;
-  }
-  public get fiber(): number {
-    return this._fiber;
-  }
-  public set fiber(value: number) {
-    this._fiber = value;
-  }
-  public get unsaturedFattyAcides(): number {
-    return this._unsaturedFattyAcides;
-  }
-  public set unsaturedFattyAcides(value: number) {
-    this._unsaturedFattyAcides = value;
-  }
-  public get monoUnsaturedFattyAcides(): number {
-    return this._monoUnsaturedFattyAcides;
-  }
-  public set monoUnsaturedFattyAcides(value: number) {
-    this._monoUnsaturedFattyAcides = value;
-  }
-  public get polyUnsaturedFattyAcides(): number {
-    return this._polyUnsaturedFattyAcides;
-  }
-  public set polyUnsaturedFattyAcides(value: number) {
-    this._polyUnsaturedFattyAcides = value;
-  }
-  public get salt(): number {
-    return this._salt;
-  }
-  public set salt(value: number) {
-    this._salt = value;
-  }
-
-  public get glycemicIndex(): number {
-    return this._glycemicIndex;
-  }
-  public set glycemicIndex(value: number) {
-    this._glycemicIndex = value;
-  }
-
-  public get glycemicLoad(): number {
-    return this._glycemicLoad;
-  }
-  public set glycemicLoad(value: number) {
-    this._glycemicLoad = value;
-  }
-
-  public get category(): Categorie {
-    return this._category;
-  }
-  public set category(value: Categorie) {
-    this._category = value;
-  }
+  public category: Categorie;
 
   // Creator of ingredient
-  // public get owner(): User {
-  //   return this._owner;
-  // }
-  // public set owner(value: User) {
-  //   this._owner = value;
-  // }
+  // public owner: User;
 
   // User comment
-  public get comment(): string {
-    return this._comment;
-  }
-  public set comment(value: string) {
-    this._comment = value;
-  }
-
+  public comment: string;
 
   constructor(
     id?: number,
@@ -189,7 +56,7 @@ export class Ingredient {
     category?: Categorie,
     owner?: User,
     comment?: string
-    ) {
+  ) {
     this.id = id;
     this.name = name;
     this.urlImage = urlImage;
@@ -208,7 +75,7 @@ export class Ingredient {
     this.glycemicIndex = glycemicIndex;
     this.glycemicLoad = glycemicLoad;
     this.category = category;
-   //  this.owner = owner;
+    //  this.owner = owner;
     this.comment = comment;
   }
 

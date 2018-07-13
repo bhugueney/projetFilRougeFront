@@ -66,9 +66,8 @@ export class IngredientService {
 
     return this.http.post<Ingredient>(
       IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId,
-      {
-        ingredient
-      });
+      ingredient
+    );
 
   }
 
