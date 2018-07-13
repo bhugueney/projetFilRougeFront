@@ -5,13 +5,14 @@ import { User } from '../models/user.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
-  static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
+  static readonly URL_INGREDIENT = environment.backEndUrl + '/ingredients';
 
   // private _ingredientsList: Ingredient[];
 

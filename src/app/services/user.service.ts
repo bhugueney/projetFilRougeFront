@@ -5,6 +5,10 @@ import { User } from 'src/app/models/user.model';
 import { BehaviorSubject, Observable } from '../../../node_modules/rxjs';
 import { MatDialog } from '../../../node_modules/@angular/material';
 import { DialogYesNoComponent } from 'src/app/components/dialog-yes-no/dialog-yes-no.component';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '../../../node_modules/@angular/common/http';
+
+// interface ICallbackString { ( s: string ): void; }
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +20,8 @@ export class UserService {
   // --------------------------
 
   static debugMode = false; // mettre a true pour afficher les logs dans la console
+
+  static readonly URL_USER = environment.backEndUrl + '/users';
 
   private static users: User[] =  [
     new User(1, 'admin', 'admin', 'pf1.fhg@gmail.com'),
@@ -69,6 +75,7 @@ export class UserService {
   constructor( private router: Router,
                private preparationService: PreparationService,
                private dialog: MatDialog,
+               private httpClient: HttpClient
              ) {
 
     // met en place une observation du changement de authenticatedUser
@@ -128,18 +135,36 @@ export class UserService {
 
    // methode pour authentifier un utilisateur avec son email et password
    // TODO : actuellement ne fait aucune vérification, a compléter plus tard
-  public authenticate(email: string, password) {
-    let retUser = UserService.users.find( (user) => user.email === email);
-    if (retUser) {
-      localStorage.userId = retUser.id;
-    } else {
-      retUser = null;
-      localStorage.removeItem('userId');
-    }
-    // emet une nouvelle valeur pour authenticatedUser
-    this.authenticatedUser.next(retUser);
+  public authenticate(email: string, password, callbackFunction) {
+    const jSonauthToken = `{email: \'${email}\', password: \'${password}\'}`; // create a json string token object
+    const b64jSonauthToken = btoa(jSonauthToken); // encoding in base64 format
 
+    // call then backend for authentification and subscribe for return
+    this.httpClient.get<User>(UserService.URL_USER + '/authenticate?authToken=' + b64jSonauthToken).subscribe(
+       (userFromBack: User) => {
+         // success call to back
+         console.log('return form back authtenticate : ', userFromBack);
+         localStorage.userId = userFromBack.id; // storing the id in local storage
+         this.authenticatedUser.next(userFromBack); // we set authenticatedUser with returned user
+         callbackFunction('OK');
+       },
+       (err) => {
+         // an error has occurred when calling back
+         console.log('return form back authtenticate : ', err);
+         localStorage.removeItem('userId'); // cleanning the id in local storage
+         this.authenticatedUser.next(null); // we set authenticatedUser to null
+         let message = '';
+         switch (err.status) {
+            case 401 : { message = 'Login ou mot de passe incorrects !'; break; } // mauvais mot de passe
+            case 404 : { message = 'Login ou mot de passe incorrects !'; break; } // mauvais email
+            default : { message = 'Une erreur est survenue sur le serveur, contactez l\'administrateur'; break; } // mauvais email
+         }
+         callbackFunction(message);
+       }
+    );
   }
+
+
 
   public disconnect() {
 
