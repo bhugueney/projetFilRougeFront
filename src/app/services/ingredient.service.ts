@@ -6,14 +6,12 @@ import { User } from '../models/user.model';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
   static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
-  static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
   // private _ingredientsList: Ingredient[];
 
@@ -25,7 +23,7 @@ export class IngredientService {
 
   public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
     // return this.ingredientsList.filter(e => e.categorie.id === catId);
-   return  this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
   }
 
 
@@ -38,13 +36,18 @@ export class IngredientService {
   }*/
 
   public getById(id: number): Observable<Ingredient> {
-    const userId = (localStorage.userId ? localStorage.userId : '0');
+
+    if (localStorage.userId) {
+      return this.http.get<Ingredient>(
+        IngredientService.URL_INGREDIENT + '/' + id,
+        {
+          params: new HttpParams()
+            .set('userId', localStorage.userId)
+        });
+    }
+
     return this.http.get<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/' + id,
-      {
-        params: new HttpParams()
-          .set('userId', userId)
-      });
+      IngredientService.URL_INGREDIENT + '/' + id, );
   }
 
   /**
@@ -108,57 +111,57 @@ export class IngredientService {
 
   // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
-/*
-  private getTomate(): Ingredient {
-    return new Ingredient(
-      1,
-      'Tomates',
-      'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+  /*
+    private getTomate(): Ingredient {
+      return new Ingredient(
+        1,
+        'Tomates',
+        'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getCarotte(): Ingredient {
-    return new Ingredient(
-      2,
-      'Carotte',
-      'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getCarotte(): Ingredient {
+      return new Ingredient(
+        2,
+        'Carotte',
+        'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getPoelee(): Ingredient {
-    return new Ingredient(
-      3,
-      'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-      'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(8),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getPoelee(): Ingredient {
+      return new Ingredient(
+        3,
+        'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
+        'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(8),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getPoireau(): Ingredient {
-    return new Ingredient(
-      4,
-      'Poireau',
-      'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getPoireau(): Ingredient {
+      return new Ingredient(
+        4,
+        'Poireau',
+        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getUnknown(): Ingredient {
-    return new Ingredient(
-      102,
-      'FAKE RECIPE',
-      'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(9),
-      IngredientService.systemUser,
-      'ceci est ingredient inconu');
-  }
-*/
+    private getUnknown(): Ingredient {
+      return new Ingredient(
+        102,
+        'FAKE RECIPE',
+        'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(9),
+        IngredientService.systemUser,
+        'ceci est ingredient inconu');
+    }
+  */
 
 
 }

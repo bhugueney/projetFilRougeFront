@@ -91,7 +91,11 @@ export class UserService {
       if (UserService.debugMode) {
         console.log('User Service changement de authenticatedUser détecté, newID = ', newID);
       }
-      localStorage.userId = newID;
+      if (newID) {
+        localStorage.userId = newID; // stocke en local l'id pour prochaine utilisation
+      } else {
+        localStorage.removeItem('userId'); // si null retire le stockage local
+      }
 
       if (UserService.debugMode) {
         console.log('User Service changement de authenticatedUser détecté =', this.authenticatedUser,
@@ -130,7 +134,7 @@ export class UserService {
       localStorage.userId = retUser.id;
     } else {
       retUser = null;
-      localStorage.userId = null;
+      localStorage.removeItem('userId');
     }
     // emet une nouvelle valeur pour authenticatedUser
     this.authenticatedUser.next(retUser);
