@@ -46,12 +46,12 @@
           <tr>
             <th>Indice glycémique</th>
             <td><input name="glycemicIdx" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-                       [(ngModel)]="ingredient.glycemicIndex" [disabled]="!isEditable"></td>
+                       [(ngModel)]="ingredient.glycemicIndex" [disabled]="!isEditable" (change)="updateGlycemicLoad()"></td>
           </tr>
           <tr>
             <th>Charge glycémique</th>
             <td><input name="glycemicLoad" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-                       [(ngModel)]="ingredient.glycemicLoad" [disabled]="!isEditable"></td>
+                       [(ngModel)]="ingredient.glycemicLoad" [disabled]="true"></td>
           </tr>
           <tr>
             <th>Lipides</th>
@@ -62,7 +62,8 @@
           <tr>
             <th>Glucides</th>
             <td><input name="glucid" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-                       [(ngModel)]="ingredient.glucid" [disabled]="!isEditable" min="0" max="100"> g/100g
+                       [(ngModel)]="ingredient.glucid" [disabled]="!isEditable" min="0" max="100"
+                       (change)="updateGlycemicLoad()"> g/100g
             </td>
           </tr>
           <tr>

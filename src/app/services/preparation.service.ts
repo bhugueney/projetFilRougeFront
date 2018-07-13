@@ -103,7 +103,10 @@ export class PreparationService {
       dialogRef.afterClosed().subscribe(result => {});
     } else {
      //  si il n'y a pas de preparation en cours on initialise une nouvelle préparation en recherchant la recette
-     this.preparation = this.recipeService.getById(id);
+     // this.preparation = this.recipeService.getById(id);
+     this.recipeService.getById(id).subscribe(
+       (recipe) => {this.preparation = recipe; }
+     );
      console.log('Preparation service set preparationbyid prep = null id=' + id, this.preparation);
     }
   }

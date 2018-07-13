@@ -1,11 +1,8 @@
-import { FoodComponent } from './../components/food/food.component';
 import { PreparationService } from './preparation.service';
 import { RecipeService } from './recipe.service';
 import { IngredientService } from './ingredient.service';
 import { CategoryService } from './category.service';
 import { Injectable } from '@angular/core';
-import { Ingredient } from '../models/ingredient.model';
-import { Recipe } from '../models/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,32 +21,32 @@ export class FoodService {
     }*/
 
     // method to get list since a category
-    public getFilterListIngredientByCategoryId(catId: number) {
+    /*public getFilterListIngredientByCategoryId(catId: number) {
       return this.ingredientService.getListByCategoryId(catId);
-    }
+    }*/
 
     // method to get main categories
-    public getMainCategories() {
+    /*public getMainCategories() {
       return this.categorieService.getMainCategories();
-    }
+    }*/
 
     // method to get details of category
-    public getCategoryById(id: number) {
+    /*public getCategoryById(id: number) {
       return this.categorieService.getCategoryById(id);
-    }
+    }*/
 
     // method to send a list of preparation
-    public setListIngredients(list: Ingredient[]) {
+    /*public setListIngredients(list: Ingredient[]) {
       this.preparationService.ingredientsList = list;
-    }
+    }*/
 
     // method to load a list of preparation
-    public getListIngredients(): Ingredient[] {
+    /*public getListIngredients(): Ingredient[] {
       return this.preparationService.ingredientsList;
-    }
+    }*/
 
     // method to get a recipe by id
-    public getRecipeById(id: number): Recipe {
+    /*public getRecipeById(id: number): Recipe {
       return this.recipeService.getById(id);
-    }
+    }*/
   }

@@ -1,18 +1,21 @@
+import { HttpClient } from '@angular/common/http';
 import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { Injectable } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
+import { Observable } from '../../../node_modules/rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
+  private readonly URL_GET: 'http://localhost:8095/categories/';
 
   private recipeList: Recipe[];
 
-  constructor(private ingredientService: IngredientService) {
+  constructor(private http: HttpClient, private ingredientService: IngredientService) {
     this.recipeList = new Array<Recipe>();
     for (let i = 1; i < 10; i++) {
       this.recipeList.push(this.createFakeRecipe(i, i));
@@ -23,13 +26,14 @@ export class RecipeService {
     return this.recipeList;
   }
 
-
-  public getById(id: number): Recipe {
-    if ((this.recipeList.filter(e => e.id === id)).length > 0) {
+  // method to load a category by id
+  public getById(id: number): Observable<Recipe> {
+    /*if ((this.recipeList.filter(e => e.id === id)).length > 0) {
       return this.recipeList.find(e => e.id === id);
     } else {
       return null;
-    }
+    }*/
+    return this.http.get<Recipe>(this.URL_GET + id);
   }
 
   public getNew(): Recipe {

@@ -1,12 +1,10 @@
+import { Ingredient } from 'src/app/models/ingredient.model';
 import { CategoryService } from './category.service';
-import { Ingredient } from './../models/ingredient.model';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject, Observable, throwError } from 'rxjs';
-
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +12,8 @@ import { Subject, Observable, throwError } from 'rxjs';
 export class IngredientService {
 
   static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
-  static readonly restItemsUrl = 'http://localhost:8095/ingredients?userId=0';
 
-  private _ingredientsList: Ingredient[];
+  // private _ingredientsList: Ingredient[];
 
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
@@ -24,27 +21,33 @@ export class IngredientService {
     return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=0');
   }
 
-  public getListByCategoryId(catId) {
-    return this.ingredientsList.filter(e => e.categorie.id === catId);
+  public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
+    // return this.ingredientsList.filter(e => e.categorie.id === catId);
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
   }
 
 
   // getters & setters
-  public get ingredientsList(): Ingredient[] {
+  /*public get ingredientsList(): Ingredient[] {
     return this._ingredientsList;
   }
   public set ingredientsList(value: Ingredient[]) {
     this._ingredientsList = value;
-  }
+  }*/
 
   public getById(id: number): Observable<Ingredient> {
-    const userId = (localStorage.userId ? localStorage.userId : '0');
+
+    if (localStorage.userId && localStorage.userId !== 'null') {
+      return this.http.get<Ingredient>(
+        IngredientService.URL_INGREDIENT + '/' + id,
+        {
+          params: new HttpParams()
+            .set('userId', localStorage.userId)
+        });
+    }
+
     return this.http.get<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/userId=' + id,
-      {
-        params: new HttpParams()
-          .set('userId', userId)
-      });
+      IngredientService.URL_INGREDIENT + '/' + id, );
   }
 
   /**
@@ -54,7 +57,7 @@ export class IngredientService {
   public create(ingredient: Ingredient): Observable<Ingredient> {
 
     // An ingredient can't be created by anonymous user.
-    if (!localStorage.userId) {
+    if (!localStorage.userId || localStorage.userId === 'null') {
       return throwError(new Error('Unknown user'));
     }
 
@@ -74,7 +77,7 @@ export class IngredientService {
   public update(ingredient: Ingredient): Observable<Ingredient> {
 
     // An ingredient can't be update by anonymous user.
-    if (!localStorage.userId) {
+    if (!localStorage.userId || localStorage.userId === 'null') {
       return throwError(new Error('Unknown user'));
     }
 
@@ -84,70 +87,81 @@ export class IngredientService {
     }
 
     return this.http.put<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/' + ingredient.id,
-      {
+      IngredientService.URL_INGREDIENT + '/' + ingredient.id + '?userId=' + localStorage.userId,
+      ingredient
+      /* {
         params: new HttpParams()
           .set('userId', localStorage.userId)
-      }
+      }*/
     );
   }
+
+
+  public calculateGlycemicLoad(glycemicIndex: number, glucidQuantityPerPortion: number): number {
+    // CG = [IG x quantité de glucides d’une portion d’aliment (g)]/100
+    if (!glycemicIndex || !glucidQuantityPerPortion) {
+      return null;
+    }
+    return Math.round(glycemicIndex * glucidQuantityPerPortion) / 100;
+  }
+
 
   /********************* ELEMENTS TO TEST FRONT COMPONENT **********************/
 
 
   // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
+  /*
+    private getTomate(): Ingredient {
+      return new Ingredient(
+        1,
+        'Tomates',
+        'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getTomate(): Ingredient {
-    return new Ingredient(
-      1,
-      'Tomates',
-      'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getCarotte(): Ingredient {
+      return new Ingredient(
+        2,
+        'Carotte',
+        'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getCarotte(): Ingredient {
-    return new Ingredient(
-      2,
-      'Carotte',
-      'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getPoelee(): Ingredient {
+      return new Ingredient(
+        3,
+        'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
+        'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(8),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getPoelee(): Ingredient {
-    return new Ingredient(
-      3,
-      'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-      'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(8),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
+    private getPoireau(): Ingredient {
+      return new Ingredient(
+        4,
+        'Poireau',
+        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(4),
+        IngredientService.systemUser,
+        'ceci est un commentaire');
+    }
 
-  private getPoireau(): Ingredient {
-    return new Ingredient(
-      4,
-      'Poireau',
-      'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(4),
-      IngredientService.systemUser,
-      'ceci est un commentaire');
-  }
-
-  private getUnknown(): Ingredient {
-    return new Ingredient(
-      102,
-      'FAKE RECIPE',
-      'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-      this.categoryService.getCategoryById(9),
-      IngredientService.systemUser,
-      'ceci est ingredient inconu');
-  }
-
+    private getUnknown(): Ingredient {
+      return new Ingredient(
+        102,
+        'FAKE RECIPE',
+        'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        this.categoryService.getCategoryById(9),
+        IngredientService.systemUser,
+        'ceci est ingredient inconu');
+    }
+  */
 
 
 }
