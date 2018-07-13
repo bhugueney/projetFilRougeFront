@@ -61,10 +61,11 @@ export class IngredientService {
       return throwError(new Error('Unknown user'));
     }
 
+    console.log('Before Http post Ingredient creation');
+
     return this.http.post<Ingredient>(
-      IngredientService.URL_INGREDIENT + '/userId=' + localStorage.userId
-      , {
-        header: new HttpHeaders().set('Allow', 'POST'),
+      IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId,
+      {
         ingredient
       });
 
