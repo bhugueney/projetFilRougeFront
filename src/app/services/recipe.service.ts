@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
 import { Injectable } from '@angular/core';
@@ -11,7 +11,7 @@ import { Observable } from '../../../node_modules/rxjs';
   providedIn: 'root'
 })
 export class RecipeService {
-  private readonly URL_GET: 'http://localhost:8095/categories/';
+  private readonly URL_GET = 'http://localhost:8095/recipe/';
 
   private recipeList: Recipe[];
 
@@ -33,7 +33,15 @@ export class RecipeService {
     } else {
       return null;
     }*/
-    return this.http.get<Recipe>(this.URL_GET + id);
+    if (localStorage.userId) {
+      return this.http.get<Recipe>(this.URL_GET + id, {
+        params: new HttpParams()
+          .set('userId', localStorage.userId)
+      }
+      );
+    } else {
+      return this.http.get<Recipe>(this.URL_GET + id);
+    }
   }
 
   public getNew(): Recipe {

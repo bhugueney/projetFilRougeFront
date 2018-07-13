@@ -8,6 +8,7 @@ import { Categorie } from './../../models/categorie.model';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { Router } from '@angular/router';
+import { Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-food',
@@ -86,7 +87,8 @@ export class FoodComponent implements OnInit {
     e.preventDefault();
     this.categoryService.getChildrenCategoryByIdParent(id).subscribe(
       (list) => {
-        this.listCategories = list; },
+        this.listCategories = list;
+      },
       () => {
         this.filterSelected = '';
         this.ingredientService.getListIngredientsByCategoryId(id).subscribe(
@@ -118,11 +120,16 @@ export class FoodComponent implements OnInit {
 
   // method pour afficher un ingredient en fonction d'un ingredient simple ou complexe (recipe)
   public displayIngredient(id: number) {
-    if (this.recipeService.getById(id)) {
-      this.route.navigateByUrl('/preparation/' + id);
-    } else {
-      this.route.navigateByUrl('/ingredient/' + id);
-    }
+    this.recipeService.getById(id).subscribe(
+      (ingredient: Recipe) => {
+       // A recipe is found for this ingredient
+          this.route.navigateByUrl('/preparation/' + id);
+        },
+      (error: Error) => {
+        console.log('Recipe not found');
+        this.route.navigateByUrl('/ingredient/' + id );
+      }
+    );
   }
 
   // method de retour arriere sur les écrans

@@ -37,7 +37,7 @@ export class IngredientService {
 
   public getById(id: number): Observable<Ingredient> {
 
-    if (localStorage.userId && localStorage.userId !== 'null') {
+    if (localStorage.userId) {
       return this.http.get<Ingredient>(
         IngredientService.URL_INGREDIENT + '/' + id,
         {
@@ -57,7 +57,7 @@ export class IngredientService {
   public create(ingredient: Ingredient): Observable<Ingredient> {
 
     // An ingredient can't be created by anonymous user.
-    if (!localStorage.userId || localStorage.userId === 'null') {
+    if (!localStorage.userId) {
       return throwError(new Error('Unknown user'));
     }
 
@@ -77,7 +77,7 @@ export class IngredientService {
   public update(ingredient: Ingredient): Observable<Ingredient> {
 
     // An ingredient can't be update by anonymous user.
-    if (!localStorage.userId || localStorage.userId === 'null') {
+    if (!localStorage.userId) {
       return throwError(new Error('Unknown user'));
     }
 
