@@ -14,8 +14,6 @@ export class IngredientService {
 
   static readonly URL_INGREDIENT = environment.backEndUrl + '/ingredients';
 
-  // private _ingredientsList: Ingredient[];
-
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   public getGlobalList(): Observable<Ingredient[]> {
@@ -26,15 +24,6 @@ export class IngredientService {
     // return this.ingredientsList.filter(e => e.categorie.id === catId);
     return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=' + localStorage.userId);
   }
-
-
-  // getters & setters
-  /*public get ingredientsList(): Ingredient[] {
-    return this._ingredientsList;
-  }
-  public set ingredientsList(value: Ingredient[]) {
-    this._ingredientsList = value;
-  }*/
 
   public getById(id: number): Observable<Ingredient> {
 
@@ -62,7 +51,7 @@ export class IngredientService {
       return throwError(new Error('Unknown user'));
     }
 
-    console.log('Before Http post Ingredient creation');
+    console.log('Before Http post Ingredient creation, userId: ' + localStorage.userId);
 
     return this.http.post<Ingredient>(
       IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId,
@@ -112,57 +101,5 @@ export class IngredientService {
 
   // tslint:disable-next-line:member-ordering
   static systemUser: User = new User(1, '', 'System', '');
-  /*
-    private getTomate(): Ingredient {
-      return new Ingredient(
-        1,
-        'Tomates',
-        'tomates.jpg', 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        this.categoryService.getCategoryById(4),
-        IngredientService.systemUser,
-        'ceci est un commentaire');
-    }
-
-    private getCarotte(): Ingredient {
-      return new Ingredient(
-        2,
-        'Carotte',
-        'carottes.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        this.categoryService.getCategoryById(4),
-        IngredientService.systemUser,
-        'ceci est un commentaire');
-    }
-
-    private getPoelee(): Ingredient {
-      return new Ingredient(
-        3,
-        'Poêlée de pommes de terre préfrites, lardons ou poulet, et autres, sans légumes verts',
-        'poelee.jpg', 200, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        this.categoryService.getCategoryById(8),
-        IngredientService.systemUser,
-        'ceci est un commentaire');
-    }
-
-    private getPoireau(): Ingredient {
-      return new Ingredient(
-        4,
-        'Poireau',
-        'poireau.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        this.categoryService.getCategoryById(4),
-        IngredientService.systemUser,
-        'ceci est un commentaire');
-    }
-
-    private getUnknown(): Ingredient {
-      return new Ingredient(
-        102,
-        'FAKE RECIPE',
-        'defaultIngredient.jpg', 50, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
-        this.categoryService.getCategoryById(9),
-        IngredientService.systemUser,
-        'ceci est ingredient inconu');
-    }
-  */
-
 
 }
