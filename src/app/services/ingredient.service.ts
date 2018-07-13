@@ -18,12 +18,12 @@ export class IngredientService {
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   public getGlobalList(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=0');
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId);
   }
 
   public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
     // return this.ingredientsList.filter(e => e.categorie.id === catId);
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=' + localStorage.userId);
   }
 
 
