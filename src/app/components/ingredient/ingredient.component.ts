@@ -36,7 +36,7 @@ export class IngredientComponent implements OnInit {
   dbErrorMessage: string;
 
   // DEBUG MODE
-  debugMode = true;
+  debugMode = false;
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
