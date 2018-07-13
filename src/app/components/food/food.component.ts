@@ -8,6 +8,10 @@ import { Categorie } from './../../models/categorie.model';
 import { Component, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { Router } from '@angular/router';
+import { FormControl } from '../../../../node_modules/@angular/forms';
+import { Observable } from '../../../../node_modules/rxjs';
+import { startWith, map } from '../../../../node_modules/rxjs/operators';
+import { Recipe } from '../../models/recipe.model';
 
 @Component({
   selector: 'app-food',
@@ -15,8 +19,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./food.component.css']
 })
 export class FoodComponent implements OnInit {
+  // create of form control
+  mySearch = new FormControl;
+  // create of observable for the form control
+  filteredIngredients: Observable<Ingredient[]>;
+  // list of ingredients filtered
+  filteredList = new Array<Ingredient>();
   // list of ingredients to display
-  private _ingredients: Ingredient[];
+  private _ingredients = new Array<Ingredient>();
   // list of categories level 1
   private _listCategories: Categorie[];
   // filters
@@ -41,6 +51,23 @@ export class FoodComponent implements OnInit {
     this.getGlobalListIngredients();
     this.getMainCategories();
     this.selectedIngredients = this.preparationService.ingredientsList;
+    // initialisation de la méthode de filtre pour l'autocompletion
+    this.filteredIngredients = this.mySearch.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.filterSearch(value))
+      );
+    this.filteredIngredients.subscribe(
+      (list) => { this.filteredList = list; }
+    );
+  }
+
+  // mise en place du filtre de l'autocompletion
+  private filterSearch(value: string): Ingredient[] {
+    if (value) { this.filterSelected = ''; } else { this.filterSelected = 'categories'; }
+    const filterValue = value.toLowerCase();
+    console.log('==> ', { filterValue });
+    return this.ingredients.filter(ing => ing.name.toLowerCase().includes(filterValue));
   }
 
   // method to load the globale list
@@ -74,7 +101,7 @@ export class FoodComponent implements OnInit {
   public setFilterFromSelector(e: MatSelectChange) {
     this.filterSelected = e.value;
     if (this.filterSelected === 'liste globale') {
-      this.getGlobalListIngredients();
+      this.filteredList = this.ingredients;
     }
     if (this.filterSelected === 'categories') {
       this.getMainCategories();
@@ -86,15 +113,17 @@ export class FoodComponent implements OnInit {
     e.preventDefault();
     this.categoryService.getChildrenCategoryByIdParent(id).subscribe(
       (list) => {
-        this.listCategories = list; },
-      () => {
+        this.listCategories = list;
+      },
+      (err) => {
         this.filterSelected = '';
+        this.filteredList = [];
         this.ingredientService.getListIngredientsByCategoryId(id).subscribe(
           (list) => {
-            this.ingredients = list;
             list.forEach(el => {
               if (el.urlImage === null) { el.urlImage = 'defaultIngredient.jpg'; }
             });
+            this.filteredList = list;
           }
         );
       }
@@ -118,11 +147,16 @@ export class FoodComponent implements OnInit {
 
   // method pour afficher un ingredient en fonction d'un ingredient simple ou complexe (recipe)
   public displayIngredient(id: number) {
-    if (this.recipeService.getById(id)) {
-      this.route.navigateByUrl('/preparation/' + id);
-    } else {
-      this.route.navigateByUrl('/ingredient/' + id);
-    }
+    this.recipeService.getById(id).subscribe(
+      (ingredient: Recipe) => {
+        // A recipe is found for this ingredient
+        this.route.navigateByUrl('/preparation/' + id);
+      },
+      (error: Error) => {
+        console.log('Recipe not found');
+        this.route.navigateByUrl('/ingredient/' + id);
+      }
+    );
   }
 
   // method de retour arriere sur les écrans

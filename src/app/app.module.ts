@@ -21,8 +21,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
-    MatDialogModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+    MatDialogModule,
+    MatAutocompleteModule} from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
 import { PreparationService } from './services/preparation.service';
 import { DialogYesNoComponent } from './components/dialog-yes-no/dialog-yes-no.component';
@@ -84,7 +85,9 @@ const routes: Routes = [
     MatTableModule,
     MatDialogModule,
     RouterModule.forRoot(routes),
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],
