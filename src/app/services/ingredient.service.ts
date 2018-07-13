@@ -5,25 +5,26 @@ import { User } from '../models/user.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IngredientService {
 
-  static readonly URL_INGREDIENT = 'http://localhost:8095/ingredients';
+  static readonly URL_INGREDIENT = environment.backEndUrl + '/ingredients';
 
   // private _ingredientsList: Ingredient[];
 
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   public getGlobalList(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=0');
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId);
   }
 
   public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
     // return this.ingredientsList.filter(e => e.categorie.id === catId);
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=0');
+    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=' + localStorage.userId);
   }
 
 

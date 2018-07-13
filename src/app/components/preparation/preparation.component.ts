@@ -39,6 +39,18 @@ export class PreparationComponent implements OnInit {
     // met en place le suivi de isUserConnected
     this.userService.isUserConnected().subscribe( (userState) => { this.isUserConnected = userState; });
 
+    // this.route.params.subscribe(params => {
+
+    //   let mode = '';
+    //   let idRequested = 0;
+
+    //   if (params.hasOwnProperty('mode')) { mode = params['mode']; }
+    //   if (params.hasOwnProperty('id')) { idRequested = +params['id']; }
+
+    //   });
+
+
+    // ancien code
     const idRequested: number = +route.snapshot.paramMap.get('id');
     const isConsult = JSON.parse(route.snapshot.queryParamMap.get('consult') || 'false');
     console.log('PreparationComponent idRequested:', idRequested);
