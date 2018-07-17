@@ -1,21 +1,19 @@
-<section id="main-menu" fxLayout="column">
+<section id="main-menu" fxLayout="column" fxLayoutGap="30px" >
 
-  <div fxLayout="column" fxLayoutAlign="space-around center"  fxFlex="90%" fxFlexFill >
-    <button mat-stroked-button color="primary" fxFlex="10%" (click)="doNewPreparation();">Effectuer une préparation</button>
-    
-    <!-- si un utilisateur est connecté affichage boutons Mes ingrédients et Mon suivi et Se déconnecter-->
-    <ng-container *ngIf="(isUserConnected$ | async)">
-        <button class="menuButton" mat-stroked-button color="accent" fxFlex="10%"  [routerLink]="'/notimplemented'">Mes ingrédients</button>
-        <button class="menuButton" mat-stroked-button color="accent" fxFlex="10%"  [routerLink]="'/notimplemented'">Mon suivi personnel</button>
-        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%" (click)="userService.disconnect();" >Se déconnecter</button>
-      </ng-container>
+  <button class="menuButton" id="preparation" mat-stroked-button color="primary" (click)="doNewPreparation();">Effectuer une préparation</button>
 
-    <!-- Si pas d'utilisateur connecté affichage boutons pour se connecter -->
-    <ng-container *ngIf="!(isUserConnected$ | async)">
-        <button class="menuButton" mat-stroked-button color="primary" fxFlex="10%" routerLink="/connexion" >Se connecter</button>
-                
-        <button class="menuButton" mat-stroked-button color="accent" fxFlex="10%"  [routerLink]="'/notimplemented'">Créer un compte</button>
-    </ng-container>
-  </div>
+  <!-- si un utilisateur est connecté affichage boutons Mes ingrédients et Mon suivi et Se déconnecter-->
+  <ng-container *ngIf="(isUserConnected$ | async)">
+    <button class="menuButton" mat-stroked-button color="primary" [routerLink]="'/notimplemented'">Mes ingrédients</button>
+    <button class="menuButton" mat-stroked-button color="primary" [routerLink]="'/notimplemented'">Mon suivi personnel</button>
+    <button class="menuButton" mat-stroked-button color="accent" (click)="userService.disconnect();" >Se déconnecter</button>
+  </ng-container>
+
+  <!-- Si pas d'utilisateur connecté affichage boutons pour se connecter -->
+  <ng-container *ngIf="!(isUserConnected$ | async)">
+    <button class="menuButton" id="cnx" mat-stroked-button color="primary" routerLink="/connexion" >Se connecter</button>
+
+    <button class="menuButton" id="account" mat-stroked-button color="accent" [routerLink]="'/notimplemented'">Créer un compte</button>
+  </ng-container>
 
 </section>

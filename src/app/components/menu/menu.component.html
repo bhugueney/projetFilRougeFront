@@ -7,7 +7,7 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)"
   >
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="toolbar">
         <button
         type="button"
         aria-label="Toggle sidenav"
@@ -28,10 +28,10 @@
         <a mat-list-item routerLink="/meal" (click)="drawer.toggle()">Suivre mes repas</a>
         <a mat-list-item routerLink="/ingredient" (click)="drawer.toggle()">Créer mon ingrédient</a>
       </ng-container>
-      
-      <a mat-list-item routerLink="/ingredient/2" (click)="drawer.toggle()" routerLinkActive=true>[Test] Ingredient display</a>
-      <a mat-list-item routerLink="/">... To complete...</a>
-      
+
+      <!-- <a mat-list-item routerLink="/ingredient/2" (click)="drawer.toggle()" routerLinkActive=true>[Test] Ingredient display</a> -->
+      <!-- <a mat-list-item routerLink="/">... To complete...</a> -->
+
       <!-- authentification disponible que si pas d'utilisateurs connectés -->
       <ng-container *ngIf="!(isUserConnected$ | async)">
         <a mat-list-item (click)="drawer.toggle();" routerLink="/connexion" >Se connecter</a>
@@ -45,7 +45,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="fixed-toolbar">
-    <mat-toolbar color="primary" >
+    <mat-toolbar color="primary" class="toolbar">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -63,6 +63,6 @@
       </span>
 
     </mat-toolbar>
-    <div Class="zoneTravail"><router-outlet></router-outlet></div>
+    <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

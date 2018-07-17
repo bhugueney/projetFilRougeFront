@@ -1,12 +1,50 @@
 #main-menu{
-    height:100vh;
+  height: 92vh;
 }
 
-div{
-    height:100%;
+.menuButton {
+  background:white;
+  border-radius: 10px 30px;
+  opacity: 0.8;
+  box-shadow: 1px 10px grey;
 }
 
-button {
+.menuButton:hover, .menuButton:active {
+  box-shadow: none;
+  background: grey;
+}
+
+@media screen and (orientation: portrait) {
+  #main-menu{
+    background: url(../../../assets/img/dietetique1.jpg) no-repeat center, white;
+    background-size: auto 100vh;
+    padding-bottom: 10%;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .menuButton {
     width: 80%;
-    font-size: 1.5 rem;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #main-menu {
+    background: url(../../../assets/img/dietetique1.jpg) no-repeat right, white;
+    background-size: auto 100vh;
+    padding-left: 5%;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .menuButton {
+    width: 45%;
+  }
+}
+
+@media screen and (min-width: 601px) and (min-height: 601px) {
+  .menuButton {
+    height: 10%;
+    font-size: 1.5em;
+  }
 }

@@ -1,21 +1,11 @@
-.sidenav-container {
-  height: 100%;
+.fixed-toolbar {
+  height: 100vh;
+}
+
+.toolbar {
+  height: 8vh;
 }
 
 .sidenav {
-  width: 250px;
-  box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
-}
-
-.fixed-toolbar {
-  width: 100%;
-  position: fixed;
-  top: 0;
-}
-
-.zoneTravail {
-  /* border: 2px green solid; */
-  width: 80%vw;
-  /* height: 500px; */
-  overflow-y: auto;
+  border: solid 1px blue;
 }
