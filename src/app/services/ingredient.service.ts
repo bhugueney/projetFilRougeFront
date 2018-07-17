@@ -17,12 +17,17 @@ export class IngredientService {
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   public getGlobalList(): Observable<Ingredient[]> {
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId);
+    return this.http.get<Ingredient[]>(
+      IngredientService.URL_INGREDIENT + (localStorage.userId ? '?userId=' + localStorage.userId : '')
+    );
   }
 
   public getListIngredientsByCategoryId(catId: number): Observable<Ingredient[]> {
     // return this.ingredientsList.filter(e => e.categorie.id === catId);
-    return this.http.get<Ingredient[]>(IngredientService.URL_INGREDIENT + '/category/' + catId + '?userId=' + localStorage.userId);
+    return this.http.get<Ingredient[]>(
+      IngredientService.URL_INGREDIENT + '/category/' + catId +
+      (localStorage.userId ? '?userId=' + localStorage.userId : '')
+    );
   }
 
   public getById(id: number): Observable<Ingredient> {
@@ -50,8 +55,6 @@ export class IngredientService {
     if (!localStorage.userId) {
       return throwError(new Error('Unknown user'));
     }
-
-    console.log('Before Http post Ingredient creation, userId: ' + localStorage.userId);
 
     return this.http.post<Ingredient>(
       IngredientService.URL_INGREDIENT + '?userId=' + localStorage.userId,
