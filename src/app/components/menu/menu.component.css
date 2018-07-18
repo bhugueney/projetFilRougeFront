@@ -7,5 +7,16 @@
 }
 
 .sidenav {
-  border: solid 1px blue;
+  height: 100vh;
+  background: url(../../../assets/img/alimentation.jpg) no-repeat bottom;
+  background-size: 100% 100%;
+}
+
+.sidenav a {
+  text-shadow: 5px 5px 2px black;
+  color: white;
+}
+
+.sidenav a:hover {
+  text-shadow: none;
 }

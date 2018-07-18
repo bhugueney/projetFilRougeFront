@@ -1,64 +1,73 @@
 <div id="food">
   <!-- ***********************************
     Display filter by autocompletion
-    *************************************-->
-  <section>
-    <mat-form-field>
-      <input matInput placeholder="Rechercher un ingrédient" aria-label="recherche d'ingredient" [formControl]="mySearch">
-    </mat-form-field>
-  </section>
+    ************************************* -->
+    <section id="filters">
+      <mat-form-field>
+        <input matInput placeholder="Rechercher un ingrédient" aria-label="recherche d'ingredient" [formControl]="mySearch">
+      </mat-form-field>
 
-  <!-- ***********************************
-      Display filters of list of ingredients
-      *************************************-->
-  <section>
-    <mat-form-field>
-      <mat-select placeholder="filtres" (selectionChange)="setFilterFromSelector($event)" [value]="filterSelected">
-        <mat-option *ngFor="let category of filters" [value]="category">{{category}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </section>
+      <!-- ***********************************
+        Display filters of list of ingredients
+        *************************************-->
+        <mat-form-field>
+          <mat-select placeholder="filtres" (selectionChange)="setFilterFromSelector($event)" [value]="filterSelected">
+            <mat-option *ngFor="let category of filters" [value]="category">{{category}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </section>
 
-  <!-- *********************************
+      <!-- *********************************
         display list of ingredients
         ***********************************-->
-  <!-- Display list of ingredients -->
-  <div [ngSwitch]="filterSelected" id="displayList">
-    <!-- Display list of categories -->
-    <section *ngSwitchCase="'categories'">
-      <article *ngFor="let cat of listCategories">
-        <a href="#" (click)="selectedCategory(cat.id, $event)">{{cat.name}}</a>
-      </article>
-    </section>
+        <!-- Display list of ingredients -->
+        <section [ngSwitch]="filterSelected" id="displayList">
+          <!-- Display list of categories -->
+          <article *ngSwitchCase="'categories'">
+            <mat-list *ngFor="let cat of listCategories">
+              <mat-list-item (click)="selectedCategory(cat.id, $event)" class="normal">{{cat.name}}</mat-list-item>
+            </mat-list>
+          </article>
 
-    <section *ngSwitchDefault="">
-      <article *ngFor="let ingredient of filteredList">
-        <a (click)="displayIngredient(ingredient.id)">
-          <img [src]="'../../assets/img/'+ingredient.urlImage" width="50px;" />{{ingredient?.name}}
-        </a>
-        <button (click)="moveIngredientInPreparationList(ingredient)">{{control(ingredient.id)? 'remove' : 'add'}}</button>
-        <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
-        <!--<button>X</button>-->
-      </article>
-    </section>
-  </div>
+          <article *ngSwitchDefault="">
+            <mat-list *ngFor="let ingredient of filteredList">
+              <mat-list-item [ngClass]="control(ingredient.id)? 'remove' : 'normal'">
+                <img [src]="'../../assets/img/'+ingredient.urlImage" height="45px;"/>
+                <a (click)="displayIngredient(ingredient.id)">{{ingredient?.name}}</a>
+                <mat-icon (click)="moveIngredientInPreparationList(ingredient)" color="primary">
+                  {{control(ingredient.id)? 'remove_circle' : 'add_circle'}}
+                </mat-icon>
+                <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
+                <!-- <mat-icon>
+                  delete_sweep
+                </mat-icon> -->
+              </mat-list-item>
+            </mat-list>
+          </article>
+        </section>
 
-  <!--*******************
+        <!--*******************
           Display actions buttons
           ********************-->
 
-  <!-- to display preparation details -->
-  <section>
-    <button mat-raised-button="displayPreparation" [color]="'primary'" [routerLink]="'/preparation'" (click)="loadListIngredients(selectedIngredients)">Visualiser la préparation</button>
-  </section>
+          <!-- to back before -->
+          <section id="buttons" fxLayout="row" fxLayoutAlign="space-around center">
+            <button mat-raised-button="back" [color]="'primary'" (click)="rollBack($event)">Précédent</button>
 
-  <!-- to back before -->
-  <section>
-    <button mat-raised-button="back" [color]="'primary'" (click)="rollBack($event)">Précédent</button>
-  </section>
+            <!-- to display preparation details -->
+            <button mat-raised-button="displayPreparation" [color]="'primary'" id="linkPreparation"
+            [routerLink]="'/preparation'" (click)="loadListIngredients(selectedIngredients)">
+            Voir la préparation
+          </button>
 
-  <!-- to create an ingredient -->
-  <section>
-    <button mat-raised-button="createIngredient" [color]="'primary'" [routerLink]="'/ingredient'">créér un ingredient</button>
-  </section>
-</div>
+          <!-- to create an ingredient -->
+          <button mat-raised-button="createIngredient" [color]="'accent'" [routerLink]="'/ingredient'" *ngIf="filterSelected != 'categories'">
+            <mat-icon>
+              add_circle_outline
+            </mat-icon>
+          </button>
+        </section>
+
+        <app-preparation></app-preparation>
+
+      </div>
