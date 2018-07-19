@@ -18,11 +18,13 @@
   margin: 4px;
 }
 
+/*
 #ingredient-container {
   width: 90vw;
   background-color: white;
   margin: 5vw;
 }
+*/
 
 .ingredientsInfos {
   display: Flex;
