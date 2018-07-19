@@ -1,18 +1,13 @@
 <table mat-table [dataSource]="recipeList" >
-    <!-- id Column -->
-    <ng-container matColumnDef="id">
-        <td mat-cell *matCellDef="let recipe" >
-            <h5>{{recipe.id}}</h5> 
-        </td>
-    </ng-container>
-
+    
     <!-- Name Column -->
     <ng-container matColumnDef="name">
-        <td mat-cell *matCellDef="let recipe" >
-          <h5  routerLink="/preparation/{{recipe.id}}">{{recipe.name}}</h5> 
+        <td  mat-cell *matCellDef="let recipe" >
+          <h5   routerLink="/recipe/{{recipe.id}}">{{recipe.name}}</h5> 
+          {{recipe.comment}}
         </td>
     </ng-container>
 
-    <tr mat-row *matRowDef="let row; columns: ['id', 'name'];" ></tr>
+    <tr  mat-row *matRowDef="let row; columns: [ 'name'];" ></tr>
 
 </table>

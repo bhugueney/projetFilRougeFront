@@ -2,7 +2,7 @@ import { UserService } from './../../services/user.service';
 import { DialogYesNoComponent } from './../dialog-yes-no/dialog-yes-no.component';
 import { RecipeIngredient } from './../../models/recipe-ingredient.model';
 import { Ingredient } from './../../models/ingredient.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { MatDialog } from '@angular/material';
@@ -11,6 +11,7 @@ import { PreparationService } from '../../services/preparation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { Observable } from '../../../../node_modules/rxjs';
+import { SaveAsRecipeComponent } from 'src/app/components/preparation/save-as-recipe/save-as-recipe.component';
 
 
 
@@ -22,7 +23,7 @@ import { Observable } from '../../../../node_modules/rxjs';
   templateUrl: './preparation.component.html',
   styleUrls: ['./preparation.component.css']
 })
-export class PreparationComponent implements OnInit {
+export class PreparationComponent implements OnInit, DoCheck {
 
   preparation: Recipe;
   showExpand: Boolean = false;
@@ -56,28 +57,21 @@ export class PreparationComponent implements OnInit {
     console.log('PreparationComponent idRequested:', idRequested);
     console.log('PreparationComponent isConsult:', isConsult);
 
-    // si pas de préparation en cours
-    if (this.preparationService.preparation === null) {
-      if (idRequested === 0) {
-        // si demande de nouvelle préparation
-        this.preparationService.setNewPreparation();
-      } else {
-        // si demande d'une recette ou repas
-        this.preparationService.setPreparationById(idRequested);
-      }
+    this.preparationService.setPreparationById(idRequested);
+  }
 
-      // vérifie si un utilisateur est connecté
-      // this.userIsConnected = this.userService.isUserConnected();
 
-    }
-
+  ngDoCheck() {
+    this.preparation = this.preparationService.preparation;
+    console.log('preparation component : ngDoCheck : preparation = ', this.preparation);
+    // if (this.preparation) { this.preparation.dataCalcul(); }
+    this.showExpand = false;
   }
 
   ngOnInit() {
-    this.preparation = this.preparationService.preparation;
-    this.preparation.dataCalcul();
-    this.showExpand = false;
   }
+
+
 
   public deleteRecipeIngredient(recipeIngredient: RecipeIngredient) {
     this.recipeService.DeleteRecipeIngredient(this.preparation, recipeIngredient);
@@ -119,7 +113,7 @@ export class PreparationComponent implements OnInit {
     this.preparation.dataCalcul();
   }
 
-  public showDetails(ingredientToShow: Ingredient) {
+  public showDetails(ingredientToShow: Recipe) {
     const dialogRef = this.dialog.open(PreparationDetailsComponent, {
       height: '350px'
     });
@@ -141,4 +135,9 @@ export class PreparationComponent implements OnInit {
     });
   }
 
+
+  SaveAsRecipe() {
+    const dialogRef = this.dialog.open(SaveAsRecipeComponent, {  });
+
+  }
 }

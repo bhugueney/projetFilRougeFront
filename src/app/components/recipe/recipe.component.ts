@@ -13,15 +13,12 @@ export class RecipeComponent implements OnInit {
   recipeList: Recipe[];
 
   constructor(private recipeService: RecipeService, private preparationService: PreparationService, private router: Router) {
-      this.recipeList = recipeService.getAll();
-   }
-
-  ngOnInit() {
   }
 
-  /*public get recipe(): Recipe {
-    return this.recipeService.getById(1);
-  }*/
+  ngOnInit() {
+    this.recipeService.getAll().subscribe( (returnedRecipeList: Recipe[]) => {  this.recipeList = returnedRecipeList; }) ;
+ 
+  }
 
   public editRecipe(recipe: Recipe) {
     this.preparationService.preparation = recipe;
