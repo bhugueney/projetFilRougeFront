@@ -2,7 +2,7 @@ import { UserService } from './../../services/user.service';
 import { DialogYesNoComponent } from './../dialog-yes-no/dialog-yes-no.component';
 import { RecipeIngredient } from './../../models/recipe-ingredient.model';
 import { Ingredient } from './../../models/ingredient.model';
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges } from '@angular/core';
 import { RecipeService } from '../../services/recipe.service';
 import { Recipe } from '../../models/recipe.model';
 import { MatDialog } from '@angular/material';
@@ -34,7 +34,7 @@ export class PreparationComponent implements OnInit, DoCheck {
               private preparationService: PreparationService,
               private recipeService: RecipeService,
               private dialog: MatDialog,
-              private router: Router,
+              public router: Router,
               private userService: UserService )  {
 
     // met en place le suivi de isUserConnected

@@ -3,7 +3,7 @@
   background-size: 100vh;
   display: flex;
   flex-direction: column;
-  height: 92vh;
+  height: 94vh;
 }
 
 #displayList {
@@ -40,7 +40,7 @@
 
 #displayList a {
   margin: 0px 3px;
-  width: 100vw;
+  width: 100%;
 }
 
 #displayList img {
@@ -56,7 +56,7 @@
   margin: 0px 3px;
 }
 
-app-preparation {
+app-preparation, app-ingredient {
   display:none;
 }
 
@@ -73,4 +73,35 @@ app-preparation {
     font-size: 0.80em;
     padding: 0px 2% 0px 0px;
   }
+}
+
+@media screen and (min-width: 1024px) {
+  #linkPreparation {
+    display: none;
+  }
+
+  #bodyFood {
+    display: grid;
+    grid-template: 60% 40% / 2fr 1fr;
+    width:100%;
+    height: 92vh;
+  }
+
+  #food {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 2;
+  }
+
+  app-preparation {
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /*app-ingredient {
+    display: block;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    background: pink;
+  }*/
 }

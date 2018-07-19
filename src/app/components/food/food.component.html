@@ -1,73 +1,81 @@
-<div id="food">
-  <!-- ***********************************
-    Display filter by autocompletion
-    ************************************* -->
-    <section id="filters">
-      <mat-form-field>
-        <input matInput placeholder="Rechercher un ingrédient" aria-label="recherche d'ingredient" [formControl]="mySearch">
-      </mat-form-field>
-
-      <!-- ***********************************
-        Display filters of list of ingredients
-        *************************************-->
+<div id="bodyFood">
+  <div id="food">
+    <!-- ***********************************
+      Display filter by autocompletion
+      ************************************* -->
+      <section id="filters">
         <mat-form-field>
-          <mat-select placeholder="filtres" (selectionChange)="setFilterFromSelector($event)" [value]="filterSelected">
-            <mat-option *ngFor="let category of filters" [value]="category">{{category}}</mat-option>
-          </mat-select>
+          <input matInput placeholder="Rechercher un ingrédient" aria-label="recherche d'ingredient" [formControl]="mySearch">
         </mat-form-field>
-      </section>
 
-      <!-- *********************************
-        display list of ingredients
-        ***********************************-->
-        <!-- Display list of ingredients -->
-        <section [ngSwitch]="filterSelected" id="displayList">
-          <!-- Display list of categories -->
-          <article *ngSwitchCase="'categories'">
-            <mat-list *ngFor="let cat of listCategories">
-              <mat-list-item (click)="selectedCategory(cat.id, $event)" class="normal">{{cat.name}}</mat-list-item>
-            </mat-list>
-          </article>
-
-          <article *ngSwitchDefault="">
-            <mat-list *ngFor="let ingredient of filteredList">
-              <mat-list-item [ngClass]="control(ingredient.id)? 'remove' : 'normal'">
-                <img [src]="'../../assets/img/'+ingredient.urlImage" height="45px;"/>
-                <a (click)="displayIngredient(ingredient.id)">{{ingredient?.name}}</a>
-                <mat-icon (click)="moveIngredientInPreparationList(ingredient)" color="primary">
-                  {{control(ingredient.id)? 'remove_circle' : 'add_circle'}}
-                </mat-icon>
-                <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
-                <!-- <mat-icon>
-                  delete_sweep
-                </mat-icon> -->
-              </mat-list-item>
-            </mat-list>
-          </article>
+        <!-- ***********************************
+          Display filters of list of ingredients
+          *************************************-->
+          <mat-form-field>
+            <mat-select placeholder="filtres" (selectionChange)="setFilterFromSelector($event)" [value]="filterSelected">
+              <mat-option *ngFor="let category of filters" [value]="category">{{category}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </section>
 
-        <!--*******************
-          Display actions buttons
-          ********************-->
+        <!-- *********************************
+          display list of ingredients
+          ***********************************-->
+          <!-- Display list of ingredients -->
+          <section [ngSwitch]="filterSelected" id="displayList">
+            <!-- Display list of categories -->
+            <article *ngSwitchCase="'categories'">
+              <mat-list *ngFor="let cat of listCategories">
+                <mat-list-item (click)="selectedCategory(cat.id, $event)" class="normal">{{cat.name}}</mat-list-item>
+              </mat-list>
+            </article>
 
-          <!-- to back before -->
-          <section id="buttons" fxLayout="row" fxLayoutAlign="space-around center">
-            <button mat-raised-button="back" [color]="'primary'" (click)="rollBack($event)">Précédent</button>
+            <article *ngSwitchDefault="">
+              <ng-container *ngIf="filteredList.length <= 0">
+                <h2>Désolé il n'y a pas d'ingrédient avec un indice glycémique d'enregistré pour le moment.</h2>
+              </ng-container>
+              <ng-container *ngIf="filteredList.length > 0">
+                <mat-list *ngFor="let ingredient of filteredList">
+                  <mat-list-item [ngClass]="control(ingredient.id)? 'remove' : 'normal'">
+                    <img [src]="'../../assets/img/'+ingredient.urlImage" height="45px;" mat-card-avatar/>
+                    <a (click)="displayIngredient(ingredient.id)">{{ingredient?.name}}</a>
+                    <mat-icon (click)="moveIngredientInPreparationList(ingredient)" color="primary">
+                      {{control(ingredient.id)? 'remove_circle' : 'add_circle'}}
+                    </mat-icon>
+                    <!-- TODO Button to remove an ingredient ONLY when user is owner of it -->
+                    <!-- <mat-icon>
+                      delete_sweep
+                    </mat-icon> -->
+                  </mat-list-item>
+                </mat-list>
+              </ng-container>
+            </article>
+          </section>
 
-            <!-- to display preparation details -->
-            <button mat-raised-button="displayPreparation" [color]="'primary'" id="linkPreparation"
-            [routerLink]="'/preparation'" (click)="loadListIngredients(selectedIngredients)">
-            Voir la préparation
-          </button>
+          <!--*******************
+            Display actions buttons
+            ********************-->
 
-          <!-- to create an ingredient -->
-          <button mat-raised-button="createIngredient" [color]="'accent'" [routerLink]="'/ingredient'" *ngIf="filterSelected != 'categories'">
-            <mat-icon>
-              add_circle_outline
-            </mat-icon>
-          </button>
-        </section>
+            <!-- to back before -->
+            <section id="buttons" fxLayout="row" fxLayoutAlign="space-around center">
+              <button mat-raised-button="back" [color]="'primary'" (click)="rollBack($event)">Précédent</button>
+
+              <!-- to display preparation details -->
+              <button mat-raised-button="displayPreparation" [color]="'primary'" id="linkPreparation"
+              [routerLink]="'/preparation'" (click)="loadListIngredients(selectedIngredients)">
+              Voir la préparation
+            </button>
+
+            <!-- to create an ingredient -->
+            <button mat-raised-button="createIngredient" [color]="'accent'" [routerLink]="'/ingredient'" *ngIf="filterSelected != 'categories'">
+              <mat-icon>
+                add_circle_outline
+              </mat-icon>
+            </button>
+          </section>
+        </div>
 
         <app-preparation></app-preparation>
+        <app-ingredient></app-ingredient>
 
       </div>

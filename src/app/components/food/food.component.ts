@@ -142,6 +142,7 @@ export class FoodComponent implements OnInit {
       } else {
         this.selectedIngredients.push(ing);
       }
+      this.preparationService.ingredientsList = this.selectedIngredients;
     }
 
     // method pour envoyer la liste d'ingrédients selectionnés à la préparation
