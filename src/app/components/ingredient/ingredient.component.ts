@@ -21,7 +21,7 @@ export class IngredientComponent implements OnInit {
   static DEFAULT_PICTURE = 'defaultIngredient.jpg';
 
   // Ingredient displayed by component
-  ingredient: Ingredient;
+  public ingredient: Ingredient;
 
   // Categories to display for this ingredient
   categories: Array<Categorie> = [];

@@ -127,7 +127,8 @@
     <button mat-raised-button="addIngredient" id="addIngredient" routerLink="/food" class="PreparationsActionButton"
     [color]="'primary'" id="addIngredient" *ngIf="router.url!='/food'">Ajout d'ingrédient(s)</button>
 
-    <button mat-raised-button="deletePreparation" id="deletePreparation" class="PreparationsActionButton" [color]="'accent'" (click)="abandon();">Abandon</button>
+    <button mat-raised-button="deletePreparation" id="deletePreparation" [ngClass]="router.url!='/food' ? 'PreparationsActionButton':'PreparationsActionButton2'"
+    [color]="'accent'" (click)="abandon();">Abandon</button>
   </div>
   </mat-card>
 </ng-container>

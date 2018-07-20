@@ -75,7 +75,8 @@
           </section>
         </div>
 
-        <app-preparation></app-preparation>
-        <app-ingredient></app-ingredient>
+        <app-preparation [ngClass]="screenDetails? 'littleScreen' : 'bigScreen'"></app-preparation>
+
+        <app-ingredient [ngClass]="screenDetails? 'details' : 'noDetails'"></app-ingredient>
 
       </div>

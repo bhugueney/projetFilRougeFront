@@ -71,8 +71,8 @@
 .ingredientQty {
   text-align: right;
   margin: 0px 3px;
-  width:60px;
-  font-size: 1.3em;
+  width:40px;
+  font-size: 1em;
   background: white;
 }
 
@@ -82,12 +82,12 @@
 }
 
 .nameColumn {
-  width: 70%;
+  width: 60%;
   font-size: 1em;
 }
 
 .QtyCol {
-  width: 25%;
+  width: 35%;
   text-align: center;
   background: grey;
 }
@@ -99,7 +99,7 @@
   flex-wrap: wrap;
 }
 
-.PreparationsActionsBar  button {
+.PreparationsActionButton, .PreparationsActionButton2 {
   padding: 1px;
   margin: 1%;
   font-size: 0.75em;
@@ -121,14 +121,14 @@
 
 @media screen and (min-width: 1024px) {
   .preparationCard {
-    height: 93vh;
+    height: 99%;
   }
 
   .PreparationIngredientsTableContainer {
     height: 100%;
   }
 
-  #deletePreparation {
+  .PreparationsActionButton2 {
     margin:0px 36%;
   }
 }

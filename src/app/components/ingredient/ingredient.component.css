@@ -1,55 +1,63 @@
-.ingredient-image {
-  display: flex;
-  width: 25%;
-  justify-content: center;
-  align-items: center;
-  padding: 5%;
-}
-
-.ingredient-main-data {
-  display: flex;
-  width: 75%;
-  justify-content: center;
-}
-
-.ingredient-main-data textarea {
-  font-size: 1em;
-  width: 100%;
-  margin: 4px;
-}
-
-/*
 #ingredient-container {
-  width: 90vw;
-  background-color: white;
-  margin: 5vw;
+  height: 98%;
+  padding-top:5px;
+  margin:0px;
+  background: white;
 }
-*/
+
+#mainData {
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: space-around;
+  height: 77px;
+  padding: 5px 0px;
+}
+
+img {
+  height: 100%;
+}
+
+#mainData mat-form-field {
+  height: 45px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#mainData  textarea {
+  height: 25px;
+  font-size: 1.2em;
+}
+
+#detailData {
+  width: 100%;
+  height: 100%;
+}
+
+#detailData table {
+  margin: auto;
+}
 
 .ingredientsInfos {
-  display: Flex;
-  flex-direction: column;
-  align-items: center center;
-  justify-content: space-around;
   border: 1px black solid;
   border-radius: 10px;
-  margin: 5px;
+  margin: 0px;
   text-align: right;
 }
 
 .ingredientsInfos td, th {
   border-radius: 10px;
-  font-size: 0.8em;
+  font-size: 0.6em;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   padding-right: 10px;
   padding-left: 10px;
 }
 
 .ingredientsInfos input {
-  width: 3em;
   text-align: right;
   border-style: none;
-  font-size: 1em;
+  font-size: 0.6em;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -73,11 +81,15 @@
 }
 
 .buttonSection {
-  width: 90vw;
+  height: 45px;
+  width: 100%;
 }
 
 .buttonSection button {
-  width: 7em;
   text-align: center;
-  margin: 5px;
+  font-size: 0.75em;
+  height: 2em;
+  line-height: 2em;
 }
+
+

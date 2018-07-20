@@ -39,6 +39,9 @@ export class FoodComponent implements OnInit {
   // link to navigate on display ingredient since simple ingredient or complexe ingredient (recipe)
   private _routerLink: string;
 
+  // window to display details ingredient on screen > 1024
+  public screenDetails: boolean;
+
   constructor(private location: Location, private recipeService: RecipeService,
     private route: Router, private ingredientService: IngredientService, private categoryService: CategoryService,
     private preparationService: PreparationService) {
@@ -152,14 +155,27 @@ export class FoodComponent implements OnInit {
 
     // method pour afficher un ingredient en fonction d'un ingredient simple ou complexe (recipe)
     public displayIngredient(id: number) {
+      const screen = window.innerWidth;
+      const screen2 = window.innerHeight;
+      console.log(screen, ' / ', screen2);
+
       this.recipeService.getById(id).subscribe(
         (ingredient: Recipe) => {
-          // A recipe is found for this ingredient
-          this.route.navigateByUrl('/preparation/' + id);
+          // a recipe is found for this ingredient
+          if (window.innerWidth < 1024) {
+            this.route.navigateByUrl('/preparation/' + id);
+          } else {
+            this.screenDetails = true;
+          }
         },
         (error: Error) => {
+          // a recipe is not found so it's a simple ingredient
           console.log('Recipe not found');
-          this.route.navigateByUrl('/ingredient/' + id);
+          if (window.innerWidth < 1024) {
+            this.route.navigateByUrl('/ingredient/' + id);
+          } else {
+            this.screenDetails = true;
+          }
         }
       );
     }
