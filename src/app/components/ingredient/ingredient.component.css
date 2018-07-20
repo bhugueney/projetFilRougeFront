@@ -27,6 +27,7 @@ img {
 
 #mainData  textarea {
   height: 25px;
+  width: 70%;
   font-size: 1.2em;
   overflow: auto;
 }
