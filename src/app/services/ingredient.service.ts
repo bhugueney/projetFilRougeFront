@@ -14,6 +14,8 @@ export class IngredientService {
 
   static readonly URL_INGREDIENT = environment.backEndUrl + '/ingredients';
 
+  public ingredientToDisplay: Ingredient;
+
   constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   public getGlobalList(): Observable<Ingredient[]> {

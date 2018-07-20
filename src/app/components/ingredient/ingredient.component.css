@@ -28,6 +28,7 @@ img {
 #mainData  textarea {
   height: 25px;
   font-size: 1.2em;
+  overflow: auto;
 }
 
 #detailData {

@@ -5,7 +5,7 @@ import { CategoryService } from './../../services/category.service';
 import { IngredientService } from './../../services/ingredient.service';
 import { Ingredient } from './../../models/ingredient.model';
 import { Categorie } from './../../models/categorie.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { MatSelectChange } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormControl } from '../../../../node_modules/@angular/forms';
@@ -70,7 +70,6 @@ export class FoodComponent implements OnInit {
     private filterSearch(value: string): Ingredient[] {
       if (value) { this.filterSelected = ''; } else { this.filterSelected = 'categories'; }
       const filterValue = value.toLowerCase();
-      console.log('==> ', { filterValue });
       return this.ingredients.filter(ing => ing.name.toLowerCase().includes(filterValue));
     }
 
@@ -155,10 +154,6 @@ export class FoodComponent implements OnInit {
 
     // method pour afficher un ingredient en fonction d'un ingredient simple ou complexe (recipe)
     public displayIngredient(id: number) {
-      const screen = window.innerWidth;
-      const screen2 = window.innerHeight;
-      console.log(screen, ' / ', screen2);
-
       this.recipeService.getById(id).subscribe(
         (ingredient: Recipe) => {
           // a recipe is found for this ingredient
@@ -175,6 +170,10 @@ export class FoodComponent implements OnInit {
             this.route.navigateByUrl('/ingredient/' + id);
           } else {
             this.screenDetails = true;
+            this.ingredientService.getById(id).subscribe(
+              (ingredient) => {this.ingredientService.ingredientToDisplay = ingredient;
+              }
+            );
           }
         }
       );
