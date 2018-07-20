@@ -20,6 +20,9 @@ export class IngredientComponent implements OnInit {
   // Constants for Ingredient Display
   static DEFAULT_PICTURE = 'defaultIngredient.jpg';
 
+  // Direct route for creation mode
+  static DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT = 'ingredient';
+
   // Ingredient displayed by component
   public ingredient: Ingredient;
 
@@ -32,6 +35,9 @@ export class IngredientComponent implements OnInit {
   // This boolean indicates if this ingredient is composed of other ones.
   isComplexIngredient = false;
 
+  // This boolean indicates if this component is integrated or not
+  isComponentIntegrated = false;
+
   // This variable content error message to display to the user in case of data base error.
   dbErrorMessage: string;
 
@@ -40,11 +46,16 @@ export class IngredientComponent implements OnInit {
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private categoryService: CategoryService) {
 
-    // Default mode : Creation mode
-    this.isEditable = true;
+    // This component is integrated if URL doesn't include DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT
+    this.isComponentIntegrated = !(router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+
+    // Default mode : Creation mode by default if this route contains DIRECT_ROUTE_CREATION_MODE
+    this.isEditable = (router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+
     this.ingredient = new Ingredient();
     this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
 
