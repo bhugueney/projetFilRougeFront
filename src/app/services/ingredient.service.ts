@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -14,9 +14,34 @@ export class IngredientService {
 
   static readonly URL_INGREDIENT = environment.backEndUrl + '/ingredients';
 
-  public ingredientToDisplay: Ingredient;
+  // ingredient Subject will be used to "publish" ingredient to display to component ingredient
+  private ingredientSubject: Subject<Ingredient>;
 
-  constructor(private http: HttpClient, private categoryService: CategoryService) { }
+  // ingredientToDisplay is an observable public on which Ingredient component will suscribe to get ingredient to display.
+  public ingredientToDisplay: Observable<Ingredient>;
+
+  constructor(private http: HttpClient, private categoryService: CategoryService) {
+    this.ingredientSubject = new Subject();
+    this.ingredientToDisplay = this.ingredientSubject.asObservable();
+  }
+
+  /**
+   * This method will be used to set ingredient to display in Ingredient component using ingredient Id.
+   * @param ingredientId Id of ingredient to display
+   */
+  public setIngredientToDisplayById(ingredientId: number) {
+    this.getById(ingredientId).subscribe(
+      (ingredient: Ingredient) => this.ingredientSubject.next(ingredient)
+    );
+  }
+
+  /**
+   * This method has to be used to set an ingredient to display in Ingredient component using a pre-loaded ingredient.
+   * @param ingredient Ingredient to display in Ingredient Component
+   */
+  public setIngredientToDisplay(ingredient: Ingredient) {
+    this.ingredientSubject.next(ingredient);
+  }
 
   public getGlobalList(): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(

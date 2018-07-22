@@ -50,36 +50,38 @@ export class IngredientComponent implements OnInit {
     private location: Location,
     private categoryService: CategoryService) {
 
-      // This component is integrated if URL doesn't include DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT
-      this.isComponentIntegrated = !(router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+    // This component is integrated if URL doesn't include DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT
+    this.isComponentIntegrated = !(router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
 
-      // Default mode : Creation mode by default if this route contains DIRECT_ROUTE_CREATION_MODE
-      this.isEditable = (router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+    // Default mode : Creation mode by default if this route contains DIRECT_ROUTE_CREATION_MODE
+    this.isEditable = (router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
 
-      this.ingredient = new Ingredient();
-      this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+    this.ingredient = new Ingredient();
+    this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
 
-      this.dbErrorMessage = '';
-      this.initCategoriesList();
-      this.route.params.subscribe(params => {
+    this.dbErrorMessage = '';
+    this.initCategoriesList();
 
-        // If an ingredient ID is provided -> read only mode
-        if (params.hasOwnProperty('id')) {
-          const idRequested: number = +params['id'];
-          this.ingredientService.getById(idRequested).subscribe(
-            (ingredient: Ingredient) => {
-              this.ingredient = ingredient;
-              this.isEditable = false;
-
-              if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
-                this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
-              }
-            }
-          );
+    // ingredient will retrieve ingredientToDisplay sent by ingredientService
+    this.ingredientService.ingredientToDisplay.subscribe(
+      (ingredientToDisplay: Ingredient) => {
+        this.ingredient = ingredientToDisplay;
+        this.isEditable = false;
+        if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+          this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
         }
-
       }
     );
+
+    this.route.params.subscribe(params => {
+      // If an ingredient ID is provided
+      if (params.hasOwnProperty('id')) {
+        const idRequested: number = +params['id'];
+        // -> Loading of the ingredient to display using  ingredient id.
+        this.ingredientService.setIngredientToDisplayById(idRequested);
+      }
+    });
+
   }
 
   public updateGlycemicLoad() {
@@ -96,23 +98,23 @@ export class IngredientComponent implements OnInit {
     // This command allow to get name of real class
     switch (this.ingredient.constructor.name) {
       case Recipe.name:
-      this.isComplexIngredient = true;
-      if (this.debugMode) {
-        console.log('this.ingredient is a recipe');
-      }
-      break;
+        this.isComplexIngredient = true;
+        if (this.debugMode) {
+          console.log('this.ingredient is a recipe');
+        }
+        break;
       case Ingredient.name:
-      this.isComplexIngredient = false;
-      if (this.debugMode) {
-        console.log('this.ingredient is a basic ingredient');
-      }
-      break;
+        this.isComplexIngredient = false;
+        if (this.debugMode) {
+          console.log('this.ingredient is a basic ingredient');
+        }
+        break;
       case Meal.name:
-      this.isComplexIngredient = true;
-      if (this.debugMode) {
-        console.log('this.ingredient is a meal');
-      }
-      break;
+        this.isComplexIngredient = true;
+        if (this.debugMode) {
+          console.log('this.ingredient is a meal');
+        }
+        break;
     }
   }
 
