@@ -2,90 +2,95 @@
   <div>
 
     <!-- DEBUG MODE -->
-    <mat-slide-toggle *ngIf="debugMode" fxFlexAlign="reverse" [color]="'primary'" [checked]="isEditable"
-    (change)="toggleEditSlide($event)">
-    Debug - Mode Edition : {{isEditable}}
-  </mat-slide-toggle>
+    <mat-slide-toggle *ngIf="debugMode" fxFlexAlign="reverse" [color]="'primary'" [checked]="isEditable" (change)="toggleEditSlide($event)">
+      Debug - Mode Edition : {{isEditable}}
+    </mat-slide-toggle>
 
-  <!-- MAIN DATA -->
-  <section #mainData id="mainData">
+    <!-- MAIN DATA -->
+    <section #mainData id="mainData">
       <img class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" mat-card-avatar/>
 
-      <textarea (resize)="true" matInput placeholder="{{(isEditable?'Ingrédient':' ')}}" [(ngModel)]="ingredient.name"
-      [disabled]="!isEditable" name="Name" rows="" cols=""
-      [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
+      <textarea (resize)="true" matInput placeholder="{{(isEditable?'Ingrédient':' ')}}" [(ngModel)]="ingredient.name" [disabled]="!isEditable"
+        name="Name" rows="" cols="" [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
 
       <mat-form-field>
-        <mat-select placeholder="{{(isEditable?'Catégorie':' ')}}" (selectionChange)="setCategoryFromSelector($event)"
-        [value]="ingredient?.category?.id"
-        [disabled]="!isEditable"
-        [class]="(isEditable?'editableInput':'disabledInput')"
-        id="categorySelector">
-        <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+        <mat-select placeholder="{{(isEditable?'Catégorie':' ')}}" (selectionChange)="setCategoryFromSelector($event)" [value]="ingredient?.category?.id"
+          [disabled]="!isEditable" [class]="(isEditable?'editableInput':'disabledInput')" id="categorySelector">
+          <mat-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-</section>
+    </section>
 
-<!-- DETAILS OF INGREDIENT -->
-<section #detailedData id="detailData">
-    <table class="ingredientsInfos">
-      <tr>
-        <th>
-          <mat-label>Valeur Calorique</mat-label>
-        </th>
-        <td><input name="energy" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-          [(ngModel)]="ingredient.energy" [disabled]="!isEditable"> Kcal
-        </td>
-      </tr>
-      <tr>
-        <th>Indice glycémique</th>
-        <td><input name="glycemicIdx" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-          [(ngModel)]="ingredient.glycemicIndex" [disabled]="!isEditable" (change)="updateGlycemicLoad()"></td>
+    <!-- DETAILS OF INGREDIENT -->
+    <section #detailedData id="detailData">
+      <table class="ingredientsInfos">
+        <tr>
+          <th>
+            <mat-label>Valeur Calorique</mat-label>
+          </th>
+          <td>
+            <input name="energy" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.energy"
+              [disabled]="!isEditable"> Kcal
+          </td>
+        </tr>
+        <tr>
+          <th>Indice glycémique</th>
+          <td>
+            <input name="glycemicIdx" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.glycemicIndex"
+              [disabled]="!isEditable" (change)="updateGlycemicLoad()">
+          </td>
         </tr>
         <tr>
           <th>Charge glycémique</th>
-          <td><input name="glycemicLoad" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-            [(ngModel)]="ingredient.glycemicLoad" [disabled]="true"></td>
-          </tr>
-          <tr>
-            <th>Lipides</th>
-            <td><input name="lipid" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.lipid" [disabled]="!isEditable" min="0" max="100"> g/100g
-            </td>
-          </tr>
-          <tr>
-            <th>Glucides</th>
-            <td><input name="glucid" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.glucid" [disabled]="!isEditable" min="0" max="100"
-              (change)="updateGlycemicLoad()"> g/100g
-            </td>
-          </tr>
-          <tr>
-            <th>Protéines</th>
-            <td><input name="protein" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.protein" [disabled]="!isEditable" min="0" max="100"> g/100g
-            </td>
-          </tr>
-          <tr>
-            <th>Sucres</th>
-            <td><input name="sugar" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.sugar" [disabled]="!isEditable" min="0" max="100"> g/100g
-            </td>
-          </tr>
-          <tr>
-            <th>Fibres</th>
-            <td><input name="fiber" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.fiber" [disabled]="!isEditable" min="0" max="100"> g/100g
-            </td>
-          </tr>
-          <tr>
-            <th>Sel</th>
-            <td><input name="salt" [class]="(isEditable?'editableInput':'disabledInput')" type="number"
-              [(ngModel)]="ingredient.salt" [disabled]="!isEditable" min="0" max="100"> g/100g
-            </td>
-          </tr>
-        </table>
+          <td>
+            <input name="glycemicLoad" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.glycemicLoad"
+              [disabled]="true">
+          </td>
+        </tr>
+        <tr>
+          <th>Lipides</th>
+          <td>
+            <input name="lipid" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.lipid"
+              [disabled]="!isEditable" min="0" max="100"> g/100g
+          </td>
+        </tr>
+        <tr>
+          <th>Glucides</th>
+          <td>
+            <input name="glucid" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.glucid"
+              [disabled]="!isEditable" min="0" max="100" (change)="updateGlycemicLoad()"> g/100g
+          </td>
+        </tr>
+        <tr>
+          <th>Protéines</th>
+          <td>
+            <input name="protein" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.protein"
+              [disabled]="!isEditable" min="0" max="100"> g/100g
+          </td>
+        </tr>
+        <tr>
+          <th>Sucres</th>
+          <td>
+            <input name="sugar" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.sugar"
+              [disabled]="!isEditable" min="0" max="100"> g/100g
+          </td>
+        </tr>
+        <tr>
+          <th>Fibres</th>
+          <td>
+            <input name="fiber" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.fiber"
+              [disabled]="!isEditable" min="0" max="100"> g/100g
+          </td>
+        </tr>
+        <tr>
+          <th>Sel</th>
+          <td>
+            <input name="salt" [class]="(isEditable?'editableInput':'disabledInput')" type="number" [(ngModel)]="ingredient.salt"
+              [disabled]="!isEditable" min="0" max="100"> g/100g
+          </td>
+        </tr>
+      </table>
     </section>
 
     <section #complexComponents *ngIf="dbErrorMessage">
@@ -101,7 +106,7 @@
     </section>
 
     <section *ngIf="!isEditable" class="buttonSection" fxLayout="row" fxLayoutAlign="space-around end">
-      <button mat-raised-button="backButton" [color]="'primary'" (click)="close($event)">Retour</button>
+      <button mat-raised-button="backButton" [color]="'primary'" (click)="close($event)">{{(isComponentIntegrated?'Fermer':'Retour')}}</button>
     </section>
 
     <!-- Special section for debugMode -->
