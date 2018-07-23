@@ -8,7 +8,7 @@
 
     <!-- MAIN DATA -->
     <section #mainData id="mainData">
-      <img class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}" mat-card-avatar/>
+      <img class="ingredient-image" src="./assets/img/{{ingredient.urlImage}}"/>
 
       <textarea (resize)="true" matInput placeholder="{{(isEditable?'Ingrédient':' ')}}" [(ngModel)]="ingredient.name" [disabled]="!isEditable"
         name="Name" rows="" cols="" [class]="(isEditable?'editableInput':'disabledInput')"></textarea>
