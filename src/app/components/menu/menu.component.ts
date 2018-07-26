@@ -33,7 +33,5 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() { }
 
-  doNewPreparation() {
-    this.preparationService.doNewPreparation();
-  }
+
 }

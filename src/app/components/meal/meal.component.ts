@@ -25,7 +25,7 @@ export class MealComponent implements OnInit {
   }
 
   public editMeal(meal: Meal) {
-    this.preparationService.preparation = meal;
-    this.router.navigate(['/preparation']);
+    // this.preparationService.preparation = meal;
+    // this.router.navigate(['/preparation']);
   }
 }

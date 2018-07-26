@@ -22,7 +22,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
     MatDialogModule,
-    MatAutocompleteModule} from '@angular/material';
+    MatAutocompleteModule,
+    MatExpansionModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
 import { PreparationService } from './services/preparation.service';
@@ -31,7 +32,6 @@ import { DialogOkComponent } from './components/dialog-ok/dialog-ok.component';
 import { UserConnexionComponent } from './components/user-connexion/user-connexion.component';
 import { NotImplementedComponent } from './components/not-implemented/not-implemented.component';
 import { SaveAsRecipeComponent } from './components/preparation/save-as-recipe/save-as-recipe.component';
-
 
 
 
@@ -89,7 +89,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],

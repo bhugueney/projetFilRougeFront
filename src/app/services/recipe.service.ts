@@ -1,3 +1,4 @@
+import { RecipeComponent } from './../components/recipe/recipe.component';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { RecipeIngredient } from './../models/recipe-ingredient.model';
 import { IngredientService } from './ingredient.service';
@@ -6,6 +7,7 @@ import { Recipe } from '../models/recipe.model';
 import { Ingredient } from '../models/ingredient.model';
 import { Observable, throwError } from '../../../node_modules/rxjs';
 import { environment } from 'src/environments/environment';
+import { Categorie } from 'src/app/models/categorie.model';
 
 
 @Injectable({
@@ -60,69 +62,48 @@ export class RecipeService {
   }
 
 
- // n'est plus nécéssaire
-//   private createFakeRecipe(id: number, numIngredients: number): Recipe {
-//     const fakeRecipe = new Recipe();
-//     fakeRecipe.id = 100 + id;
-//     fakeRecipe.name = 'Recette N° ' + fakeRecipe.id;
-//     fakeRecipe.comment = 'ceci est la recette n° ' + fakeRecipe.id;
-//     fakeRecipe.energy = 0.0;
-//     fakeRecipe.water = 0.0;
-//     fakeRecipe.protein = 0.0;
-//     fakeRecipe.glucid = 0.0;
-//     fakeRecipe.lipid = 0.0;
-//     fakeRecipe.sugar = 0.0;
-//     fakeRecipe.amidon = 0.0;
-//     fakeRecipe.fiber = 0.0;
-//     fakeRecipe.unsaturedFattyAcides = 0.0;
-//     fakeRecipe.monoUnsaturedFattyAcides = 0.0;
-//     fakeRecipe.polyUnsaturedFattyAcides = 0.0;
-//     fakeRecipe.salt = 0.0;
-
-//     // create ingredients list
-//     const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
-//     for (let i = 1; i <= numIngredients; i++) {
-//       const recipeIngredient: RecipeIngredient = new RecipeIngredient();
-//       // recipeIngredient.recipe = fakeRecipe;
-//       // recipeIngredient.ingredient = this.ingredientService.getById(i);
-//       /*
-//       this.ingredientService.getById(i).subscribe(
-//         (ingredient: Ingredient) => {
-//           recipeIngredient.ingredient = ingredient;
-//           recipeIngredient.quantity = 100.0 * i;
-//           listIngredient.push(recipeIngredient);
-//         },
-//         (error) => { } // What do you want to do John Snow.... Nothing ?!
-//       );
-// */
-//     }
-//     fakeRecipe.listOfIngredients = listIngredient;
-
-//     return fakeRecipe;
-
-//   }
 
 
-/**
+  /**
    * Create a recipe in database
-   * @param recipe : ingredient to create
+   * @param preparation : preparation to save as a recipe
+   * @param recipeName : name for the new recipe
+   * @param recipeComment : comment for the new recipe
+   * @param category : category for the new recipe
+   *
    */
-  public create(recipe: Recipe): Observable<Recipe> {
+  public create(preparation: Recipe, recipeName: string, recipeComment: string, category: Categorie): Observable<Recipe> {
 
-    recipe.id = null; // new recipe dont have id for backend
+    // clone preparation as a new recipe object so preparation will not be affected by change
+    const recipe: Recipe = (JSON.parse(JSON.stringify(preparation)));
+
+    // set new recipe attributes
+    recipe.id = null; // delete recipe id because new recipe needs not have id for backend to save it
+    recipe.name = recipeName; // set recipe name
+    recipe.comment = recipeComment; // set recipe comment
+    recipe.category = category; // set recipe category
+    recipe.glycemicIndex = 0;
+    recipe.glycemicLoad = 0;
 
     console.log('recipeService : create : recipe = ', recipe);
-    // A recipet can't be created by anonymous user.
+
+
+    // A recipe can't be created by anonymous user.
     if (!localStorage.userId) {
       return throwError(new Error('Unknown user'));
     }
 
+    // call back end REST service to create the new recipe and return the result as observable
     return this.http.post<Recipe>(
       RecipeService.URL_RECIPE + '?userId=' + localStorage.userId,
       recipe
     );
 
   }
+
+
+
+
 
   /**
    * Update an existing recipe in database
@@ -135,7 +116,7 @@ export class RecipeService {
       return throwError(new Error('Unknown user'));
     }
 
-    // An ingredient can't be updated if it has no ID
+    // A recipe can't be updated if it has no ID
     if (!recipe.id) {
       return throwError(new Error('An update can\'t be performed without an id'));
     }

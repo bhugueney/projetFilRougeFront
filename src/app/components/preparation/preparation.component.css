@@ -10,50 +10,88 @@
   background-color: lightcoral;
 }
 
-.preparationCard {
+.MainContainer {
+  width: 100%;
+  height: 93vh;
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  overflow: hidden;
 }
 
-.preparationTitle {
-  text-align: center;
-  font-size: 1.2em;
-
+.PannelsHead {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.preparationInfos {
-  border: 1px black solid;
-  border-radius: 10px;
-  margin: 0px auto;
+
+.PannelTitle {
+}
+
+.PannelNutrinonalInfos {
+  border: 2px solid rgb(7, 7, 7);
+  margin: 5px;
+  border-collapse: separate;
+  border-radius: 8px;
+  border-spacing: 2px;
   text-align: right;
 }
 
-.preparationInfos td, th {
-  border-radius: 10px;
-  font-size: 0.8em;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+.PannelNutrinonalInfos tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
 }
 
-.preparationInfos tr:nth-child(odd){
+.PannelNutrinonalInfos th, td {
+  padding: 5px 4px 6px 4px; 
+  text-align: center;
+  vertical-align: top;
+  border-left: 1px solid #ddd; 
+  font-size: 0.8em;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;   
+}
+
+.PannelNutrinonalInfos td {
+  text-align: right;
+    
+}
+
+.PannelNutrinonalInfos thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+  border-radius: 8px 0 0 0;
+}
+.PannelNutrinonalInfos thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+  border-radius: 0 0 0 8px;
+}
+
+.PannelNutrinonalInfos tr:nth-child(odd){
   background-color: rgb(220,220,220);
 }
 
-.preparationInfos tr:nth-child(even){
+.PannelNutrinonalInfos tr:nth-child(even){
   background-color: rgba(220,220,220,0.5);
 }
 
+
+
+
+
 .PreparationIngredientsTableContainer {
-  max-height: 100vh;
+  width: 100wv;
   overflow-y: auto;
+  overflow-x: hidden;
+  
   border: solid 1px rgb(54, 54, 240);
   order:1;
-  background: url('../../../assets/img/repas.jpg') no-repeat center;
-  background-size: 100%;
+  max-height: 300px;
+  /* background: url('../../../assets/img/repas.jpg') no-repeat center;
+  background-size: 100%; */
 }
 
 .PreparationIngredientsTable {
-  width: 100%;
+  width:100%;
 }
 
 .PreparationIngredientsTable tr:nth-child(odd){
@@ -76,8 +114,8 @@
   background: white;
 }
 
-#image {
-  width: 5%;
+.image {
+  max-height: 50px !important;
   padding: 0px 5px;
 }
 
@@ -93,42 +131,25 @@
 }
 
 .PreparationsActionsBar {
-  padding:10px 0px;
-  position: flex;
+  display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
 }
+
 
 .PreparationsActionsBar  button {
-  padding: 1px;
-  margin: 1%;
-  font-size: 0.75em;
-  height: 2em;
-  line-height: 2em;
+  margin-left: 3px;
 }
 
-#saveRecipe, #saveMeal {
-  width: 48%;
-}
 
 #addIngredient {
-  width: 68%;
+  width: 100%; 
 }
 
-#deletePreparation {
-  width: 28%;
-}
 
 @media screen and (min-width: 1024px) {
-  .preparationCard {
-    height: 93vh;
-  }
+  .PannelsHead { flex-direction: row; }
+  .PreparationIngredientsTableContainer { max-height: initial;}
 
-  .PreparationIngredientsTableContainer {
-    height: 100%;
-  }
-
-  #deletePreparation {
-    margin:0px 36%;
-  }
 }

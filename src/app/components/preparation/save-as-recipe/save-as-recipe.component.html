@@ -1,12 +1,12 @@
 <div class="form-container">
-    <h1 class="form-field">Sauvegarder la préparation en tant que recette</h1>
+    <h1 class="form-field">{{title}}</h1>
   
     <form>
-        <mat-form-field  class="form-field">
-          <input matInput name="password" placeholder="saisir le nom de la recette" [(ngModel)]="name" name="name"/>
+        <mat-form-field  class="formField" >
+          <input matInput placeholder="saisir le nom de la recette" [(ngModel)]="name" name="name"/>
         </mat-form-field>
         
-        <mat-form-field>
+        <mat-form-field class="formField">
             <mat-select placeholder="Catégorie':" (selectionChange)="setCategoryFromSelector($event)"
                         [value]="category?.id"
                         id="categorySelector">
@@ -15,13 +15,13 @@
         </mat-form-field>
       
 
-        <mat-form-field  class="form-field">
-            <input matInput name="password" placeholder="saisir votre commentaire" [(ngModel)]="comment" name="comment"/>
+        <mat-form-field  class="formField">
+            <input matInput placeholder="saisir votre commentaire" [(ngModel)]="comment" name="comment"/>
         </mat-form-field>
           
-        <button (click)="onSubmit()" [mat-dialog-close]="false" class="form-field">Enregistrer</button>
+        <button (click)="onSubmit()" [mat-dialog-close]="false" class="form-field">{{bt1Label}}</button>
         &nbsp;
-        <button [mat-dialog-close]="false" class="form-field">Abandonner</button>
+        <button [mat-dialog-close]="false" >{{bt2Label}}</button>
         
     </form>
   
