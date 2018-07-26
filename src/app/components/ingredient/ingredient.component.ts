@@ -20,8 +20,11 @@ export class IngredientComponent implements OnInit {
   // Constants for Ingredient Display
   static DEFAULT_PICTURE = 'defaultIngredient.jpg';
 
+  // Direct route for creation mode
+  static DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT = 'ingredient';
+
   // Ingredient displayed by component
-  ingredient: Ingredient;
+  public ingredient: Ingredient;
 
   // Categories to display for this ingredient
   categories: Array<Categorie> = [];
@@ -32,6 +35,9 @@ export class IngredientComponent implements OnInit {
   // This boolean indicates if this ingredient is composed of other ones.
   isComplexIngredient = false;
 
+  // This boolean indicates if this component is integrated or not
+  isComponentIntegrated = false;
+
   // This variable content error message to display to the user in case of data base error.
   dbErrorMessage: string;
 
@@ -40,35 +46,42 @@ export class IngredientComponent implements OnInit {
 
   constructor(private ingredientService: IngredientService,
     private route: ActivatedRoute,
+    private router: Router,
     private location: Location,
     private categoryService: CategoryService) {
 
-    // Default mode : Creation mode
-    this.isEditable = true;
+    // This component is integrated if URL doesn't include DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT
+    this.isComponentIntegrated = !(router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+
+    // Default mode : Creation mode by default if this route contains DIRECT_ROUTE_CREATION_MODE
+    this.isEditable = (router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
+
     this.ingredient = new Ingredient();
     this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
 
     this.dbErrorMessage = '';
     this.initCategoriesList();
-    this.route.params.subscribe(params => {
 
-      // If an ingredient ID is provided -> read only mode
+    // ingredient will retrieve ingredientToDisplay sent by ingredientService
+    this.ingredientService.ingredientToDisplay.subscribe(
+      (ingredientToDisplay: Ingredient) => {
+        this.ingredient = ingredientToDisplay;
+        this.isEditable = false;
+        if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
+          this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
+        }
+      }
+    );
+
+    this.route.params.subscribe(params => {
+      // If an ingredient ID is provided
       if (params.hasOwnProperty('id')) {
         const idRequested: number = +params['id'];
-        this.ingredientService.getById(idRequested).subscribe(
-          (ingredient: Ingredient) => {
-            this.ingredient = ingredient;
-            this.isEditable = false;
-
-            if (isNullOrUndefined(this.ingredient.urlImage) || this.ingredient.urlImage.length === 0) {
-              this.ingredient.urlImage = IngredientComponent.DEFAULT_PICTURE;
-            }
-          }
-        );
+        // -> Loading of the ingredient to display using  ingredient id.
+        this.ingredientService.setIngredientToDisplayById(idRequested);
       }
+    });
 
-    }
-    );
   }
 
   public updateGlycemicLoad() {
@@ -155,7 +168,11 @@ export class IngredientComponent implements OnInit {
       console.log('this.location.back');
     }
     e.preventDefault();
-    this.location.back();
+    if (this.router.url !== '/food') {
+      this.location.back();
+    } else {
+      console.log('clôture');
+    }
   }
 
   /*
