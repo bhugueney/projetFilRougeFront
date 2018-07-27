@@ -1,134 +1,201 @@
+<ng-container *ngIf="!preparation">
+  <h1>Aucune préparation ou recette en cours</h1>
+</ng-container>
+
 <ng-container *ngIf="preparation">
-  <mat-card class="preparationCard">
-  <div class="preparationTitle">{{preparation.name}}</div>
-  <div class="preparationInfos">
+  <div class="MainContainer">
 
-  <!--
-                <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : showExpand}" (click)="showExpand= !showExpand;">expand_more</mat-icon>
-                <mat-icon Class="preparationInfosExpandButton" [ngClass]="{'hide' : !showExpand}" (click)="showExpand= !showExpand;">expand_less</mat-icon>
+    <mat-toolbar color = "warm" class="PreparationsActionsBar">
+      <span Class="PreparationsActionsBarTitle"> 
+        <ng-container *ngIf="preparationType === 'NEW PREPARATION'" >Préparation</ng-container>
+        <ng-container *ngIf="preparationType === 'RECIPE'"          >Recette</ng-container>
+        <ng-container *ngIf="preparationType === 'MEAL'"            >Repas</ng-container>
+      </span>
+      
+      
+      <ng-container *ngIf="isUserConnected">
+          <ng-container *ngIf="preparationType === 'NEW PREPARATION'">
+            <button mat-raised-button
+            matTooltip="Sauvegarder cette préparation en tant que nouvelle recette"
+            id="saveRecipe" 
+            class="PreparationsActionButton"
+            [color]="'primary'" 
+            (click)="SaveAsRecipe()">
+              <mat-icon>save</mat-icon> recette
+            </button>
+            
+            <button mat-raised-button
+            matTooltip="Sauvegarder cette préparation en tant que nouveau repas"
+            id="saveMeal" 
+            class="PreparationsActionButton"
+            [color]="'primary'" 
+            routerLink="/notimplemented">
+              <mat-icon>save</mat-icon> repas
+            </button>
+          </ng-container> <!-- end of ng-container NEW PREPARATION-->
+    
+          <ng-container *ngIf="preparationType === 'RECIPE'">
+            <button mat-raised-button
+              matTooltip="Enregistrer les modifications de cette recette"
+              id="saveRecipe" 
+              class="PreparationsActionButton"
+              [color]="'primary'" 
+              (click)="UpdateRecipe()">
+              <mat-icon>save</mat-icon>
+            </button>
+          </ng-container> <!-- end of ng-containe RECIPE-->
 
+      </ng-container> <!-- end of ng-containe USER CONNECTED-->
 
-  -->
-    <table>
-        <tr>
-          <th>
-            <mat-icon  *ngIf="!showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_more</mat-icon>
-            <mat-icon  *ngIf="showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_less</mat-icon>
-          </th>
-          <th>Info.&#8239;Nutritionelle</th>
-          <th>Total</th>
-          <th>Portion 100gr</th>
-        </tr>
-        <tr>
-          <td colspan=2>Valeur Calorique</td>
-          <td >{{preparation.totalEnergy | number: '1.2-2'}} Kcal</td>
-          <td >{{preparation.energy | number: '1.2-2'}} Kcal</td>
-        </tr>
-        <tr *ngIf="showExpand">
-          <td  colspan=2>Lipides</td>
-          <td>{{preparation.totalLipid | number: '1.2-2'}} g</td>
-          <td>{{preparation.lipid | number: '1.2-2'}} g</td>
-        </tr>
-        <tr>
-          <td  colspan=2>Glucides</td>
-          <td>{{preparation.totalGlucid | number: '1.2-2'}} g</td>
-          <td>{{preparation.glucid | number: '1.2-2'}} g</td>
-        </tr>
-        <tr *ngIf="showExpand">
-          <td colspan=2>Protéines</td>
-          <td>{{preparation.totalProtein | number: '1.2-2'}} g</td>
-          <td>{{preparation.protein | number: '1.2-2'}} g</td>
-        </tr>
-        <tr>
-          <td colspan=2>Sucres</td>
-          <td>{{preparation.totalSugar | number: '1.2-2'}} g</td>
-          <td>{{preparation.sugar | number: '1.2-2'}} g</td>
-        </tr>
-        <tr *ngIf="showExpand">
-          <td colspan=2>Fibres</td>
-          <td>{{preparation.totalFiber | number: '1.2-2'}} g</td>
-          <td>{{preparation.fiber | number: '1.2-2'}} g</td>
-        </tr>
-        <tr *ngIf="showExpand">
-          <td colspan=2>Sel</td>
-          <td>{{preparation.totalSalt | number: '1.2-2'}} g</td>
-          <td>{{preparation.salt | number: '1.2-2'}} g</td>
-        </tr>
-        <tr>
-          <th colspan=2>Charge glycémique</th>
-          <td [ngClass]="{'Vert': (preparation.totalGlycemicLoad < 11),
-                          'Orange': (preparation.totalGlycemicLoad >= 11 && preparation.totalGlycemicLoad < 20),
-                          'Rouge': (preparation.totalGlycemicLoad >= 20)
-                        }">
-                        {{preparation.totalGlycemicLoad | number: '1.2-2'}}
-          </td>
-          <td  [ngClass]="{'Vert': (preparation.glycemicLoad < 11),
-                          'Orange': (preparation.glycemicLoad >= 11 && preparation.totalGlycemicIndex < 20),
-                          'Rouge': (preparation.glycemicLoad >= 20)
+      <button mat-raised-button
+        matTooltip="abandonner l'édition et revenir à l'accueil"
+        [color]="'primary'" 
+        (click)="abandon();">
+          <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </mat-toolbar> <!-- end of PreparationsActionsBar-->
+
+    
+    <div Class="PannelsHead" >
+
+        <!-- panneau nom / categorie / commentaire -->
+        <mat-expansion-panel Class="PannelTitle" *ngIf="preparationType === 'RECIPE' ">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon (click)="EditRecipeInfos();">edit</mat-icon>&nbsp;{{preparation.name}} 
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{preparation.category.name}}</p>
+          <p>{{preparation.comment}}</p>
+        </mat-expansion-panel>
+
+      
+      
+      
+
+      <!-- pannel Nutrional Infos infos -->
+      <div>
+        <table class="PannelNutrinonalInfos">
+          <tr>
+            <th>
+              <mat-icon  *ngIf="!showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_more</mat-icon>
+              <mat-icon  *ngIf="showExpand" Class="preparationInfosExpandButton"  (click)="showExpand= !showExpand;">expand_less</mat-icon>
+            </th>
+            <th>Info.&#8239;Nutritionelle</th>
+            <th>Total</th>
+            <th>Portion 100gr</th>
+          </tr>
+          <tr>
+            <td colspan=2>Valeur Calorique</td>
+            <td >{{preparation.totalEnergy | number: '1.2-2'}} Kcal</td>
+            <td >{{preparation.energy | number: '1.2-2'}} Kcal</td>
+          </tr>
+          <tr *ngIf="showExpand">
+            <td  colspan=2>Lipides</td>
+            <td>{{preparation.totalLipid | number: '1.2-2'}} g</td>
+            <td>{{preparation.lipid | number: '1.2-2'}} g</td>
+          </tr>
+          <tr>
+            <td  colspan=2>Glucides</td>
+            <td>{{preparation.totalGlucid | number: '1.2-2'}} g</td>
+            <td>{{preparation.glucid | number: '1.2-2'}} g</td>
+          </tr>
+          <tr *ngIf="showExpand">
+            <td colspan=2>Protéines</td>
+            <td>{{preparation.totalProtein | number: '1.2-2'}} g</td>
+            <td>{{preparation.protein | number: '1.2-2'}} g</td>
+          </tr>
+          <tr>
+            <td colspan=2>Sucres</td>
+            <td>{{preparation.totalSugar | number: '1.2-2'}} g</td>
+            <td>{{preparation.sugar | number: '1.2-2'}} g</td>
+          </tr>
+          <tr *ngIf="showExpand">
+            <td colspan=2>Fibres</td>
+            <td>{{preparation.totalFiber | number: '1.2-2'}} g</td>
+            <td>{{preparation.fiber | number: '1.2-2'}} g</td>
+          </tr>
+          <tr *ngIf="showExpand">
+            <td colspan=2>Sel</td>
+            <td>{{preparation.totalSalt | number: '1.2-2'}} g</td>
+            <td>{{preparation.salt | number: '1.2-2'}} g</td>
+          </tr>
+          <tr>
+            <th colspan=2>Charge glycémique</th>
+            <td [ngClass]="{'Vert': (preparation.totalGlycemicLoad < 11),
+                            'Orange': (preparation.totalGlycemicLoad >= 11 && preparation.totalGlycemicLoad < 20),
+                            'Rouge': (preparation.totalGlycemicLoad >= 20)
                           }">
-                          {{preparation.glycemicLoad | number: '1.2-2'}}
+                          {{preparation.totalGlycemicLoad | number: '1.2-2'}}
             </td>
-        </tr>
+            <td  [ngClass]="{'Vert': (preparation.glycemicLoad < 11),
+                            'Orange': (preparation.glycemicLoad >= 11 && preparation.totalGlycemicIndex < 20),
+                            'Rouge': (preparation.glycemicLoad >= 20)
+                            }">
+                            {{preparation.glycemicLoad | number: '1.2-2'}}
+              </td>
+          </tr>
+        </table>
+      </div> <!-- end of pannel preparation infos -->
+  </div> <!-- end of pannels head -->
+
+
+
+
+
+    <!-- toolbar for button add ingredients -->
+    <mat-toolbar color = "warm" class="PreparationsActionsBar">
+        <button mat-raised-button
+          *ngIf="router.url!='/food'"
+          id="addIngredient" 
+          routerLink="/food" 
+          class="PreparationsActionButton"
+          [color]="'primary'" 
+        >
+          Choisir les ingrédients à ajouter
+      </button>
+    </mat-toolbar> <!-- end of toolbar for button add ingredients -->
+
+
+
+
+
+
+    <!-- List of ingrédients -->
+    <div Class="PreparationIngredientsTableContainer">
+      <table mat-table [dataSource]="preparation.listOfIngredients" class="PreparationIngredientsTable">
+        <!-- Image Column -->
+        <ng-container matColumnDef="image">
+          <td mat-cell *matCellDef="let recipeIngredient" id="image">
+            <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar
+            src="/assets/img/{{recipeIngredient.ingredient.urlImage === null ? 'defaultIngredient.jpg' : recipeIngredient.ingredient.urlImage}}"
+            class="image" >
+            </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <td mat-cell *matCellDef="let recipeIngredient" class="nameColumn">
+              <h5 (click)="showDetails(recipeIngredient.ingredient)">{{recipeIngredient.ingredient.name}}</h5>
+
+            </td>
+        </ng-container>
+
+        <!-- Qty Column -->
+        <ng-container matColumnDef="qty">
+            <td mat-cell *matCellDef="let recipeIngredient" class="QtyCol">
+                <div>
+                  <input class="ingredientQty" matInput type="number" value="{{recipeIngredient.quantity}}" (input)="updateQty(recipeIngredient, Qty.value)" #Qty>
+                  <span>grs.</span>
+                </div>
+                <mat-icon (click)="increaseQty(recipeIngredient)">add</mat-icon>
+                <mat-icon (click)="decreaseQty(recipeIngredient)">remove</mat-icon>
+                <mat-icon (click)="deleteRecipeIngredient(recipeIngredient)" *ngIf="router.url!='/food'">delete_outline</mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-row *matRowDef="let row; columns: ['image', 'name', 'qty'];" class="Row"></tr>
       </table>
+    </div> <!-- end List of ingrédients -->
   </div>
-
-  <!--  [ngClass]="{'hide' : !showExpand}" -->
-
-  <div Class="PreparationIngredientsTableContainer">
-
-  <table mat-table [dataSource]="preparation.listIngredient" class="PreparationIngredientsTable">
-
-      <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
-
-      <!-- Image Column -->
-      <ng-container matColumnDef="image">
-        <td mat-cell *matCellDef="let recipeIngredient" id="image">
-          <img routerLink="/ingredient/{{recipeIngredient.ingredient.id}}" mat-card-avatar
-          src="/assets/img/{{recipeIngredient.ingredient.urlImage}}"
-          class="image" >
-          </td>
-      </ng-container>
-
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-          <td mat-cell *matCellDef="let recipeIngredient" class="nameColumn">
-            <h5 (click)="showDetails(recipeIngredient.ingredient)">{{recipeIngredient.ingredient.name}}</h5>
-
-          </td>
-      </ng-container>
-
-      <!-- Qty Column -->
-      <ng-container matColumnDef="qty">
-          <td mat-cell *matCellDef="let recipeIngredient" class="QtyCol">
-              <div>
-                <input class="ingredientQty" matInput type="number" value="{{recipeIngredient.quantity}}" (input)="updateQty(recipeIngredient, Qty.value)" #Qty>
-                <span>grs.</span>
-              </div>
-              <mat-icon (click)="increaseQty(recipeIngredient)">add</mat-icon>
-              <mat-icon (click)="decreaseQty(recipeIngredient)">remove</mat-icon>
-              <mat-icon (click)="deleteRecipeIngredient(recipeIngredient)" *ngIf="router.url!='/food'">delete_outline</mat-icon>
-          </td>
-      </ng-container>
-
-      <tr mat-row *matRowDef="let row; columns: ['image', 'name', 'qty'];" class="Row"></tr>
-    </table>
-  </div>
-
-  <div Class="PreparationsActionsBar">
-
-    <ng-container *ngIf="isUserConnected">
-        <button mat-raised-button="saveRecipe" id="saveRecipe" class="PreparationsActionButton"
-        [color]="'primary'" routerLink="/notimplemented">Sauvegarder la recette</button>
-        <button mat-raised-button="saveMeal" id="saveMeal" class="PreparationsActionButton"
-        [color]="'primary'" routerLink="/notimplemented">Enregistrer le repas</button>
-    </ng-container>
-
-    <button mat-raised-button="addIngredient" id="addIngredient" routerLink="/food" class="PreparationsActionButton"
-    [color]="'primary'" id="addIngredient" *ngIf="router.url!='/food'">Ajout d'ingrédient(s)</button>
-
-    <button mat-raised-button="deletePreparation" id="deletePreparation" [ngClass]="router.url!='/food' ? 'PreparationsActionButton':'PreparationsActionButton2'"
-    [color]="'accent'" (click)="abandon();">Abandon</button>
-  </div>
-  </mat-card>
 </ng-container>

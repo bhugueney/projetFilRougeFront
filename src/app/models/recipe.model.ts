@@ -7,119 +7,31 @@ export class Recipe extends Ingredient {
   // Total Recipe Informations
 
   // energy is specified in k/cal for total recipe
-  private _totalEnergy: number;
+  public totalEnergy: number;
 
   // Attributes below are specified in g for total recipe
-  private _totalWater: number;
-  private _totalProtein: number;
-  private _totalGlucid: number;
-  private _totalLipid: number;
-  private _totalSugar: number;
-  private _totalAmidon: number;
-  private _totalFiber: number;
-  private _totalUnsaturedFattyAcides: number;
-  private _totalMonoUnsaturedFattyAcides: number;
-  private _totalPolyUnsaturedFattyAcides: number;
-  private _totalSalt: number;
+  public totalWater: number;
+  public totalProtein: number;
+  public totalGlucid: number;
+  public totalLipid: number;
+  public totalSugar: number;
+  public totalAmidon: number;
+  public totalFiber: number;
+  public totalUnsaturedFattyAcides: number;
+  public totalMonoUnsaturedFattyAcides: number;
+  public totalPolyUnsaturedFattyAcides: number;
+  public totalSalt: number;
 
   // Attributes below are specified indice for total recipe
-  private _totalGlycemicLoad: number;
+  public totalGlycemicLoad: number;
 
   // content of the recipe : since the Ingredient class
-  private _listIngredient: RecipeIngredient[];
-
-
-  public get totalEnergy(): number {
-    return this._totalEnergy;
-  }
-  public set totalEnergy(value: number) {
-    this._totalEnergy = value;
-  }
-
-  public get totalWater(): number {
-    return this._totalWater;
-  }
-  public set totalWater(value: number) {
-    this._totalWater = value;
-  }
-  public get totalProtein(): number {
-    return this._totalProtein;
-  }
-  public set totalProtein(value: number) {
-    this._totalProtein = value;
-  }
-  public get totalGlucid(): number {
-    return this._totalGlucid;
-  }
-  public set totalGlucid(value: number) {
-    this._totalGlucid = value;
-  }
-  public get totalLipid(): number {
-    return this._totalLipid;
-  }
-  public set totalLipid(value: number) {
-    this._totalLipid = value;
-  }
-  public get totalSugar(): number {
-    return this._totalSugar;
-  }
-  public set totalSugar(value: number) {
-    this._totalSugar = value;
-  }
-  public get totalAmidon(): number {
-    return this._totalAmidon;
-  }
-  public set totalAmidon(value: number) {
-    this._totalAmidon = value;
-  }
-  public get totalFiber(): number {
-    return this._totalFiber;
-  }
-  public set totalFiber(value: number) {
-    this._totalFiber = value;
-  }
-  public get totalUnsaturedFattyAcides(): number {
-    return this._totalUnsaturedFattyAcides;
-  }
-  public set totalUnsaturedFattyAcides(value: number) {
-    this._totalUnsaturedFattyAcides = value;
-  }
-  public gettotalMmonoUnsaturedFattyAcides(): number {
-    return this._totalMonoUnsaturedFattyAcides;
-  }
-  public set totalMonoUnsaturedFattyAcides(value: number) {
-    this._totalMonoUnsaturedFattyAcides = value;
-  }
-  public get totalPolyUnsaturedFattyAcides(): number {
-    return this._totalPolyUnsaturedFattyAcides;
-  }
-  public set totalPolyUnsaturedFattyAcides(value: number) {
-    this._totalPolyUnsaturedFattyAcides = value;
-  }
-  public get totalSalt(): number {
-    return this._totalSalt;
-  }
-  public set totalSalt(value: number) {
-    this._totalSalt = value;
-  }
-
-  public get totalGlycemicLoad(): number {
-    return this._totalGlycemicLoad;
-  }
-  public set totalGlycemicLoad(value: number) {
-    this._totalGlycemicLoad = value;
-  }
+  public listOfIngredients: RecipeIngredient[];
 
 
 
 
-  public get listIngredient(): RecipeIngredient[] {
-    return this._listIngredient;
-  }
 
-  public set listIngredient(value: RecipeIngredient[]) {
-    this._listIngredient = value;
-  }
 
   // method to cumulate data informations of every ingredient
   public dataCalcul() {
@@ -140,9 +52,9 @@ export class Recipe extends Ingredient {
     this.totalSalt = 0.0;
     this.totalGlycemicLoad = 0.0;
 
-    if (this.listIngredient != null) {
+    if (this.listOfIngredients != null) {
 
-      this.listIngredient.forEach(
+      this.listOfIngredients.forEach(
         recipeIngredient => {
           // tslint:disable-next-line:no-shadowed-variable
           const element: Ingredient = recipeIngredient.ingredient;

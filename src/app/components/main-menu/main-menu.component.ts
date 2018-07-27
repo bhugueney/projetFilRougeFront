@@ -20,7 +20,4 @@ export class MainMenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  doNewPreparation() {
-    this.preparationService.doNewPreparation();
-  }
 }

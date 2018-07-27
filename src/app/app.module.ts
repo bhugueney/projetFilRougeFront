@@ -22,7 +22,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, MatIconModule,
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
     MatDialogModule,
-    MatAutocompleteModule} from '@angular/material';
+    MatAutocompleteModule,
+    MatExpansionModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
 import { PreparationService } from './services/preparation.service';
@@ -30,7 +31,7 @@ import { DialogYesNoComponent } from './components/dialog-yes-no/dialog-yes-no.c
 import { DialogOkComponent } from './components/dialog-ok/dialog-ok.component';
 import { UserConnexionComponent } from './components/user-connexion/user-connexion.component';
 import { NotImplementedComponent } from './components/not-implemented/not-implemented.component';
-
+import { SaveAsRecipeComponent } from './components/preparation/save-as-recipe/save-as-recipe.component';
 
 
 
@@ -42,7 +43,7 @@ const routes: Routes = [
   {path: 'meal', component: MealComponent},
   {path: 'food', component: FoodComponent},
   {path: 'preparation', component: PreparationComponent},
-  {path: 'preparation/:id', component: PreparationComponent},
+  {path: 'recipe/:id', component: PreparationComponent},
   {path: 'ingredient', component: IngredientComponent},
   {path: 'ingredient/:id', component: IngredientComponent},
   {path: 'connexion', component: UserConnexionComponent},
@@ -65,7 +66,8 @@ const routes: Routes = [
     DialogYesNoComponent,
     DialogOkComponent,
     UserConnexionComponent,
-    NotImplementedComponent
+    NotImplementedComponent,
+    SaveAsRecipeComponent
     ],
   imports: [
     BrowserModule,
@@ -87,10 +89,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogYesNoComponent, DialogOkComponent, PreparationDetailsComponent]
+  entryComponents: [DialogYesNoComponent, DialogOkComponent, PreparationDetailsComponent, SaveAsRecipeComponent]
 })
 export class AppModule { }

@@ -53,8 +53,6 @@ export class MealService {
     const listIngredient: RecipeIngredient[] = new Array<RecipeIngredient>();
     for (let i = 1; i <= numIngredients; i++) {
       const recipeIngredient: RecipeIngredient = new RecipeIngredient();
-      recipeIngredient.recipe = fakeMeal;
-      // recipeIngredient.ingredient = this.ingredientService.getById(i);
       this.ingredientService.getById(i).subscribe(
         (ingredient: Ingredient) => {
           recipeIngredient.ingredient = ingredient;
@@ -68,7 +66,7 @@ export class MealService {
       );
 
     }
-    fakeMeal.listIngredient = listIngredient;
+    fakeMeal.listOfIngredients = listIngredient;
 
     return fakeMeal;
 
