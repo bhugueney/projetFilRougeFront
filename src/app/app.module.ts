@@ -23,7 +23,8 @@ import { MatButtonModule, MatSidenavModule, MatListModule, MatToolbarModule, Mat
    MatCardModule, MatFormFieldModule, MatInputModule, MatSlideToggleModule, MatSelectModule, MatTableModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatExpansionModule} from '@angular/material';
+    MatExpansionModule,
+    MatTreeModule} from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PreparationDetailsComponent } from 'src/app/components/preparation-details/preparation-details.component';
 import { PreparationService } from './services/preparation.service';
@@ -90,7 +91,8 @@ const routes: Routes = [
     HttpClientModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTreeModule
   ],
   providers: [FoodService, IngredientService, MealService, RecipeService, CategoryService, PreparationService],
   bootstrap: [AppComponent],

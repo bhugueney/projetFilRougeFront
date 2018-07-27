@@ -126,4 +126,29 @@ export class RecipeService {
       recipe
     );
   }
+
+
+
+
+  /**
+   * Delete a recipe in database
+  * @param recipe : existing recipe to update in database
+    */
+  public delete(recipe: Recipe): Observable<string> {
+
+    console.log('recipeService : delete : recipe = ', recipe);
+
+
+    // A recipe can't be deleted by anonymous user.
+    if (!localStorage.userId) {
+      return throwError(new Error('Unknown user'));
+    }
+
+    // call back end REST service to delete the recipe and return the result as observable
+    return this.http.delete<string>(
+      RecipeService.URL_RECIPE + '/' + recipe.id + '?userId=' + localStorage.userId);
+
+  }
+
+
 }
