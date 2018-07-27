@@ -155,16 +155,16 @@ export class PreparationComponent implements OnInit {
 
   }
 
-  public abandon() {
+  public quit() {
     let message: string;
     switch (this.preparationType) {
-      case 'NEW PREPARATION': {message = 'Etes-vous sûr de vouloir abandonner l\'éditionde de cette nouvelle préparation ?'; break; }
-      case 'RECIPE': {message = 'Etes-vous sûr de vouloir abandonner l\'édition de de cette recette ?'; break; }
-      case 'MEAL': {message = 'Etes-vous sûr de vouloir abandonner l\'éditionde de ce repas ?'; break; }
-      default: {message = 'Etes-vous sûr de vouloir abandonner cette préparation ?'; break; }
+      case 'NEW PREPARATION': {message = 'Etes-vous sûr de vouloir quitter l\'éditionde de cette nouvelle préparation ?'; break; }
+      case 'RECIPE': {message = 'Etes-vous sûr de vouloir quitter l\'édition de de cette recette ?'; break; }
+      case 'MEAL': {message = 'Etes-vous sûr de vouloir quitter l\'éditionde de ce repas ?'; break; }
+      default: {message = 'Etes-vous sûr de vouloir quitter cette préparation ?'; break; }
     }
     const dialogRef = this.dialog.open(DialogYesNoComponent,
-      {data: {title: 'Confirmation abandon', message: message}});
+      {data: {title: 'Confirmation quitter', message: message}});
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
