@@ -9,6 +9,7 @@ import {Categorie} from '../../models/categorie.model';
 import {CategoryService} from '../../services/category.service';
 import {isNullOrUndefined} from 'util';
 import {Location} from '@angular/common';
+import {from} from 'rxjs/index';
 
 @Component({
   selector: 'app-ingredient',
@@ -120,6 +121,19 @@ export class IngredientComponent implements OnInit {
     }
   }
 
+  initCategoriesList() {
+    this.categoryService.getLeafCategories().subscribe(
+      (categories: Categorie[]) => {
+        console.log('Categories nb: ' + categories.length);
+        this.categories = categories;
+        if (this.ingredient.category) {
+          console.log(this.ingredient.category.name);
+        }
+
+      }
+    );
+  }
+
   setCategoryFromSelector(e: MatSelectChange) {
     const categoryId: number = +e.value;
     this.categoryService.getCategoryById(categoryId).subscribe(
@@ -188,17 +202,6 @@ export class IngredientComponent implements OnInit {
     this.isEditable = e.checked;
   }
 
-  initCategoriesList() {
-    this.categoryService.getCategories().subscribe(
-      (categories: Categorie[]) => {
-        this.categories = categories;
-        if (this.ingredient.category) {
-          console.log(this.ingredient.category.name);
-        }
-
-      }
-    );
-  }
 
   checkIngredient(e: Event) {
     console.log(this.ingredient);
