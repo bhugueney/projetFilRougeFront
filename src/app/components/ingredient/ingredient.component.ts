@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Ingredient } from '../../models/ingredient.model';
-import { IngredientService } from '../../services/ingredient.service';
-import { Recipe } from '../../models/recipe.model';
-import { Meal } from '../../models/meal.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSlideToggleChange, MatSelectChange } from '@angular/material';
-import { Categorie } from '../../models/categorie.model';
-import { CategoryService } from '../../services/category.service';
-import { isNullOrUndefined } from 'util';
-import { Location } from '@angular/common';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Ingredient} from '../../models/ingredient.model';
+import {IngredientService} from '../../services/ingredient.service';
+import {Recipe} from '../../models/recipe.model';
+import {Meal} from '../../models/meal.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatSlideToggleChange, MatSelectChange} from '@angular/material';
+import {Categorie} from '../../models/categorie.model';
+import {CategoryService} from '../../services/category.service';
+import {isNullOrUndefined} from 'util';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-ingredient',
@@ -25,6 +25,8 @@ export class IngredientComponent implements OnInit {
 
   // Ingredient displayed by component
   public ingredient: Ingredient;
+
+  @Output() eventToClose = new EventEmitter();
 
   // Categories to display for this ingredient
   categories: Array<Categorie> = [];
@@ -45,10 +47,10 @@ export class IngredientComponent implements OnInit {
   debugMode = false;
 
   constructor(private ingredientService: IngredientService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location,
-    private categoryService: CategoryService) {
+              private route: ActivatedRoute,
+              private router: Router,
+              private location: Location,
+              private categoryService: CategoryService) {
 
     // This component is integrated if URL doesn't include DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT
     this.isComponentIntegrated = !(router.url.includes(IngredientComponent.DIRECT_ROUTE_FOR_INGREDIENT_COMPONENT));
@@ -121,14 +123,16 @@ export class IngredientComponent implements OnInit {
   setCategoryFromSelector(e: MatSelectChange) {
     const categoryId: number = +e.value;
     this.categoryService.getCategoryById(categoryId).subscribe(
-      (cat) => { this.ingredient.category = cat; }
+      (cat) => {
+        this.ingredient.category = cat;
+      }
     );
   }
 
   /**
-  * This method is called to save current ingredient in database
-  * @param e : event of button calling this method
-  */
+   * This method is called to save current ingredient in database
+   * @param e : event of button calling this method
+   */
   saveEditableIngredient() {
     if (this.debugMode) {
       console.log('save ingredient');
@@ -172,6 +176,7 @@ export class IngredientComponent implements OnInit {
       this.location.back();
     } else {
       console.log('clôture');
+      this.eventToClose.next(true);
     }
   }
 
@@ -185,7 +190,6 @@ export class IngredientComponent implements OnInit {
 
   initCategoriesList() {
     this.categoryService.getCategories().subscribe(
-
       (categories: Categorie[]) => {
         this.categories = categories;
         if (this.ingredient.category) {

@@ -77,6 +77,6 @@
 
         <app-preparation [ngClass]="screenDetails? 'littleScreen' : 'bigScreen'"></app-preparation>
 
-        <app-ingredient [ngClass]="screenDetails? 'details' : 'noDetails'"></app-ingredient>
+        <app-ingredient [ngClass]="screenDetails? 'details' : 'noDetails'" (eventToClose)="screenDetails= (!$event);"></app-ingredient>
 
       </div>
