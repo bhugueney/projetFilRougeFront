@@ -6,3 +6,16 @@
     height: 15%;
     font-size: 1.2em;
   }
+
+  
+.RecipesActionsBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+}
+
+
+.RecipesActionsBar  button {
+  margin-left: 3px;
+}

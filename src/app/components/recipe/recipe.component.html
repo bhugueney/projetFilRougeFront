@@ -1,4 +1,18 @@
-<h1>Mes recettes</h1>
+<mat-toolbar color = "warm" class="RecipesActionsBar">
+        <span Class="RecetteActionsBarTitle">Mes recettes</span>
+ 
+        <button mat-raised-button
+          matTooltip="Revenir à l'accueil"
+          routerLink="/main"
+          [color]="'primary'" 
+          >
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </mat-toolbar> <!-- end of RecipesActionsBar-->
+  
+
+
+
 <ng-container  *ngIf="!HasRecipes">
     <mat-card Class="MessageNoRecipe" >
         <mat-card-title>

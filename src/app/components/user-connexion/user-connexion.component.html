@@ -3,16 +3,19 @@
 
   <form (ngSubmit)="onSubmit()" >
       <mat-form-field class="form-field">
-        <mat-select placeholder="utilisateur" [(ngModel)]="email" name="email">
-              <mat-option value="pf1.fhg@gmail.com">Admin</mat-option>
-              <mat-option value="frederic.pareja.pf1@gmail.com">Frédérick</mat-option>
-              <mat-option value="hugues.poumeyrol.pf1@gmail.com">Hugues</mat-option>
-              <mat-option value="gabriel.wisniewski@gmail.com">Gabriel</mat-option>
-        </mat-select>
+        <input type="text" matInput placeholder="email utilisateur" [(ngModel)]="email" name="email" [matAutocomplete]="auto">
+        <mat-autocomplete  #auto="matAutocomplete">
+            <mat-option value="guest.filrouge.fhg@gmail.com">Guest : guest.filrouge.fhg@gmail.com</mat-option>
+            <mat-option value="pf1.fhg@gmail.com">Admin : pf1.fhg@gmail.com</mat-option>
+            <mat-option value="frederic.pareja.pf1@gmail.com">Frédérick : frederic.pareja.pf1@gmail.com</mat-option>
+            <mat-option value="hugues.poumeyrol.pf1@gmail.com">Hugues : hugues.poumeyrol.pf1@gmail.com</mat-option>
+            <mat-option value="gabriel.wisniewski@gmail.com">Gabriel : gabriel.wisniewski@gmail.com</mat-option> 
+        </mat-autocomplete>
       </mat-form-field>
 
+
       <mat-form-field  class="form-field">
-        <input matInput name="password" placeholder="saisir le mot de passe" [(ngModel)]="password" name="password"/>
+        <input type="password" matInput name="password" placeholder="mot de passe" [(ngModel)]="password" name="password"/>
       </mat-form-field>
 
       <button  mat-raised-button="cnx" [color]="'primary'" class="form-field">Se connecter</button>

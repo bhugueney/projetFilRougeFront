@@ -5,8 +5,8 @@
   <!-- si un utilisateur est connecté affichage boutons Mes ingrédients et Mon suivi et Se déconnecter-->
   <ng-container *ngIf="(isUserConnected$ | async)">
     <button class="menuButton" mat-stroked-button color="primary" [routerLink]="'/recipe'">Mes recettes</button>
-    <button class="menuButton" mat-stroked-button color="primary" [routerLink]="'/notimplemented'">Mon suivi personnel</button>
-    <button class="menuButton" mat-stroked-button color="accent" (click)="userService.disconnect();" >Se déconnecter</button>
+    <button class="menuButton" mat-stroked-button color="accent" [routerLink]="'/notimplemented'">Mon suivi personnel</button>
+    <button class="menuButton" mat-stroked-button color="primary" (click)="userService.disconnect();" >Se déconnecter</button>
   </ng-container>
 
   <!-- Si pas d'utilisateur connecté affichage boutons pour se connecter -->
